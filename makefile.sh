@@ -54,8 +54,8 @@ Main ()
 
     umask 077
 
-    Run touch .rhosts
-    Run chown root:root .rhosts
+    Run touch .rhosts .shosts
+    Run chown root:root .rhosts .shosts
 }
 
 Main "$@"
