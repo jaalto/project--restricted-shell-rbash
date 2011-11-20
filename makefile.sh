@@ -38,9 +38,9 @@ Main ()
 	[ "$path" ] && Run ln -s $path $cmd
     done
 
-    umask 022
-
     Run cd ~$LOGIN || return 1
+
+    umask 022
 
     Run mkdir .ssh
     Run "echo PATH=/usr/local/bin/restricted > .ssh/environment"
@@ -51,6 +51,11 @@ Main ()
     Run chown root:root .bash* .ssh .ssh/environment
     Run chown root:root .
     Run chmod 755 . .bash* .ssh/*
+
+    umask 077
+
+    Run touch .rhosts
+    Run chown root:root .rhosts
 }
 
 Main "$@"
