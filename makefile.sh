@@ -20,7 +20,7 @@
 #	along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1121.1530"
+VERSION="2011.1121.1532"
 LICENCE="GPL-2+"
 COMMANDS=""
 
@@ -317,7 +317,7 @@ Main ()
     Echo "[NOTE] Add keys to $dummy.ssh/authorized_keys"
 
     Run chown "$CHOWN" .ssh .ssh/*
-    Run chmod 0755 .ossh
+    Run chmod 0755 .ssh
     Run chmod ugo-s .ssh
     Run chmod 0644 .ssh/*
 
