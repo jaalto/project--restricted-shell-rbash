@@ -5,6 +5,7 @@
 #
 # Synopsis: [RSHELL=shell] [HOMEROOT=dir] [test=1] makefile.sh <login name>
 
+CHOWN=${CHOWN:-root:root}
 HOMEROOT=${HOMEROOT:-/home}
 RSHELL=${RSHELL:-/bin/rbash}
 pwd=$( cd $(dirname $0) ; pwd )
@@ -106,19 +107,19 @@ Main ()
 
     Run cd ~$LOGIN || return 1
 
-    Run chown root:root .bash* .ssh .ssh/environment
-    Run chown root:root .
+    Run chown "$CHOWN" .bash* .ssh .ssh/environment
+    Run chown "$CHOWN" .
     Run chmod 0644 .bash* .ssh/*
     Run chmod 0755  . .ssh
     Run chmod ugo-s . .ssh
 
     umask 077
 
-    Run chown root:root .bash_history
+    Run chown "$CHOWN" .bash_history
     # Allow appending to the file
     Run Chattr +a .bash_history
 
-    Run chown root:root .rhosts .shosts
+    Run chown "$CHOWN" .rhosts .shosts
     Run chmod 0600 .rhosts .shosts
 }
 
