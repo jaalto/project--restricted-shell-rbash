@@ -161,6 +161,7 @@ Main ()
 
     umask 077
 
+    Run chattr -a .bash_history 2> /dev/null # Can't chown without this
     Run chown "$CHOWN" .bash_history
     # Allow appending to the file
     Run Chattr +a .bash_history
