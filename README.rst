@@ -52,7 +52,7 @@ REQUIREMENTS
 
 2. Build: Perl and standard GNU make
 
-3. Run: POSIX ``/bin/sh`` and GNU command line programs
+3. Run: Bash for rbash, POSIX ``/bin/sh`` and GNU command line programs
 
 USAGE
 =====
