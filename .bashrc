@@ -1,4 +1,4 @@
-# Disable options
+# ~/.bashrc
 
 set +a # Do not export variables and functions
 set -f # Disable pathname expansion
@@ -21,3 +21,5 @@ shopt -u \
  progcomp \
  promptvars \
  xpg_echo
+
+# End of file
