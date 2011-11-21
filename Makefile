@@ -188,8 +188,9 @@ install-lib:
 	$(INSTALL_BIN) -d $(SHAREDIR)
 	for f in $(INSTALL_OBJS_LIB); \
 	do \
-		$(INSTALL_BIN) -D $$f $(SHAREDIR)/$$f; \
+		$(INSTALL_DATA) -D $$f $(SHAREDIR)/$$f; \
 	done
+	chmod 755 $(SHAREDIR)/*.sh
 
 install-bin:
 	# install-bin - Install programs
