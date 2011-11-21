@@ -47,7 +47,7 @@ MakeUser ()
 
 MakeRestrictedBin ()
 {
-    Run install -d -m 750 bin
+    Run install -d -m 755 bin
     Run chown "$CHOWN" bin
 
     pwd=$(pwd)
@@ -73,6 +73,18 @@ MakeRestrictedBin ()
     done
 
     cd "$pwd" || exit 1
+}
+
+SetPath ()
+{
+    path="$(pwd)/bin"
+
+    for file in .bash_profile .ssh/environment
+    do
+	[ -f "$file" ] || continue
+
+	Run sed --in-place "s,%PATH,$path," "$file"
+    done
 }
 
 CopyFiles ()
@@ -141,8 +153,6 @@ Main ()
 
     Run cd ~$LOGIN || return 1
 
-    MakeRestrictedBin
-
     Run chown "$CHOWN" .bash* .ssh .ssh/environment
     Run chown "$CHOWN" .
     Run chmod 0644 .bash* .ssh/*
@@ -157,6 +167,9 @@ Main ()
 
     Run chown "$CHOWN" .rhosts .shosts
     Run chmod 0600 .rhosts .shosts
+
+    MakeRestrictedBin
+    SetPath
 }
 
 Main "$@"
