@@ -20,13 +20,12 @@ utilities only.
 USAGE
 =====
 
-Simply copy files in this project somewhere and run help ::
+Simply copy files in this project somewhere and read usage ::
 
     ./makefile.sh --help
 
-Select a user to create (or existing user), who will be locked. To
-make sure this is what you want, run in test mode first and nothing is
-done but you will see the commands ::
+Select a user to create (or an existing user), who will be locked. To
+see what command would be run, make a test run ::
 
    ./makefile.sh --test dummy
 
@@ -50,20 +49,19 @@ does not require Perl and additional Perl Modules, just plain ``/bin/sh``.
 
 Directory ``bin/`` contains a very simple menu based script that
 allows running only selected commands. You could use it instead of
-``rbash`` approach by setting user's shell to the script ::
+previous ``rbash`` approach by setting user's shell to the script ::
 
    # Create user and needed files
    ./makefile.sh dummy date
 
-   # Insall "restricted shell"
+   # Install command menu based "restricted shell"
    install -D -m 700 bin/rshell.sh ~dummy/bin/rshell
 
-   # Edit, add command to case-staetment
+   # Edit commands in Main() case-statement
    $EDITOR ~dummy/bin/rshell
 
    # Change user's shell
-   path=$(cd ~dummy; echo $(pwd)/bin/rshell)
-   chsh -s $path dummy
+   chsh -s $(cd ~dummy; echo $(pwd)/bin/rshell) dummy
 
 This feature is experimental and I'm not exactly convinced that shell
 scrips are safe anough to be used as menu shells. Use your judgement
@@ -90,7 +88,7 @@ understand which method would be suitable for your threat level.
 Copyright and License
 =====================
 
-Copyright (C) 2010-2012 Jari Aalto <jari.aalto@cante.net>
+Copyright (C) 2011-2012 Jari Aalto <jari.aalto@cante.net>
 
 The material is free; you can redistribute and/or modify it under
 the terms of GNU General Public license either version 2 of the
