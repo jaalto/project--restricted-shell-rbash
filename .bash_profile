@@ -1,7 +1,7 @@
 # ~/.bash_profile
 
 umask 007
-PATH="./bin"
+PATH="%PATH"
 
 if [ -f $HOME/.bashrc ] ; then
     . $HOME/.bashrc
