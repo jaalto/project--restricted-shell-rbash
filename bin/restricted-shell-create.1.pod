@@ -44,16 +44,17 @@ restricted-shell-create - create a restricted shell environment using rbash
 
 =head1 SYNOPSIS
 
-  restricted-shell-create [options] <login name> [allowed commands]
+  restricted-shell-create [options] <login name> <list of allowed commands>
 
 =head1 DESCRIPTION
 
-Script to create a restricted shell environment using /bin/rbash.
-Creates a LOGIN NAME if it does not exists.
+Program to create a restricted shell environment using
+C</bin/rbash>. Creates a LOGIN NAME if it does not exist.
 
 Program can only be run by root and it must be run on a host,
 that has direct access to the user's home; not on a host that NFS
-mounts /home.
+mounts /home. The allowed command must be on PATH or written
+using full path name.
 
 =head1 OPTIONS
 
