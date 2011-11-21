@@ -128,14 +128,14 @@ dist-git: test
 dist-snap: test
 	@echo gt tar -q -z -p $(NAME) -c -D master
 
-# Rule: dist - alias for dist-git
+# Rule: dist - [maintainer] alias for dist-git
 dist: dist-git
 
 # Rule: dist-ls - [maintainer] list of release files
 dist-ls:
 	@ls -1tr $(DIST_DIR)/$(NAME)*
 
-# Rule: ls - alias for dist-ls
+# Rule: ls - [maintainer] alias for dist-ls
 ls: dist-ls
 
 bin/$(NAME).1: bin/$(NAME).1.pod
@@ -160,14 +160,13 @@ txt: doc/manual/index.txt
 # Rule: doc - Generate or update all documentation
 doc: man html txt
 
-# Rule: perl-test - Check program syntax
-perl-test:
-	# perl-test - Check syntax
-	perl -cw $(PL_SCRIPT)
-	podchecker $(PL_SCRIPT)
+# Rule: pod-test - Check POD syntax
+pod-test:
+	# pod-test - Check POD syntax
+	podchecker bin/*.pod
 
 # Rule: test - Run tests
-test: perl-test
+test: pod-test
 
 install-doc:
 	# install-doc - Install documentation
@@ -206,7 +205,7 @@ install-bin:
 # Rule: install - Standard install
 install: install-bin install-lib install-man install-doc
 
-# Rule: install-test - for Maintainer only
+# Rule: install-test - [maintainer] run test installation to tmp/
 install-test:
 	rm -rf tmp
 	make DESTDIR=`pwd`/tmp prefix=/usr install
@@ -214,7 +213,7 @@ install-test:
 
 .PHONY: clean distclean realclean
 .PHONY: install install-bin install-lib install-man
-.PHONY: all man doc test install-test perl-test
+.PHONY: all man doc test install-test pod-test
 .PHONY: dist dist-git dist-ls ls
 
 # End of file
