@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1121.1750"
+VERSION="2011.1121.1754"
 LICENCE="GPL-2+"
 COMMANDS=""
 
@@ -183,7 +183,7 @@ Help ()
 {
     echo "\
 SYNOPSIS
-	[options] <login name> [allowed commands]
+	[options] <login name> <list of allowed commands>
 
 DESCRIPTION
 	Script to create a restricted shell environment using /bin/rbash.
