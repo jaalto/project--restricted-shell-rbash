@@ -1,7 +1,12 @@
 #!/bin/sh
 #
-# To create restricted shell
+# Script to create a restricted shell environment using /bin/rbash. Creates
+# a LOGIN NAME if it does not exists. Only root can run this script.
+#
+# Synopsis: [RSHELL=shell] [HOMEROOT=dir] [test=1] makefile.sh <login name>
 
+HOMEROOT=${HOMEROOT:-/home}
+RSHELL=${RSHELL:-/bin/rbash}
 pwd=$( cd $(dirname $0) ; pwd )
 
 Warn ()
@@ -23,12 +28,12 @@ MakeUser ()
 {
     if ! IsUser "$1" ; then
         # Don't use -m option because it would copy skeleton files.
-	Run useradd -d /home/dummy -s /bin/rbash "$1"
-	mkdir -p "/home/$1"
+	Run useradd -d "$HOMEROOT/dummy" -s "$RSHELL" "$1"
+	Run mkdir -p "$HOMEROOT/$1"
     fi
 }
 
-MakeBin ()
+MakeRestrictedBin ()
 {
     [ -d /usr/local/bin/restricted ] && return 0
 
@@ -44,7 +49,7 @@ MakeBin ()
     done
 }
 
-Copy ()
+CopyFiles ()
 {
     umask 022
 
@@ -64,7 +69,7 @@ Copy ()
 
 MountWarning ()
 {
-    mount=$(mount | grep ':/home')
+    mount=$(mount | grep ':$HOMEROOT')
 
     if [ "$mount" ]; then
 	Warn "WARN: Can't change attributes on NFS mount"
@@ -96,8 +101,8 @@ Main ()
     fi
 
     MakeUser "$LOGIN"
-    MakeBin
-    Copy "$LOGIN"
+    MakeRestrictedBin
+    CopyFiles "$LOGIN"
 
     Run cd ~$LOGIN || return 1
 
