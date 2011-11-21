@@ -68,6 +68,12 @@ The mount directory of system home. Defaults to /home.
 
 Display short help.
 
+=item B<-i, --init>
+
+Clean initialization. Delete all previous commands from user's
+C<bin/> directory before creating suymlinks to the allowed
+commands.
+
 =item B<-o, --chown USER:GROUP>
 
 Set permissions to USER:GROUP. Defaults to root:root.
