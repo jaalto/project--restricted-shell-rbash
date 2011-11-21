@@ -1,0 +1,67 @@
+NAME
+    restricted-shell-create - create a restricted shell environment using
+    rbash
+
+SYNOPSIS
+      restricted-shell-create [options] <login name> [allowed commands]
+
+DESCRIPTION
+    Script to create a restricted shell environment using /bin/rbash.
+    Creates a LOGIN NAME if it does not exists.
+
+    Program can only be run by root and it must be run on a host, that has
+    direct access to the user's home; not on a host that NFS mounts /home.
+
+OPTIONS
+    -d, --homeroot
+        The mount directory of system home. Defaults to /home.
+
+    -h, --help
+        Display short help.
+
+    -o, --chown USER:GROUP
+        Set permissions to USER:GROUP. Defaults to root:root.
+
+    -s, --shell PROGRAM
+        Set PROGRAM to user's --user shell. Defualts to "/bin/rbash".
+
+    -t, --test
+        Show commands to run. Do not actually do anything.
+
+    -v, --verbose
+        Be verbose.
+
+    -V, --version
+        Display version information.
+
+EXAMPLES
+    Create user dummy, but don't actaully do anything:
+
+        restricted-shell-create --test dummy
+
+    Create user dummy, which is allowed to run command: date, ls, ssh
+
+        restricted-shell-create dummy date ls ssh
+
+ENVIRONMENT
+    None.
+
+FILES
+    None.
+
+STANDARDS
+    None.
+
+AVAILABILITY
+    http://freecode.com/projects/restricted-shell-rbash
+
+SEE ALSO
+    bash(1) rbash(1) ssh(1)
+
+AUTHORS
+    Program was written by <jari.aalto@cante.net>
+
+    Released under license GNU GPL version 2 or (at your option) any later
+    version. For more information about license, visit
+    <http://www.gnu.org/copyleft/gpl.html>.
+
