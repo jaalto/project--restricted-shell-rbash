@@ -8,7 +8,7 @@ Description
 GNU project's Bash running in ``rbash`` mode is a viable choice if you
 are trying to somewhat contain trusted users. This project includes
 basic files and utility to create a dummy user that only can run
-command of your choice.
+commands of your choice.
 
 REQUIREMENTS
 ============
