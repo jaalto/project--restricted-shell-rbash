@@ -77,7 +77,7 @@ Set PROGRAM to user's B<--user> shell. Defualts to C</bin/rbash>.
 
 =item B<-t, --test>
 
-Show commands to run. Do not actually do anything.
+Show what commands would be run. Do not actually do anything.
 
 =item B<-v, --verbose>
 
