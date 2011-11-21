@@ -51,10 +51,10 @@ Main ()
 	Die "$0: Setup error. Run Makefile in source distribution."
     fi
 
-    dir=$( echo $PROGRAM | sed 's,/[^/]\+$,,' )
-    bin=$( echo $PROGRAM | sed 's,.*/,,' )
+    dir=$( dirname $PROGRAM )
+    bin=$( basename $PROGRAM )
 
-    cd $dir
+    cd "$dir"
     "$bin" "$@"
 }
 
