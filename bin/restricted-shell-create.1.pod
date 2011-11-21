@@ -92,13 +92,10 @@ Display version information.
 
 =head1 EXAMPLES
 
-Create user dummy, but don't actaully do anything:
+Create user dummy, allow it to run commands date(1), ls(1) and
+ssh(1) but don't actually do anything:
 
-    restricted-shell-create --test dummy
-
-Create user dummy, which is allowed to run command: date, ls, ssh
-
-    restricted-shell-create dummy date ls ssh
+    restricted-shell-create --test dummy date ls ssh
 
 =head1 ENVIRONMENT
 
