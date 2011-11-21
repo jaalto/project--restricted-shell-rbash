@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1121.1804"
+VERSION="2011.1121.1817"
 LICENCE="GPL-2+"
 COMMANDS=""
 
@@ -36,6 +36,7 @@ CHOWN=root:root
 
 unset test
 unset verbose
+unset initialize
 
 Echo ()
 {
@@ -102,6 +103,11 @@ MakeRestrictedBin ()
     str=" in $(pwd)"
     [ "$test" ] && str=""
     Echo "[NOTE] Symlinking allowed commands$str"
+
+    if [ "$initialize" ]; then
+	Echo "[NOTE] Removing previous commands"
+	Run rm -f *
+    fi
 
     for cmd in $COMMANDS
     do
@@ -226,6 +232,10 @@ Main ()
 		shift
 		Help
 		return 0
+		;;
+	    -i | --init)
+		shift
+		initialize="initialize"
 		;;
 	    -o | --chown)
 		shift
