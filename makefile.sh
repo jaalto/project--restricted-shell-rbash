@@ -20,9 +20,9 @@
 #	along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1121.1358"
+VERSION="2011.1121.1530"
 LICENCE="GPL-2+"
-COMMAND=""
+COMMANDS=""
 
 CURDIR=$( cd $(dirname $0) ; pwd )
 HOMEROOT=/home
@@ -32,9 +32,14 @@ CHOWN=root:root
 unset test
 unset verbose
 
+Echo ()
+{
+    echo "# $*"
+}
+
 Warn ()
 {
-    echo "$*" >&2
+    Echo "$*" >&2
 }
 
 Die ()
@@ -89,7 +94,9 @@ MakeRestrictedBin ()
     pwd=$(pwd)
     Run cd bin || exit 1
 
-    echo "[NOTE] Alowed commands in $(pwd)"
+    str=" in $(pwd)"
+    [ "$test" ] && str=""
+    Echo "[NOTE] Allowed commands$str"
 
     for cmd in $COMMANDS
     do
@@ -161,7 +168,8 @@ Chattr ()
 {
 
     Run MountWarning
-    echo "$(pwd): chattr" "$@"
+    Echo "$(pwd)"
+    echo "chattr" "$@"
     Run chattr "$@"
 }
 
@@ -198,6 +206,8 @@ Version ()
 
 Main ()
 {
+    dummy="$*"				# for debug
+
     while :
     do
 	case "$1" in
@@ -244,7 +254,7 @@ Main ()
 		return 0
 		;;
 	     -*)
-		echo "Unknown option: $1" >&2
+		Warn "[WARN] Unknown option: $1" >&2
 		shift
 		;;
 	      *)
@@ -253,12 +263,13 @@ Main ()
 	esac
     done
 
-    LOGIN=$1
-    shift
+    LOGIN="$1"
 
     if [ ! "$LOGIN" ]; then
 	Die "ERROR: Which login name to use for restricted shell?"
     fi
+
+    shift
 
     if [ ! "$test" ]; then
 	if ! IsRoot ; then
@@ -272,24 +283,24 @@ Main ()
 	Die "ERROR: --shell program does not exists: $RSELL"
     fi
 
-    if ! Match : $CHOWN ; then
+    if ! Match "*:*" $CHOWN ; then
 	Die "ERROR --chown is not in format user:group => $CHOWN"
     fi
 
-    if ! Match /* $HOMEROOT ; then
+    if ! Match "/*" $HOMEROOT ; then
 	Die "ERROR --homeroot is not an absolute path: $HOMEROOT"
     fi
 
     if [ "$1" ]; then
 	COMMANDS="$*"
     else
-	Die "ERROR: Which commands to allow $USER to run?"
+	Die "ERROR: Which commands to allow user '$LOGIN' to run?"
     fi
 
     MakeUser "$LOGIN"
     CopyFiles "$LOGIN"
 
-    Run cd ~$LOGIN || return 1
+    Run cd ~"$LOGIN" || return 1
 
     Run chown "$CHOWN" .
     Run chmod 0750 .
@@ -299,7 +310,12 @@ Main ()
     Run chmod 0644 .bash*
 
     touch  .ssh/authorized_keys
-    echo "[NOTE] Add keys to $(pwd)/.ssh/authorized_keys"
+
+    dummy=$(pwd)/
+    [ "$test" ] && dummy=""
+
+    Echo "[NOTE] Add keys to $dummy.ssh/authorized_keys"
+
     Run chown "$CHOWN" .ssh .ssh/*
     Run chmod 0755 .ossh
     Run chmod ugo-s .ssh
