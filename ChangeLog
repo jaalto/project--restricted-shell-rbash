@@ -1,16 +1,16 @@
 2011-11-21  Jari Aalto  <jari.aalto@cante.net>
 
-	* Makefile: New.
+	* GENERAL: Make project public through Github.
+
+	* Makefile, pod2man.mk: New.
 
 	* makefile.sh: Convert all global variables into
 	options: --homeroot, --chown, --shell. Improve argument
 	checking.
 
-	* bin/restricted-shell-create: New.
+	* bin/restricted-shell-create.sh: New.
 
 	* bin/restricted-shell-create.1.pod: New.
-
-	* Make public through Github.
 
 2011-11-15 Jari Aalto  <jari.aalto@cante.net>
 
