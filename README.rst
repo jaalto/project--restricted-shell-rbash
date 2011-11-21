@@ -43,9 +43,9 @@ like allowing only ssh key based access ::
 MENU BASED SHELL
 ================
 
-A popular perl based menu shell is available at
-<http://freecode.com/projects/pshell>. The code below is simple and
-does not require Perl and additional Perl Modules, just plain ``/bin/sh``.
+A popular Perl based menu shell is available at
+<http://freecode.com/projects/pshell>. The implementation below does
+not require Perl and additional modules, just plain ``/bin/sh``.
 
 Directory ``bin/`` contains a very simple menu based script that
 allows running only selected commands. You could use it instead of
