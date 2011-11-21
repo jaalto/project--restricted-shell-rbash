@@ -18,9 +18,14 @@
 #
 #	You should have received a copy of the GNU General Public License
 #	along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+#   Description
+#
+#	See --help. This program must be located in the same directory as the
+#	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1121.1540"
+VERSION="2011.1121.1750"
 LICENCE="GPL-2+"
 COMMANDS=""
 
@@ -178,7 +183,7 @@ Help ()
 {
     echo "\
 SYNOPSIS
-	$0 [options] <login name> [allowed commands]
+	[options] <login name> [allowed commands]
 
 DESCRIPTION
 	Script to create a restricted shell environment using /bin/rbash.
@@ -186,14 +191,10 @@ DESCRIPTION
 	script.
 
 OPTIONS
-	-h, --help
-	    Display short help.
+	See manual page for complete set of options.
 
 	-t, --test
-	    Show commands to run. Do not actually do anything.
-
-	-v, --verbose
-	    Be verbose.
+	    Show what commands would be run. Do not actually do anything.
 
 	-V, --version
 	    Display version.
