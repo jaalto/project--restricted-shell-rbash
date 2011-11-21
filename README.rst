@@ -2,16 +2,48 @@
     Emacs: http://docutils.sourceforge.net/tools/editors/emacs/rst.el
     Manual: http://docutils.sourceforge.net/docs/user/rst/quickref.html
 
-Description
+DESCRIPTION
 ===========
 
 GNU project's Bash running in ``rbash`` mode is a viable choice if you
 are trying to somewhat contain trusted users. This project includes
 basic files and utility to create a dummy user that only can run
-commands of your choice.
-
-Project homepage (bugs and source) is at
+commands of your choice. Project homepage (bugs and source) is at
 <http://freecode.com/projects/restricted-shell-rbash>.
+
+How does it work?
+-----------------
+
+Bash installation contains `rbash' binary which restricts access. See
+<http://www.gnu.org/s/bash/manual/html_node/The-Restricted-Shell.html>.
+What is left to do is to provide a small set of configuration files to
+go with the account and that's pretty much it. The concept is pretty
+straight forward but tedious to type all the commans, so this project
+simply collects them all to a automatized shell script whi:
+
+1. Create user account, if not yet exists. Set's shell to ``rbash``
+
+2. Copies minimal startup files for Bash and SSH.
+
+2. Make allowed command available user user's ``bin/``directory and points PATH there.
+
+3. Arranges tight permissions on startp files and directories of the created user.
+
+After these steps, the account is hopefully sufficiently locked down.
+User cannot edit configuration files, change PATH, run commands
+starting with slash, or cd anywhere, so the only commands available to
+him are those in ``bin/``.
+
+Warnings
+--------
+
+Don't let anyone run commands that allow escaping to shells. Like
+editors (``emacs``, ``vi``) or mail programs (``mutt``) etc.
+
+For a real hard security, remember: "Honestly a restricted shells are
+depreciated, you should be using tools such as apparmor, selinux,
+grsecurity or virtualization as it is rather trivial to break out of
+rbash."
 
 REQUIREMENTS
 ============
@@ -71,17 +103,6 @@ previous ``rbash`` approach by setting user's shell to the script ::
 This feature is experimental and I'm not exactly convinced that shell
 scrips are safe anough to be used as menu shells. Use your judgement
 if you really want to use method below.
-
-NOTES
-=====
-
-Don't let anyone run commands that allow escaping to shells. Like
-editors (``emacs``, ``vi``) or mail programs (``mutt``) etc.
-
-For real hard security, remember: "Honestly a restricted shells are
-depreciated, you should be using tools such as apparmor, selinux,
-grsecurity or virtualization as it is rather trivial to break out of
-rbash."
 
 REFERENCES
 ==========
