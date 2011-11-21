@@ -201,7 +201,7 @@ install-bin:
 	done
 	# Update path
 	sed --in-place \
-		-e "s,%PROGRAM,$(LIBDIR)/$(LIBPRG)," \
+		-e "s,%PROGRAM,$(SHAREDIR)/$(LIBPRG)," \
 		-e "s,$(DESTDIR),," \
 		$(BINDIR)/$(NAME)
 
