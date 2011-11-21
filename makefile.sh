@@ -1,14 +1,23 @@
 #!/bin/sh
 #
-# Description
+#   Copyright
 #
-#	Script to create a restricted shell environment using /bin/rbash.
-#	Creates a LOGIN NAME if it does not exists. Only root can run this
-#	script.
+#	Copyright (C) 2011 Jari Aalto <jari.aalto@cante.net>
 #
-# Synopsis
+#   License
 #
-#	[test=1] makefile.sh <login name> [allowed commands]
+#	This program is free software; you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation; either version 2 of the License, or
+#	(at your option) any later version.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 # User globals variables
 
@@ -19,7 +28,13 @@ COMMANDS=${COMMANDS:-ssh date ls}
 
 # Private global variables
 
+AUTHOR="Jari Aalto <jari.aalto@cante.net>"
+VERSION="2011.1121.1016"
+LICENCE="GPL-2+"
+
 CURDIR=$( cd $(dirname $0) ; pwd )
+unset test
+unset verbose
 
 Warn ()
 {
@@ -43,7 +58,7 @@ IsUser ()
 MakeUser ()
 {
     if ! IsUser "$1" ; then
-        # Don't use -m option because it would copy skeleton files.
+	# Don't use -m option because it would copy skeleton files.
 	Run useradd -d "$HOMEROOT/dummy" -s "$RSHELL" "$1"
 	Run mkdir -p "$HOMEROOT/$1"
     fi
@@ -65,10 +80,12 @@ MakeRestrictedBin ()
 	    /*) path="$cmd"
 		cmd=$( echo $cmd | sed 's,.*/,,' )
 		;;
+
 	     */*)
 		Warn "ERROR: Not an absolute path, skipped: $cmd"
 		continue
-	        ;;
+		;;
+
 	     *) path=$(which $cmd)
 		;;
 	esac
@@ -131,8 +148,72 @@ Chattr ()
     Run chattr "$@"
 }
 
+Help ()
+{
+    echo "\
+SYNOPSIS
+
+	$0 [options] <login name> [allowed commands]
+
+OPTIONS
+	-h, --help
+	    Display short help.
+
+	-t, --test
+	    Show only command to run. Do not actually do anything.
+
+	-v, --verbose
+	    Be verbose.
+
+	-V, --version
+	    Display version.
+
+DESCRIPTION
+
+	Script to create a restricted shell environment using /bin/rbash.
+	Creates a LOGIN NAME if it does not exists. Only root can run this
+	script.
+"
+}
+
+Version ()
+{
+    echo "$VERSION $LICENSE $AUTHOR $URL"
+}
+
 Main ()
 {
+    while :
+    do
+	case "$1" in
+	    -h | --help)
+		shift
+		Help
+		return 0
+		;;
+	    -t | --test)
+		shift
+		test="test"
+		;;
+	    -v | --verbose)
+		shift
+		verbose="verbose"
+		;;
+	    -V | --version)
+		shift
+		Version
+		return 0
+		;;
+	     -*)
+		echo "Unknown option: $1" >&2
+		shift
+		;;
+	      *)
+		break
+		;;
+	esac
+    done
+
     LOGIN=$1
     shift
 
