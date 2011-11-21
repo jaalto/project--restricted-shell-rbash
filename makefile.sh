@@ -5,10 +5,15 @@
 #
 # Synopsis: [RSHELL=shell] [HOMEROOT=dir] [test=1] makefile.sh <login name>
 
+# User globals variables
+
 CHOWN=${CHOWN:-root:root}
 HOMEROOT=${HOMEROOT:-/home}
 RSHELL=${RSHELL:-/bin/rbash}
-pwd=$( cd $(dirname $0) ; pwd )
+
+# Private global variables
+
+CURDIR=$( cd $(dirname $0) ; pwd )
 
 Warn ()
 {
@@ -103,6 +108,8 @@ Main ()
 
     MakeUser "$LOGIN"
     MakeRestrictedBin
+
+    cd "$CURDIR" || return 1
     CopyFiles "$LOGIN"
 
     Run cd ~$LOGIN || return 1
