@@ -25,7 +25,7 @@ tedious to type all the commands. This project automates the steps to:
 
 2. Copy minimal startup files (Bash, SSH).
 
-2. Symlink allowed commands to user's ``bin/``directory and point PATH there.
+2. Symlink allowed commands to user's ``bin/`` directory and point PATH there.
 
 3. Set tight permissions for the account directory and its files.
 
