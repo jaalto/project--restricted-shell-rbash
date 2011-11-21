@@ -80,7 +80,7 @@ INSTALL_SUID	= $(INSTALL) -m 4755
 DIST_DIR	= ../build-area
 DATE		= `date +"%Y.%m%d"`
 VERSION		= $(DATE)
-RELEASE		= $(NAME)-$(VERSION)
+RELEASE		= $(PACKAGE)-$(VERSION)
 
 INSTALL_OBJS_LIB = README.rst makefile.sh .bash* .ssh/*
 INSTALL_OBJS_BIN = bin/$(BIN)
@@ -126,7 +126,7 @@ dist-git: test
 # The "gt" is maintainer's program frontend to Git
 # Rule: dist-snap - [maintainer] release snapshot from Git repository
 dist-snap: test
-	@echo gt tar -q -z -p $(NAME) -c -D master
+	@echo gt tar -q -z -p $(PACKAGE) -c -D master
 
 # Rule: dist - [maintainer] alias for dist-git
 dist: dist-git
