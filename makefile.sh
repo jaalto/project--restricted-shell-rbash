@@ -156,7 +156,8 @@ Main ()
     Run chown "$CHOWN" .bash* .ssh .ssh/environment
     Run chown "$CHOWN" .
     Run chmod 0644 .bash* .ssh/*
-    Run chmod 0755  . .ssh
+    Run chmod 0750 .
+    Run chmod 0755 ssh
     Run chmod ugo-s . .ssh
 
     umask 077
