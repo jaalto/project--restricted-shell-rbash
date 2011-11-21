@@ -19,26 +19,28 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-# User globals variables
-
-CHOWN=${CHOWN:-root:root}
-HOMEROOT=${HOMEROOT:-/home}
-RSHELL=${RSHELL:-/bin/rbash}
-COMMANDS=${COMMANDS:-ssh date ls}
-
-# Private global variables
-
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1121.1016"
+VERSION="2011.1121.1358"
 LICENCE="GPL-2+"
+COMMAND=""
 
 CURDIR=$( cd $(dirname $0) ; pwd )
+HOMEROOT=/home
+RSHELL=/bin/rbash
+CHOWN=root:root
+
 unset test
 unset verbose
 
 Warn ()
 {
     echo "$*" >&2
+}
+
+Die ()
+{
+    Warn "$*"
+    exit 1
 }
 
 Run ()
@@ -48,6 +50,21 @@ Run ()
     else
 	eval "$@"
     fi
+}
+
+Match ()
+{
+    case "$2" in
+	$1) return 0
+	    ;;
+	*)  return 1
+	    ;;
+    esac
+}
+
+IsRoot ()
+{
+    [ "$(id -u -n)" = "root" ]
 }
 
 IsUser ()
@@ -152,27 +169,25 @@ Help ()
 {
     echo "\
 SYNOPSIS
-
 	$0 [options] <login name> [allowed commands]
+
+DESCRIPTION
+	Script to create a restricted shell environment using /bin/rbash.
+	Creates a LOGIN NAME if it does not exists. Only root can run this
+	script.
 
 OPTIONS
 	-h, --help
 	    Display short help.
 
 	-t, --test
-	    Show only command to run. Do not actually do anything.
+	    Show commands to run. Do not actually do anything.
 
 	-v, --verbose
 	    Be verbose.
 
 	-V, --version
 	    Display version.
-
-DESCRIPTION
-
-	Script to create a restricted shell environment using /bin/rbash.
-	Creates a LOGIN NAME if it does not exists. Only root can run this
-	script.
 "
 }
 
@@ -186,10 +201,34 @@ Main ()
     while :
     do
 	case "$1" in
+	    -d | --homeroot)
+		shift
+		HOMEROOT="$1"
+		if Match -* $HOMEROOT ; then
+		    Die "ERROR --homeroot looks like option: $HOMEROOT"
+		fi
+		shift
+		;;
 	    -h | --help)
 		shift
 		Help
 		return 0
+		;;
+	    -o | --chown)
+		shift
+		CHOWN="$1"
+		if Match -* $CHOWN ; then
+		    Die "ERROR --chown looks like option: $CHOWN"
+		fi
+		shift
+		;;
+	    -s | --shell)
+		shift
+		RSHELL="$1"
+		if Match -* $RSHELL ; then
+		    Die "ERROR --shell looks like option: $RSHELL"
+		fi
+		shift
 		;;
 	    -t | --test)
 		shift
@@ -218,19 +257,33 @@ Main ()
     shift
 
     if [ ! "$LOGIN" ]; then
-	Warn "ERROR: Which login name to use for restricted shell?"
-	return 1
+	Die "ERROR: Which login name to use for restricted shell?"
     fi
 
     if [ ! "$test" ]; then
-	if [ "$(id -u -n)" != "root" ]; then
-	    Warn "ERROR: This file must be run by root"
-	    return 1
+	if ! IsRoot ; then
+	    Die "ERROR: This command can be run only by root"
 	fi
+    fi
+
+    if [ ! "$RSHELL" ]; then
+	Die "ERROR: --shell program not set"
+    elif [ ! -x "$RSHELL" ]; then
+	Die "ERROR: --shell program does not exists: $RSELL"
+    fi
+
+    if ! Match : $CHOWN ; then
+	Die "ERROR --chown is not in format user:group => $CHOWN"
+    fi
+
+    if ! Match /* $HOMEROOT ; then
+	Die "ERROR --homeroot is not an absolute path: $HOMEROOT"
     fi
 
     if [ "$1" ]; then
 	COMMANDS="$*"
+    else
+	Die "ERROR: Which commands to allow $USER to run?"
     fi
 
     MakeUser "$LOGIN"
