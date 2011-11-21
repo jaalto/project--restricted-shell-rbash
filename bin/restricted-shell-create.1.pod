@@ -53,7 +53,7 @@ C</bin/rbash>. Creates a LOGIN NAME if it does not exist.
 
 Program can only be run by root and it must be run on a host,
 that has direct access to the user's home; not on a host that NFS
-mounts /home. The allowed command must be on PATH or written
+mounts /home. The allowed commands must be on PATH or written
 using full path name.
 
 =head1 OPTIONS
