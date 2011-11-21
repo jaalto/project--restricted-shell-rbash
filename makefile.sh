@@ -1,15 +1,21 @@
 #!/bin/sh
 #
-# Script to create a restricted shell environment using /bin/rbash. Creates
-# a LOGIN NAME if it does not exists. Only root can run this script.
+# Description
 #
-# Synopsis: [RSHELL=shell] [HOMEROOT=dir] [test=1] makefile.sh <login name>
+#	Script to create a restricted shell environment using /bin/rbash.
+#	Creates a LOGIN NAME if it does not exists. Only root can run this
+#	script.
+#
+# Synopsis
+#
+#	[test=1] makefile.sh <login name> [allowed commands]
 
 # User globals variables
 
 CHOWN=${CHOWN:-root:root}
 HOMEROOT=${HOMEROOT:-/home}
 RSHELL=${RSHELL:-/bin/rbash}
+COMMANDS=${COMMANDS:-ssh date ls}
 
 # Private global variables
 
@@ -41,18 +47,32 @@ MakeUser ()
 
 MakeRestrictedBin ()
 {
-    [ -d /usr/local/bin/restricted ] && return 0
+    Run install -d -m 750 bin
+    Run chown "$CHOWN" bin
 
-    Run mkdir -p /usr/local/bin/restricted
+    pwd=$(pwd)
+    Run cd bin || exit 1
 
-    Run cd /usr/local/bin/restricted
+    echo "[NOTE] Alowed commands in $(pwd)"
 
-    for cmd in ls date ssh
+    for cmd in $COMMANDS
     do
-	path=$(which $cmd)
+	case "$cmd" in
+	    /*) path="$cmd"
+		cmd=$( echo $cmd | sed 's,.*/,,' )
+		;;
+	     */*)
+		Warn "ERROR: Not an absolute path, skipped: $cmd"
+		continue
+	        ;;
+	     *) path=$(which $cmd)
+		;;
+	esac
 
-	[ "$path" ] && Run ln -s $path $cmd
+	[ "$path" ] && Run ln --verbose --force -s "$path" "$cmd"
     done
+
+    cd "$pwd" || exit 1
 }
 
 CopyFiles ()
@@ -79,7 +99,7 @@ CopyFiles ()
 
 MountWarning ()
 {
-    mount=$(mount | grep ':$HOMEROOT')
+    mount=$(mount | grep ":$HOMEROOT")
 
     if [ "$mount" ]; then
 	Warn "WARN: Can't change attributes on NFS mount"
@@ -89,6 +109,7 @@ MountWarning ()
 
 Chattr ()
 {
+
     Run MountWarning
     echo "$(pwd): chattr" "$@"
     Run chattr "$@"
@@ -97,6 +118,7 @@ Chattr ()
 Main ()
 {
     LOGIN=$1
+    shift
 
     if [ ! "$LOGIN" ]; then
 	Warn "ERROR: Which login name to use for restricted shell?"
@@ -110,11 +132,16 @@ Main ()
 	fi
     fi
 
+    if [ "$1" ]; then
+	COMMANDS="$*"
+    fi
+
     MakeUser "$LOGIN"
-    MakeRestrictedBin
     CopyFiles "$LOGIN"
 
     Run cd ~$LOGIN || return 1
+
+    MakeRestrictedBin
 
     Run chown "$CHOWN" .bash* .ssh .ssh/environment
     Run chown "$CHOWN" .
