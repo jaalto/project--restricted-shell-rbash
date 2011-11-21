@@ -43,8 +43,12 @@ Copy ()
 {
     umask 022
 
-    for elt in ./.[a-z]*
+    for elt in .[a-z]*
     do
+	case "$elt" in
+	    .git*) continue ;;
+	esac
+
 	if [ -d "$elt" ]; then
 	    Run cp --verbose -r "$elt" ~"$1"/
 	else
@@ -77,7 +81,8 @@ Main ()
 
     Run chown root:root .bash* .ssh .ssh/environment
     Run chown root:root .
-    Run chmod 755 . .bash* .ssh .ssh/*
+    Run chmod 755 . .ssh
+    Run chmod 644 .bash* .ssh/*
 
     umask 077
 
