@@ -55,7 +55,7 @@ Main ()
     bin=$( basename $PROGRAM )
 
     cd "$dir"
-    "$bin" "$@"
+    ./"$bin" "$@"
 }
 
 Main "$@"
