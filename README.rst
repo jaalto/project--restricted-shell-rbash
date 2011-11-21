@@ -84,6 +84,10 @@ A popular Perl based menu shell is available at
 <http://freecode.com/projects/pshell>. The implementation below does
 not require Perl and additional modules, just plain ``/bin/sh``.
 
+This feature is experimental and I'm not exactly convinced that shell
+scrips are safe enough to be used as menu shells. Use your judgement
+if you really want to use method below.
+
 Directory ``bin/`` contains a very simple menu based script that
 allows running only selected commands. You could use it instead of
 previous ``rbash`` approach by setting user's shell to the script ::
@@ -99,10 +103,6 @@ previous ``rbash`` approach by setting user's shell to the script ::
 
    # Change user's shell
    chsh -s $(cd ~dummy; echo $(pwd)/bin/rshell) dummy
-
-This feature is experimental and I'm not exactly convinced that shell
-scrips are safe enough to be used as menu shells. Use your judgement
-if you really want to use method below.
 
 REFERENCES
 ==========
