@@ -1,0 +1,15 @@
+Requires
+
+   Linux
+   Perl to run Makefile for docs
+   Bash (for /bin/rbash)
+   Standard POSIX /bin/sh
+   Standard GNU command line programs
+
+To install the program for system wide use:
+
+   make help
+   make install
+
+To run run "in place" without installation, see README.rst in
+currect directory and use makefile.sh
