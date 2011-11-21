@@ -14,7 +14,7 @@ commands of your choice. Project homepage (bugs and source) is at
 How does it work?
 -----------------
 
-Bash installation contains `rbash' binary which restricts access. See
+Bash installation contains ``rbash`` binary which restricts access. See
 <http://www.gnu.org/s/bash/manual/html_node/The-Restricted-Shell.html>.
 What is left to do is to provide a small set of configuration files to
 go with the account and that's pretty much it. The concept is pretty
