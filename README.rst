@@ -14,12 +14,12 @@ commands of your choice. Project homepage (bugs and source) is at
 How does it work?
 -----------------
 
-Bash installation contains ``rbash`` binary which restricts access. See
+Bash installation contains ``rbash`` binary which restricts access.
+See
 <http://www.gnu.org/s/bash/manual/html_node/The-Restricted-Shell.html>.
 What is left to do is to provide a small set of configuration files to
-go with the account and that's pretty much it. The concept is pretty
-straight forward but tedious to type all the commans, so this project
-simply collects them all to a automatized shell script whi:
+go with the account. The concept is pretty straight forward but it is
+tedious to type all the commans. This project automatizes the steps to:
 
 1. Create user account, if not yet exists. Set's shell to ``rbash``
 
