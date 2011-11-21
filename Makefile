@@ -26,7 +26,7 @@ endif
 PACKAGE		= restricted-shell-rbash
 NAME		= restricted-shell-create
 BIN		= $(NAME).sh
-PACKAGE_DOC	= $(NAME)
+PACKAGE_DOC	= $(PACKAGE)
 # The real binary
 LIBPRG		= makefile.sh
 
@@ -43,10 +43,10 @@ BINDIR		= $(DESTDIR)$(sbindir)
 DOCDIR		= $(DESTDIR)$(sharedir)/doc/$(PACKAGE_DOC)
 EXAMPLESDIR	= $(DOCDIR)/examples
 LOCALEDIR	= $(DESTDIR)$(sharedir)/locale
-SHAREDIR	= $(DESTDIR)$(sharedir)/$(NAME)
-LIBDIR		= $(DESTDIR)$(prefix)/lib/$(NAME)
+SHAREDIR	= $(DESTDIR)$(sharedir)/$(PACKAGE)
+LIBDIR		= $(DESTDIR)$(prefix)/lib/$(PACKAGE)
 SBINDIR		= $(DESTDIR)$(exec_prefix)/sbin
-ETCDIR		= $(DESTDIR)/etc/$(NAME)
+ETCDIR		= $(DESTDIR)/etc/$(PACKAGE)
 
 # 1 = regular, 5 = conf, 6 = games, 8 = daemons
 MANDIR		= $(DESTDIR)$(mandir)
@@ -185,10 +185,10 @@ install-man: man
 
 install-lib:
 	# install-lib - Install libraries
-	$(INSTALL_BIN) -d $(LIBDIR)
+	$(INSTALL_BIN) -d $(SHAREDIR)
 	for f in $(INSTALL_OBJS_LIB); \
 	do \
-		$(INSTALL_BIN) -D $$f $(LIBDIR)/$$f; \
+		$(INSTALL_BIN) -D $$f $(SHAREDIR)/$$f; \
 	done
 
 install-bin:
