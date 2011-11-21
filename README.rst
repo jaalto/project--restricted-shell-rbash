@@ -21,13 +21,13 @@ What is left to do is to provide a small set of configuration files to
 go with the account. The concept is pretty straight forward but it is
 tedious to type all the commands. This project automates the steps to:
 
-1. Create user account, if not yet exists. Set's shell to ``rbash``
+1. Create a user account, provided it does not exist. Set login shell to ``rbash``
 
-2. Copies minimal startup files for Bash and SSH.
+2. Copy minimal startup files (Bash, SSH).
 
-2. Make allowed command available user user's ``bin/``directory and points PATH there.
+2. Symlink allowed commands to user's ``bin/``directory and point PATH there.
 
-3. Arranges tight permissions on startp files and directories of the created user.
+3. Set tight permissions for the account directory and its files.
 
 After these steps, the account is hopefully sufficiently locked down.
 User cannot edit configuration files, change PATH, run commands
