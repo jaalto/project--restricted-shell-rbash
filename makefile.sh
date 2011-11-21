@@ -4,6 +4,11 @@
 
 pwd=$( cd $(dirname $0) ; pwd )
 
+Warn ()
+{
+    echo "$*" >&2
+}
+
 Run ()
 {
     ${test+echo} eval "$@"
@@ -57,18 +62,35 @@ Copy ()
     done
 }
 
+MountWarning ()
+{
+    mount=$(mount | grep ':/home')
+
+    if [ "$mount" ]; then
+	Warn "WARN: Can't change attributes on NFS mount"
+	Warn "$mount"
+    fi
+}
+
+Chattr ()
+{
+    Run MountWarning
+    echo "$(pwd): chattr" "$@"
+    Run chattr "$@"
+}
+
 Main ()
 {
     LOGIN=$1
 
     if [ ! "$LOGIN" ]; then
-	echo "ERROR: Which login name to use for restricted shell?" >&2
+	Warn "ERROR: Which login name to use for restricted shell?"
 	return 1
     fi
 
     if [ ! "$test" ]; then
 	if [ "$(id -u -n)" != "root" ]; then
-	    echo "ERROR: This file must be run by root" >&2
+	    Warn "ERROR: This file must be run by root"
 	    return 1
 	fi
     fi
@@ -88,9 +110,8 @@ Main ()
     umask 077
 
     Run chown root:root .bash_history
-    Run chmod 0640 .bash_history
     # Allow appending to the file
-    Run chattr +a .bash_history
+    Run Chattr +a .bash_history
 
     Run chown root:root .rhosts .shosts
     Run chmod 0600 .rhosts .shosts
