@@ -101,7 +101,7 @@ previous ``rbash`` approach by setting user's shell to the script ::
    chsh -s $(cd ~dummy; echo $(pwd)/bin/rshell) dummy
 
 This feature is experimental and I'm not exactly convinced that shell
-scrips are safe anough to be used as menu shells. Use your judgement
+scrips are safe enough to be used as menu shells. Use your judgement
 if you really want to use method below.
 
 REFERENCES
