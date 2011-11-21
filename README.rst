@@ -41,6 +41,30 @@ like allowing only ssh key based access ::
     cd ~dummy
     .... edit ~dummy/.ssh/authorize_keys
 
+MENU BASED SHELL
+================
+
+Directory ``bin/`` contains a very simple menu based script that
+allows running only selected commands. You could use it instead of
+``rbash`` approach by setting user's shell to the script ::
+
+   # Create user and needed files
+   ./makefile.sh dummy date
+
+   # Insall "restricted shell"
+   install -D -m 700 bin/rshell.sh ~dummy/bin/rshell
+
+   # Edit, add command to case-staetment
+   $EDITOR ~dummy/bin/rshell
+
+   # Change user's shell
+   path=$(cd ~dummy; echo $(pwd)/bin/rshell)
+   chsh -s $path dummy
+
+This feature is experimental and I'm not exactly convinced that shell
+scrips are safe anough to be used as menu shells. Use your judgement
+if you really want to use method below.
+
 NOTES
 =====
 
