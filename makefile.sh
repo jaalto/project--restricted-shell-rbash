@@ -28,7 +28,11 @@ Warn ()
 
 Run ()
 {
-    ${test+echo} eval "$@"
+    if [ "$test" ]; then
+	echo "$*"
+    else
+	eval "$@"
+    fi
 }
 
 IsUser ()
@@ -163,7 +167,7 @@ Main ()
     touch  .ssh/authorized_keys
     echo "[NOTE] Add keys to $(pwd)/.ssh/authorized_keys"
     Run chown "$CHOWN" .ssh .ssh/*
-    Run chmod 0755 ssh
+    Run chmod 0755 .ossh
     Run chmod ugo-s .ssh
     Run chmod 0644 .ssh/*
 
