@@ -19,7 +19,7 @@ See
 <http://www.gnu.org/s/bash/manual/html_node/The-Restricted-Shell.html>.
 What is left to do is to provide a small set of configuration files to
 go with the account. The concept is pretty straight forward but it is
-tedious to type all the commadns. This project automates the steps to:
+tedious to type all the commands. This project automates the steps to:
 
 1. Create user account, if not yet exists. Set's shell to ``rbash``
 
