@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1121.1817"
+VERSION="2011.1121.1820"
 LICENCE="GPL-2+"
 COMMANDS=""
 
@@ -100,14 +100,16 @@ MakeRestrictedBin ()
     pwd=$(pwd)
     Run cd bin || exit 1
 
-    str=" in $(pwd)"
-    [ "$test" ] && str=""
-    Echo "[NOTE] Symlinking allowed commands$str"
+    if [ ! "$test" ]; then
+	Echo "Directory $(pwd)"
+    fi
 
     if [ "$initialize" ]; then
 	Echo "[NOTE] Removing previous commands"
-	Run rm -f *
+	Run rm --verbose -f *
     fi
+
+    Echo "[NOTE] Symlinking allowed commands"
 
     for cmd in $COMMANDS
     do
