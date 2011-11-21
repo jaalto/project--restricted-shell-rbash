@@ -59,10 +59,14 @@ CopyFiles ()
 {
     umask 022
 
+    cd "$CURDIR" || exit 1
+
     for elt in .[a-z]*
     do
+	# This directory may be in version control. Skip
+
 	case "$elt" in
-	    .git*) continue ;;
+	    .git* | .bzr* | .hg* | *.svn ) continue ;;
 	esac
 
 	if [ -d "$elt" ]; then
@@ -108,8 +112,6 @@ Main ()
 
     MakeUser "$LOGIN"
     MakeRestrictedBin
-
-    cd "$CURDIR" || return 1
     CopyFiles "$LOGIN"
 
     Run cd ~$LOGIN || return 1
