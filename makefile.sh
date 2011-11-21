@@ -81,13 +81,19 @@ Main ()
 
     Run chown root:root .bash* .ssh .ssh/environment
     Run chown root:root .
-    Run chmod 755 . .ssh
-    Run chmod 644 .bash* .ssh/*
+    Run chmod 0644 .bash* .ssh/*
+    Run chmod 0755  . .ssh
+    Run chmod ugo-s . .ssh
 
     umask 077
 
+    Run chown root:root .bash_history
+    Run chmod 0640 .bash_history
+    # Allow appending to the file
+    Run chattr +a .bash_history
+
     Run chown root:root .rhosts .shosts
-    chmod 600 .rhosts .shosts
+    Run chmod 0600 .rhosts .shosts
 }
 
 Main "$@"
