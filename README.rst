@@ -38,7 +38,7 @@ Check that everything looks good and make modifications as needed,
 like allowing only ssh key based access ::
 
     cd ~dummy
-    .... edit ~dummy/.ssh/authorize_keys
+    $EDITOR .ssh/authorize_keys
 
 MENU BASED SHELL
 ================
