@@ -20,7 +20,7 @@
 #	along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1121.1532"
+VERSION="2011.1121.1540"
 LICENCE="GPL-2+"
 COMMANDS=""
 
@@ -96,7 +96,7 @@ MakeRestrictedBin ()
 
     str=" in $(pwd)"
     [ "$test" ] && str=""
-    Echo "[NOTE] Allowed commands$str"
+    Echo "[NOTE] Symlinking allowed commands$str"
 
     for cmd in $COMMANDS
     do
@@ -154,22 +154,23 @@ CopyFiles ()
     done
 }
 
-MountWarning ()
+IsMount ()
 {
-    mount=$(mount | grep ":$HOMEROOT")
-
-    if [ "$mount" ]; then
-	Warn "WARN: Can't change attributes on NFS mount"
-	Warn "$mount"
-    fi
+    mount | grep "$1"
 }
 
 Chattr ()
 {
+    if [ ! "$test" ]; then
+	mount=$(Run IsMount ":$HOMEROOT")
+    fi
 
-    Run MountWarning
-    Echo "$(pwd)"
-    echo "chattr" "$@"
+    if [ "$mount" ]; then
+	Warn "WARN: chattr(1) will fail. Can't change attributes on NFS mount"
+	Warn "$mount"
+    fi
+
+    echo "cd ~$LOGIN ; chattr" "$@"
     Run chattr "$@"
 }
 
@@ -320,7 +321,6 @@ Main ()
     Run chmod 0755 .ssh
     Run chmod ugo-s .ssh
     Run chmod 0644 .ssh/*
-
 
     umask 077
 
