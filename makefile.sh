@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1121.1754"
+VERSION="2011.1121.1804"
 LICENCE="GPL-2+"
 COMMANDS=""
 
@@ -172,6 +172,7 @@ Chattr ()
 
     if [ "$mount" ]; then
 	Warn "WARN: chattr(1) will fail. Can't change attributes on NFS mount"
+	Warn "WARN: run the command manually on the host of $HOMEROOT"
 	Warn "$mount"
     fi
 
