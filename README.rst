@@ -10,12 +10,17 @@ are trying to somewhat contain trusted users. This project includes
 basic files and utility to create a dummy user that only can run
 commands of your choice.
 
+Project homepage (bugs and source) is at
+<http://freecode.com/projects/restricted-shell-rbash>.
+
 REQUIREMENTS
 ============
 
-This project is only for Linux systems with GNU tools. Don't try to
-use on SunOS Solaris etc. Depends on basic ``/bin/sh`` and standard
-utilities only.
+1. Environment: Linux only
+
+2. Build: Perl and standard GNU make
+
+3. Run: POSIX ``/bin/sh`` and GNU command line programs
 
 USAGE
 =====
