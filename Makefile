@@ -200,7 +200,9 @@ install-bin:
 		$(INSTALL_BIN) $$f $(BINDIR)/$$dest; \
 	done
 	# Update path
-	sed --in-place "s,%PROGRAM,$(LIBDIR)/$(LIBPRG)," $(BINDIR)/$(NAME)
+	sed --in-place \
+		-e "s,%PROGRAM,$(LIBDIR)/$(LIBPRG)," $(BINDIR)/$(NAME)
+		-e "s,$(DESTDIR),,"
 
 # Rule: install - Standard install
 install: install-bin install-lib install-man install-doc
