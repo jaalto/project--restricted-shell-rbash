@@ -153,12 +153,20 @@ Main ()
 
     Run cd ~$LOGIN || return 1
 
-    Run chown "$CHOWN" .bash* .ssh .ssh/environment
     Run chown "$CHOWN" .
-    Run chmod 0644 .bash* .ssh/*
     Run chmod 0750 .
+    Run chmod ugo-s .
+
+    Run chown "$CHOWN" .bash*
+    Run chmod 0644 .bash*
+
+    touch  .ssh/authorized_keys
+    echo "[NOTE] Add keys to $(pwd)/.ssh/authorized_keys"
+    Run chown "$CHOWN" .ssh .ssh/*
     Run chmod 0755 ssh
-    Run chmod ugo-s . .ssh
+    Run chmod ugo-s .ssh
+    Run chmod 0644 .ssh/*
+
 
     umask 077
 
