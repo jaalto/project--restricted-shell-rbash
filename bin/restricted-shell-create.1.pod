@@ -64,6 +64,20 @@ using full path name.
 
 The mount directory of system home. Defaults to /home.
 
+=item B<-D, --debug>
+
+Activate shell debug.
+
+=item B<-f, --force>
+
+Allow destructive changes, like overwriting files while copying
+bash startup to user's home directory.
+
+=item B<-g, --group>
+
+If provided, passed to B<usedadd(1)> command if user does not
+exist.
+
 =item B<-h, --help>
 
 Display short help.
@@ -103,13 +117,26 @@ ssh(1) but don't actually do anything:
 
     restricted-shell-create --test dummy date ls ssh
 
+Same, but clean all other command that user may have had access
+to from last setup:
+
+    restricted-shell-create --test --init dummy date ls ssh
+
+Overwrite account files while creating the restricted shell
+environment:
+
+    restricted-shell-create --force --init dummy date ls ssh
+
 =head1 ENVIRONMENT
 
 None.
 
 =head1 FILES
 
-None.
+Directory C</ust/share/restricted-shell-rbash> contains template
+field. These are not user editable as they are overwritten by
+next install. If you want to supply your own, copy them over to
+user directory after this program.
 
 =head1 STANDARDS
 
