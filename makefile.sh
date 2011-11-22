@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1122.1530"
+VERSION="2011.1122.1533"
 LICENCE="GPL-2+"
 
 CURDIR=$( cd $(dirname $0) ; pwd )
@@ -149,7 +149,7 @@ MakeRestrictedBin ()
 	Run rm $verbose -f *
     fi
 
-    Echo "NOTE: Symlinking allowed commands"
+    Echo "Symlinking allowed commands"
 
     for cmd in $COMMANDS
     do
@@ -190,6 +190,8 @@ CopyFiles ()
     umask 022
 
     cd "$CURDIR" || exit 1
+
+    Echo "Copyring setup files"
 
     for elt in .[a-z]*
     do
