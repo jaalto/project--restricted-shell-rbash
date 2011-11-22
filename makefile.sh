@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1122.1443"
+VERSION="2011.1122.1512"
 LICENCE="GPL-2+"
 
 CURDIR=$( cd $(dirname $0) ; pwd )
@@ -100,16 +100,29 @@ IsRoot ()
 
 IsUser ()
 {
-    getent passwd "$1" > /dev/null 2>&1
+    getent passwd "$1" 2> /dev/null
+}
+
+UserShell ()
+{
+    [ "$1" ] || return 2
+    IsUser "$1" | awk -F: '{ print $(NF) }'
 }
 
 MakeUser ()
 {
-    if IsUser "$1" ; then
-	Echo "Not touching existing account '$1'." \
-	     "Set shell manually with: chsh --shell $RSHELL"
+    if IsUser "$1" > /dev/null ; then
+	Echo "NOTE: Not touching existing account '$1'."
+
+	str=$(UserShell $1)
+
+	if Match "*rbash" "$str"; then
+	    Echo "Good, login shell of user '$1' is $str"
+	else
+	    "Run manually: chsh --shell $RSHELL $1"
+	fi
     else
-	Echo "[NOTE] Adding user 'S1'"
+	Echo "NOTE: Adding user 'S1'"
 
 	Run useradd \
 	    ${USERGROUP+--group $USERGROUP} \
@@ -125,19 +138,18 @@ MakeRestrictedBin ()
     Run install --directory --mode=755 bin
     Run chown "$CHOWN" bin
 
-    cwd=$(pwd)
     Run cd bin || exit 1
 
     if [ ! "$test" ]; then
-	Echo "Directory $cwd"
+	Echo "Directory $(pwd)"
     fi
 
     if [ "$initialize" ]; then
-	Echo "[NOTE] Removing previous commands"
+	Echo "NOTE: Removing previous commands"
 	Run rm $verbose -f *
     fi
 
-    Echo "[NOTE] Symlinking allowed commands"
+    Echo "NOTE: Symlinking allowed commands"
 
     for cmd in $COMMANDS
     do
@@ -385,7 +397,7 @@ Main ()
     cwd=
     [ "$test" ] || cwd="$(pwd)/"
 
-    Echo "[NOTE] Add keys to $cwd.ssh/authorized_keys"
+    Echo "NOTE: Add keys to $cwd.ssh/authorized_keys"
 
     Run chown "$CHOWN" .ssh .ssh/*
     Run chmod 0755 .ssh

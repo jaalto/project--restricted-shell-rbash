@@ -16,6 +16,8 @@
 	(DieIfOption): New.
 	(CopyFiles): Add check for existing files.
 	(Main): Add options --debug, --force, --group.
+	(UserShell): New.
+	(MakeUser): Check mand match user shell against rbash.
 
 2011-11-21  Jari Aalto  <jari.aalto@cante.net>
 
