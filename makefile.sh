@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1121.1820"
+VERSION="2011.1122.1420"
 LICENCE="GPL-2+"
 COMMANDS=""
 
@@ -37,10 +37,26 @@ CHOWN=root:root
 unset test
 unset verbose
 unset initialize
+unset force
+
+Match ()
+{
+    case "$2" in
+	$1) return 0
+	    ;;
+	*)  return 1
+	    ;;
+    esac
+}
+
+IsOption ()
+{
+    Match -* "$1"
+}
 
 Echo ()
 {
-    echo "# $*"
+    [ "$verbose" ] && echo "# $*"
 }
 
 Warn ()
@@ -54,6 +70,14 @@ Die ()
     exit 1
 }
 
+DieIfOption ()
+{
+    if Match "-*" $1 ; then
+	shift
+	Die "ERROR: $*"
+    fi
+}
+
 Run ()
 {
     if [ "$test" ]; then
@@ -63,15 +87,11 @@ Run ()
     fi
 }
 
-Match ()
+DropTrailingSlash ()
 {
-    case "$2" in
-	$1) return 0
-	    ;;
-	*)  return 1
-	    ;;
-    esac
+    echo "$1" | sed "s,/$,,"
 }
+
 
 IsRoot ()
 {
@@ -85,10 +105,14 @@ IsUser ()
 
 MakeUser ()
 {
-    if ! IsUser "$1" ; then
-	# Don't use -m option because it would copy skeleton files.
-	Run useradd -d "$HOMEROOT/dummy" -s "$RSHELL" "$1"
-	Run mkdir -p "$HOMEROOT/$1"
+    if IsUser "$1" ; then
+	Echo "Not touching existing account '$1'." \
+	     "Set shell manually with: chsh -s $RSHELL"
+    else
+	Echo "[NOTE] Adding user 'S1'"
+
+	Run useradd --home "$HOMEROOT/$1" --shell "$RSHELL" "$1"
+	Run mkdir --parents "$HOMEROOT/$1"
     fi
 }
 
@@ -106,7 +130,7 @@ MakeRestrictedBin ()
 
     if [ "$initialize" ]; then
 	Echo "[NOTE] Removing previous commands"
-	Run rm --verbose -f *
+	Run rm $verbose -f *
     fi
 
     Echo "[NOTE] Symlinking allowed commands"
@@ -127,7 +151,7 @@ MakeRestrictedBin ()
 		;;
 	esac
 
-	[ "$path" ] && Run ln --verbose --force -s "$path" "$cmd"
+	[ "$path" ] && Run ln $verbose --force -s "$path" "$cmd"
     done
 
     cd "$pwd" || exit 1
@@ -159,10 +183,18 @@ CopyFiles ()
 	    .git* | .bzr* | .hg* | *.svn ) continue ;;
 	esac
 
+	if [ ! "$test" ]; then
+	    if [ "$force" ]; then
+		:   # Skip
+	    elif [ -d ~"$1/$elt" ] || [ -f ~"$1/$elt" ] ; then
+		Die "ERROR: Abort. Not overwriting without --force file: $elt"
+	    fi
+	fi
+
 	if [ -d "$elt" ]; then
-	    Run cp --verbose -r "$elt" ~"$1"/
+	    Run cp $verbose --recursive "$elt" ~"$1"/
 	else
-	    Run cp --verbose "$elt" ~"$1"/
+	    Run cp $verbose "$elt" ~"$1"/
 	fi
     done
 }
@@ -200,7 +232,18 @@ DESCRIPTION
 	script.
 
 OPTIONS
-	See manual page for complete set of options.
+	See manual page for complete set of options. An exerpt:
+
+	-D, --debug
+	    Activate shell debug option (set -x).
+
+	-f, --force
+	    Allow destructive changes, like overwriting files.
+
+	-i, --init
+	    Clean initialization. Delete all previous commands from user's
+	    bin/ directory before creating suymlinks to the allowed
+	    commands.
 
 	-t, --test
 	    Show what commands would be run. Do not actually do anything.
@@ -221,61 +264,68 @@ Main ()
 
     while :
     do
-	case "$1" in
-	    -d | --homeroot)
-		shift
-		HOMEROOT="$1"
-		if Match -* $HOMEROOT ; then
-		    Die "ERROR --homeroot looks like option: $HOMEROOT"
-		fi
+	  case "$1" in
+	      -d | --homeroot)
+		  shift
+		  HOMEROOT="$1"
+		  DieIfOption $HOMEROOT "--homeroot looks like an option: $HOMEROOT"
+		  shift
+		  ;;
+	      -D | --debug)
+		   set -x
+		   ;;
+	      -f | --force)
+		  shift
+		  force="force"
+		  ;;
+	      -g | --group)
+		  shift
+		  USERGROUP="$1"
+		  DieIfOption $USERGROUP "--group looks like an option: $USERGROUP"
+		  shift
+		  ;;
+	      -h | --help)
+		  shift
+		  Help
+		  return 0
+		  ;;
+	      -i | --init)
+		  shift
+		  initialize="initialize"
+		  ;;
+	      -o | --chown)
+			  shift
+			  CHOWN="$1"
+			  DieIfOption $CHOWN "--chown looks like an option: $CHOWN"
+			  shift
+			  ;;
+	      -s | --shell)
+			  shift
+			  RSHELL="$1"
+			  DieIfOption $RSHELL "--shell looks like an option: $RSHELL"
+			  shift
+			  ;;
+	      -t | --test)
+			  shift
+			  test="test"
+			  ;;
+	      -v | --verbose)
+			  shift
+			  verbose="--verbose"
+			  ;;
+	      -V | --version)
+			  shift
+			  Version
+			  return 0
+		  ;;
+	       -*)
+		Warn "[WARN] Unknown option: $1"
 		shift
 		;;
-	    -h | --help)
-		shift
-		Help
-		return 0
-		;;
-	    -i | --init)
-		shift
-		initialize="initialize"
-		;;
-	    -o | --chown)
-		shift
-		CHOWN="$1"
-		if Match -* $CHOWN ; then
-		    Die "ERROR --chown looks like option: $CHOWN"
-		fi
-		shift
-		;;
-	    -s | --shell)
-		shift
-		RSHELL="$1"
-		if Match -* $RSHELL ; then
-		    Die "ERROR --shell looks like option: $RSHELL"
-		fi
-		shift
-		;;
-	    -t | --test)
-		shift
-		test="test"
-		;;
-	    -v | --verbose)
-		shift
-		verbose="verbose"
-		;;
-	    -V | --version)
-		shift
-		Version
-		return 0
-		;;
-	     -*)
-		Warn "[WARN] Unknown option: $1" >&2
-		shift
-		;;
-	      *)
+		*)
 		break
 		;;
-	esac
+	  esac
     done
 
     LOGIN="$1"
@@ -295,16 +345,18 @@ Main ()
     if [ ! "$RSHELL" ]; then
 	Die "ERROR: --shell program not set"
     elif [ ! -x "$RSHELL" ]; then
-	Die "ERROR: --shell program does not exists: $RSELL"
+	Die "ERROR: --shell program does not exist: $RSELL"
     fi
 
     if ! Match "*:*" $CHOWN ; then
-	Die "ERROR --chown is not in format user:group => $CHOWN"
+	Die "ERROR: --chown is not in format user:group => $CHOWN"
     fi
 
     if ! Match "/*" $HOMEROOT ; then
-	Die "ERROR --homeroot is not an absolute path: $HOMEROOT"
+	Die "ERROR: --homeroot is not an absolute path: $HOMEROOT"
     fi
+
+    HOMEROOT=$( DropTrailingSlash $HOMEROOT )
 
     if [ "$1" ]; then
 	COMMANDS="$*"
