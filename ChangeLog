@@ -18,6 +18,8 @@
 	(Main): Add options --debug, --force, --group.
 	(UserShell): New.
 	(MakeUser): Check mand match user shell against rbash.
+	(HOMEPAGE): New.
+	(LICENSE): Fix typo in variable name. Corrects --version option.
 
 2011-11-21  Jari Aalto  <jari.aalto@cante.net>
 

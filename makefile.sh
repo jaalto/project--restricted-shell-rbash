@@ -25,8 +25,9 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1122.1533"
-LICENCE="GPL-2+"
+VERSION="2011.1122.1817"
+LICENSE="GPL-2+"
+HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
 CURDIR=$( cd $(dirname $0) ; pwd )
 HOMEROOT=/home
@@ -273,7 +274,7 @@ OPTIONS
 
 Version ()
 {
-    echo "$VERSION $LICENSE $AUTHOR $URL"
+    echo "$VERSION $LICENSE $AUTHOR $HOMEPAGE"
 }
 
 Main ()
