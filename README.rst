@@ -64,17 +64,16 @@ Simply copy files in this project somewhere and read usage ::
     ./makefile.sh --help
 
 Select a user to create (or an existing user), who will be locked. To
-see what command would be run, make a test run ::
+see what would happen, test all first ::
 
-   ./makefile.sh --test dummy
+   ./makefile.sh --test dummy date ls ssh
 
-If all looks good, switch to *root* and supply list of commands you
-want user to be able to run ::
+If all looks good, switch to *root* and create a real account:
 
    ./makefile.sh dummy date ls ssh
 
-Check that everything looks good and make modifications as needed,
-like allowing only ssh key based access ::
+Make your personal modifications as needed, like allowing only ssh key
+based access ::
 
     cd ~dummy
     $EDITOR .ssh/authorize_keys
@@ -86,12 +85,13 @@ A popular Perl based menu shell is available at
 <http://freecode.com/projects/pshell>. The implementation below does
 not require Perl and additional modules, just plain ``/bin/sh``.
 
-This feature is experimental and I'm not exactly convinced that shell
-scrips are safe enough to be used as menu shells. Use your judgement
-if you really want to use method below.
+The followgin feature is experimental and provided only as an idea.
+I'm not exactly convinced that a shell script is safe enough to be
+used as a menu shell. Use your judgement if you really want to use the
+method below.
 
-Directory ``bin/`` contains a very simple menu based script that
-allows running only selected commands. You could use it instead of
+Directory ``bin/`` contains a very simple menu shell script that
+allows running only defined commands. You could use it instead of
 previous ``rbash`` approach by setting user's shell to the script ::
 
    # Create user and needed files
@@ -100,11 +100,11 @@ previous ``rbash`` approach by setting user's shell to the script ::
    # Install command menu based "restricted shell"
    install -D -m 700 bin/rshell.sh ~dummy/bin/rshell
 
-   # Edit commands in Main() case-statement
+   # Edit commands in case-statement of Main() function
    $EDITOR ~dummy/bin/rshell
 
    # Change user's shell
-   chsh -s $(cd ~dummy; echo $(pwd)/bin/rshell) dummy
+   chsh --shell $(cd ~dummy; echo $(pwd)/bin/rshell) dummy
 
 REFERENCES
 ==========
