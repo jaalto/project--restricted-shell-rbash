@@ -159,13 +159,21 @@ txt: doc/manual/index.txt
 # Rule: doc - Generate or update all documentation
 doc: man html txt
 
-# Rule: pod-test - Check POD syntax
-pod-test:
-	# pod-test - Check POD syntax
+# Rule: test-shell - Check SH file syntaxes
+test-shell:
+	# test-shell - Check SH file syntaxes
+	@for file in $$(find . -name "*.sh"); \
+	do \
+	    sh -nx "$$file"; \
+	done
+
+# Rule: test-pod - Check POD syntax
+test-pod:
+	# test-pod - Check POD syntax
 	podchecker bin/*.pod
 
 # Rule: test - Run tests
-test: pod-test
+test: test-pod test-shell
 
 install-doc:
 	# install-doc - Install documentation
@@ -216,7 +224,7 @@ install-test:
 
 .PHONY: clean distclean realclean
 .PHONY: install install-bin install-lib install-man
-.PHONY: all man doc test install-test pod-test
+.PHONY: all man doc test install-test test-pod
 .PHONY: dist dist-git dist-ls ls
 
 # End of file
