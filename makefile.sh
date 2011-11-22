@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1122.1439"
+VERSION="2011.1122.1441"
 LICENCE="GPL-2+"
 
 CURDIR=$( cd $(dirname $0) ; pwd )
@@ -95,7 +95,7 @@ DropTrailingSlash ()
 
 IsRoot ()
 {
-    [ "$(id -u -n)" = "root" ]
+    [ "$(id --user --name)" = "root" ]
 }
 
 IsUser ()
