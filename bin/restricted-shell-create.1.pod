@@ -56,6 +56,15 @@ that has direct access to the user's home; not on a host that NFS
 mounts /home. The allowed commands must be on PATH or written
 using full path name.
 
+Remember that the acocunt is only as secure as your choice of
+commands. Don't let anyone run commands that would allow escaping
+to a shell. Like editors (emacs, vi) or mail programs (mutt) etc.
+
+For a real hard security, remember: "Honestly a restricted shells
+are depreciated, you should be using tools such as apparmor,
+selinux, grsecurity or virtualization as it is rather trivial to
+break out of rbash."
+
 =head1 OPTIONS
 
 =over 4
