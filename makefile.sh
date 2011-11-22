@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1122.1512"
+VERSION="2011.1122.1530"
 LICENCE="GPL-2+"
 
 CURDIR=$( cd $(dirname $0) ; pwd )
@@ -61,7 +61,7 @@ Echo ()
 
 Warn ()
 {
-    Echo "$*" >&2
+    echo "# $*" >&2
 }
 
 Die ()
