@@ -1,3 +1,22 @@
+2011-11-22  Jari Aalto  <jari.aalto@cante.net>
+
+	* Makefile (test-pod): Rename target from pod-test.
+	(test-shell): New.
+
+	* bin/restricted-shell-create.1.pod: Add options --debug,
+	--force, --init.
+
+	* makefile.sh (CHOWN): Display message if existing user found.
+	(Echo): Check $verbose before displaying message.
+	(Main): Fix typo near RSHELL check.
+	(MakeRestrictedBin): Respect $verbose.
+	(MakeUser): Fix serious error in useradd(1) call where -d option
+	didn't use $1 argument (the user). Use long option names.
+	(DropTrailingSlash): New.
+	(DieIfOption): New.
+	(CopyFiles): Add check for existing files.
+	(Main): Add options --debug, --force.
+
 2011-11-21  Jari Aalto  <jari.aalto@cante.net>
 
 	* GENERAL: Make project public through Github.
