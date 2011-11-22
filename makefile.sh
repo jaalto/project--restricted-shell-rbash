@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1122.1441"
+VERSION="2011.1122.1443"
 LICENCE="GPL-2+"
 
 CURDIR=$( cd $(dirname $0) ; pwd )
@@ -107,7 +107,7 @@ MakeUser ()
 {
     if IsUser "$1" ; then
 	Echo "Not touching existing account '$1'." \
-	     "Set shell manually with: chsh -s $RSHELL"
+	     "Set shell manually with: chsh --shell $RSHELL"
     else
 	Echo "[NOTE] Adding user 'S1'"
 
@@ -116,13 +116,13 @@ MakeUser ()
 	    --home "$HOMEROOT/$1" \
 	    --shell "$RSHELL" "$1"
 
-	Run mkdir --parents "$HOMEROOT/$1"
+	Run install --directory --mode=750 "$HOMEROOT/$1"
     fi
 }
 
 MakeRestrictedBin ()
 {
-    Run install -d -m 755 bin
+    Run install --directory --mode=755 bin
     Run chown "$CHOWN" bin
 
     cwd=$(pwd)
@@ -239,7 +239,7 @@ OPTIONS
 	See manual page for complete set of options. An exerpt:
 
 	-D, --debug
-	    Activate shell debug option (set -x).
+	    Activate shell debug option.
 
 	-f, --force
 	    Allow destructive changes, like overwriting files.
