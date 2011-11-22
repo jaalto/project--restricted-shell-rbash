@@ -25,15 +25,15 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1122.1433"
+VERSION="2011.1122.1439"
 LICENCE="GPL-2+"
-COMMANDS=""
 
 CURDIR=$( cd $(dirname $0) ; pwd )
 HOMEROOT=/home
 RSHELL=/bin/rbash
 CHOWN=root:root
-
+unset COMMANDS
+unset USERGROUP
 unset test
 unset verbose
 unset initialize
@@ -111,7 +111,11 @@ MakeUser ()
     else
 	Echo "[NOTE] Adding user 'S1'"
 
-	Run useradd --home "$HOMEROOT/$1" --shell "$RSHELL" "$1"
+	Run useradd \
+	    ${USERGROUP+--group $USERGROUP} \
+	    --home "$HOMEROOT/$1" \
+	    --shell "$RSHELL" "$1"
+
 	Run mkdir --parents "$HOMEROOT/$1"
     fi
 }
@@ -121,11 +125,11 @@ MakeRestrictedBin ()
     Run install -d -m 755 bin
     Run chown "$CHOWN" bin
 
-    pwd=$(pwd)
+    cwd=$(pwd)
     Run cd bin || exit 1
 
     if [ ! "$test" ]; then
-	Echo "Directory $(pwd)"
+	Echo "Directory $cwd"
     fi
 
     if [ "$initialize" ]; then
@@ -151,10 +155,10 @@ MakeRestrictedBin ()
 		;;
 	esac
 
-	[ "$path" ] && Run ln $verbose --force -s "$path" "$cmd"
+	[ "$path" ] && Run ln $verbose --force --symbolic "$path" "$cmd"
     done
 
-    cd "$pwd" || exit 1
+    cd "$cwd" || exit 1
 }
 
 SetPath ()
@@ -348,7 +352,7 @@ Main ()
 	Die "ERROR: --shell program does not exist: $RSELL"
     fi
 
-    if ! Match "*:*" $CHOWN ; then
+    if ! Match "*[a-z]:[a-z]*" $CHOWN ; then
 	Die "ERROR: --chown is not in format user:group => $CHOWN"
     fi
 
@@ -378,10 +382,10 @@ Main ()
 
     touch  .ssh/authorized_keys
 
-    dummy=$(pwd)/
-    [ "$test" ] && dummy=""
+    cwd=
+    [ "$test" ] || cwd="$(pwd)/"
 
-    Echo "[NOTE] Add keys to $dummy.ssh/authorized_keys"
+    Echo "[NOTE] Add keys to $cwd.ssh/authorized_keys"
 
     Run chown "$CHOWN" .ssh .ssh/*
     Run chmod 0755 .ssh
