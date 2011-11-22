@@ -15,7 +15,7 @@
 	(DropTrailingSlash): New.
 	(DieIfOption): New.
 	(CopyFiles): Add check for existing files.
-	(Main): Add options --debug, --force.
+	(Main): Add options --debug, --force, --group.
 
 2011-11-21  Jari Aalto  <jari.aalto@cante.net>
 
