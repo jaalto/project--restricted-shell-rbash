@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1122.1420"
+VERSION="2011.1122.1433"
 LICENCE="GPL-2+"
 COMMANDS=""
 
@@ -264,65 +264,65 @@ Main ()
 
     while :
     do
-	  case "$1" in
-	      -d | --homeroot)
-		  shift
-		  HOMEROOT="$1"
-		  DieIfOption $HOMEROOT "--homeroot looks like an option: $HOMEROOT"
-		  shift
-		  ;;
-	      -D | --debug)
-		   set -x
-		   ;;
-	      -f | --force)
-		  shift
-		  force="force"
-		  ;;
-	      -g | --group)
-		  shift
-		  USERGROUP="$1"
-		  DieIfOption $USERGROUP "--group looks like an option: $USERGROUP"
-		  shift
-		  ;;
-	      -h | --help)
-		  shift
-		  Help
-		  return 0
-		  ;;
-	      -i | --init)
-		  shift
-		  initialize="initialize"
-		  ;;
-	      -o | --chown)
-			  shift
-			  CHOWN="$1"
-			  DieIfOption $CHOWN "--chown looks like an option: $CHOWN"
-			  shift
-			  ;;
-	      -s | --shell)
-			  shift
-			  RSHELL="$1"
-			  DieIfOption $RSHELL "--shell looks like an option: $RSHELL"
-			  shift
-			  ;;
-	      -t | --test)
-			  shift
-			  test="test"
-			  ;;
-	      -v | --verbose)
-			  shift
-			  verbose="--verbose"
-			  ;;
-	      -V | --version)
-			  shift
-			  Version
-			  return 0
-		  ;;
-	       -*)
+	case "$1" in
+	    -d | --homeroot)
+		shift
+		HOMEROOT="$1"
+		DieIfOption $HOMEROOT "--homeroot looks like an option: $HOMEROOT"
+		shift
+		;;
+	    -D | --debug)
+		set -x
+		;;
+	    -f | --force)
+		shift
+		force="force"
+		;;
+	    -g | --group)
+		shift
+		USERGROUP="$1"
+		DieIfOption $USERGROUP "--group looks like an option: $USERGROUP"
+		shift
+		;;
+	    -h | --help)
+		shift
+		Help
+		return 0
+		;;
+	    -i | --init)
+		shift
+		initialize="initialize"
+		;;
+	    -o | --chown)
+		shift
+		CHOWN="$1"
+		DieIfOption $CHOWN "--chown looks like an option: $CHOWN"
+		shift
+		;;
+	    -s | --shell)
+		shift
+		RSHELL="$1"
+		DieIfOption $RSHELL "--shell looks like an option: $RSHELL"
+		shift
+		;;
+	    -t | --test)
+		shift
+		test="test"
+		;;
+	    -v | --verbose)
+		shift
+		verbose="--verbose"
+		;;
+	    -V | --version)
+		shift
+		Version
+		return 0
+		;;
+	     -*)
 		Warn "[WARN] Unknown option: $1"
 		shift
 		;;
-		*)
+	      *)
 		break
 		;;
 	  esac
