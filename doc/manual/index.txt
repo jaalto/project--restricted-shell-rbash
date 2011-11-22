@@ -3,21 +3,36 @@ NAME
     rbash
 
 SYNOPSIS
-      restricted-shell-create [options] <login name> [allowed commands]
+      restricted-shell-create [options] <login name> <list of allowed commands>
 
 DESCRIPTION
-    Script to create a restricted shell environment using /bin/rbash.
-    Creates a LOGIN NAME if it does not exists.
+    Program to create a restricted shell environment using "/bin/rbash".
+    Creates a LOGIN NAME if it does not exist.
 
     Program can only be run by root and it must be run on a host, that has
     direct access to the user's home; not on a host that NFS mounts /home.
+    The allowed commands must be on PATH or written using full path name.
 
 OPTIONS
     -d, --homeroot
         The mount directory of system home. Defaults to /home.
 
+    -D, --debug
+        Activate shell debug.
+
+    -f, --force
+        Allow destructive changes, like overwriting files while copying bash
+        startup to user's home directory.
+
+    -g, --group
+        If provided, passed to usedadd(1) command if user does not exist.
+
     -h, --help
         Display short help.
+
+    -i, --init
+        Clean initialization. Delete all previous commands from user's
+        "bin/" directory before creating suymlinks to the allowed commands.
 
     -o, --chown USER:GROUP
         Set permissions to USER:GROUP. Defaults to root:root.
@@ -26,7 +41,7 @@ OPTIONS
         Set PROGRAM to user's --user shell. Defualts to "/bin/rbash".
 
     -t, --test
-        Show commands to run. Do not actually do anything.
+        Show what commands would be run. Do not actually do anything.
 
     -v, --verbose
         Be verbose.
@@ -35,19 +50,28 @@ OPTIONS
         Display version information.
 
 EXAMPLES
-    Create user dummy, but don't actaully do anything:
+    Create user dummy, allow it to run commands date(1), ls(1) and ssh(1)
+    but don't actually do anything:
 
-        restricted-shell-create --test dummy
+        restricted-shell-create --test dummy date ls ssh
 
-    Create user dummy, which is allowed to run command: date, ls, ssh
+    Same, but clean all other command that user may have had access to from
+    last setup:
 
-        restricted-shell-create dummy date ls ssh
+        restricted-shell-create --test --init dummy date ls ssh
+
+    Overwrite account files while creating the restricted shell environment:
+
+        restricted-shell-create --force --init dummy date ls ssh
 
 ENVIRONMENT
     None.
 
 FILES
-    None.
+    Directory "/ust/share/restricted-shell-rbash" contains template field.
+    These are not user editable as they are overwritten by next install. If
+    you want to supply your own, copy them over to user directory after this
+    program.
 
 STANDARDS
     None.

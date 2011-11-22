@@ -43,16 +43,17 @@
 <hr />
 <h1><a name="synopsis">SYNOPSIS</a></h1>
 <pre>
-  restricted-shell-create [options] &lt;login name&gt; [allowed commands]</pre>
+  restricted-shell-create [options] &lt;login name&gt; &lt;list of allowed commands&gt;</pre>
 <p>
 </p>
 <hr />
 <h1><a name="description">DESCRIPTION</a></h1>
-<p>Script to create a restricted shell environment using /bin/rbash.
-Creates a LOGIN NAME if it does not exists.</p>
+<p>Program to create a restricted shell environment using
+<code>/bin/rbash</code>. Creates a LOGIN NAME if it does not exist.</p>
 <p>Program can only be run by root and it must be run on a host,
 that has direct access to the user's home; not on a host that NFS
-mounts /home.</p>
+mounts /home. The allowed commands must be on PATH or written
+using full path name.</p>
 <p>
 </p>
 <hr />
@@ -63,10 +64,34 @@ mounts /home.</p>
 <dd>
 <p>The mount directory of system home. Defaults to /home.</p>
 </dd>
+<dt><strong><a name="d_debug" class="item"><strong>-D, --debug</strong></a></strong></dt>
+
+<dd>
+<p>Activate shell debug.</p>
+</dd>
+<dt><strong><a name="f_force" class="item"><strong>-f, --force</strong></a></strong></dt>
+
+<dd>
+<p>Allow destructive changes, like overwriting files while copying
+bash startup to user's home directory.</p>
+</dd>
+<dt><strong><a name="g_group" class="item"><strong>-g, --group</strong></a></strong></dt>
+
+<dd>
+<p>If provided, passed to <strong>usedadd(1)</strong> command if user does not
+exist.</p>
+</dd>
 <dt><strong><a name="h_help" class="item"><strong>-h, --help</strong></a></strong></dt>
 
 <dd>
 <p>Display short help.</p>
+</dd>
+<dt><strong><a name="i_init" class="item"><strong>-i, --init</strong></a></strong></dt>
+
+<dd>
+<p>Clean initialization. Delete all previous commands from user's
+<code>bin/</code> directory before creating suymlinks to the allowed
+commands.</p>
 </dd>
 <dt><strong><a name="o_chown_user_group" class="item"><strong>-o, --chown USER:GROUP</strong></a></strong></dt>
 
@@ -81,7 +106,7 @@ mounts /home.</p>
 <dt><strong><a name="t_test" class="item"><strong>-t, --test</strong></a></strong></dt>
 
 <dd>
-<p>Show commands to run. Do not actually do anything.</p>
+<p>Show what commands would be run. Do not actually do anything.</p>
 </dd>
 <dt><strong><a name="v_verbose" class="item"><strong>-v, --verbose</strong></a></strong></dt>
 
@@ -98,12 +123,18 @@ mounts /home.</p>
 </p>
 <hr />
 <h1><a name="examples">EXAMPLES</a></h1>
-<p>Create user dummy, but don't actaully do anything:</p>
+<p>Create user dummy, allow it to run commands <code>date(1)</code>, <code>ls(1)</code> and
+<code>ssh(1)</code> but don't actually do anything:</p>
 <pre>
-    restricted-shell-create --test dummy</pre>
-<p>Create user dummy, which is allowed to run command: date, ls, ssh</p>
+    restricted-shell-create --test dummy date ls ssh</pre>
+<p>Same, but clean all other command that user may have had access
+to from last setup:</p>
 <pre>
-    restricted-shell-create dummy date ls ssh</pre>
+    restricted-shell-create --test --init dummy date ls ssh</pre>
+<p>Overwrite account files while creating the restricted shell
+environment:</p>
+<pre>
+    restricted-shell-create --force --init dummy date ls ssh</pre>
 <p>
 </p>
 <hr />
@@ -113,7 +144,10 @@ mounts /home.</p>
 </p>
 <hr />
 <h1><a name="files">FILES</a></h1>
-<p>None.</p>
+<p>Directory <code>/ust/share/restricted-shell-rbash</code> contains template
+field. These are not user editable as they are overwritten by
+next install. If you want to supply your own, copy them over to
+user directory after this program.</p>
 <p>
 </p>
 <hr />
