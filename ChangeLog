@@ -4,7 +4,7 @@
 
 	* makefile.sh (Main): set permissions of .ssh/authorized_keys
 	and .ssh/id* files. Add section breaks and move code
-	into logical blocks.
+	into logical blocks. If COMMANDS is empty, warn, not die.
 
 	* bin/restricted-shell-create.1.pod: Start entences with
 	capital letter.

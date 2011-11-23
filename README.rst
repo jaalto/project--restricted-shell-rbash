@@ -70,8 +70,8 @@ previous ``rbash`` approach by setting user's shell to the script.
 This script is experimental and provided "as is". Use your judgement
 if you want to use this approach ::
 
-   # Create user and needed files
-   ./makefile.sh dummy date
+   # Create user "dummy"
+   ./makefile.sh dummy
 
    # Install command menu based "restricted shell"
    install -D -m 700 bin/rshell.sh ~dummy/bin/rshell
