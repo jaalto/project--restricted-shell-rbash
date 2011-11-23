@@ -8,7 +8,7 @@
 
 	* bin/restricted-shell-create.1.pod: Start entences with
 	capital letter.
-	(EXAMPLES): Mention authorized_keys.
+	(EXAMPLES): Mention authorized_keys. Add svn+ssh use case.
 
 2011-11-22  Jari Aalto  <jari.aalto@cante.net>
 
