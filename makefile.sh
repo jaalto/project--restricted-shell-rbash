@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1123.1838"
+VERSION="2011.1123.1839"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -136,7 +136,7 @@ MakeUser ()
 
 MakeRestrictedBin ()
 {
-    Run install --directory --mode=755 bin
+    Run install --directory --mode=750 bin
     Run chown "$CHOWN" bin
 
     Run cd bin || exit 1
