@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1123.1834"
+VERSION="2011.1123.1836"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -425,12 +425,12 @@ Main ()
 
     Run touch  .ssh/authorized_keys
 
-    od file in .ssh/authorized_keys .ssh/id*
+    for file in .ssh/authorized_keys .ssh/id*
     do
 	[ -f "$file" ] && Run chmod 0600 "$elt"
     done
 
-    Rrn chown "$CHOWN" .shosts
+    Run chown "$CHOWN" .shosts
     Run chmod 0600 .shosts
 
     # .... other ..........................................................
