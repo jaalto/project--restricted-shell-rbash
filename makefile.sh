@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1123.1849"
+VERSION="2011.1123.2134"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -369,7 +369,7 @@ Main ()
     if [ "$1" ]; then
 	COMMANDS="$*"
     else
-	Die "ERROR: Which commands to allow user '$LOGIN' to run?"
+	Warn "WARN: list of commands not given for '$LOGIN' to run"
     fi
 
     if [ ! "$RSHELL" ]; then
