@@ -144,6 +144,9 @@ log in to the account by using public key authentication ::
     cd ~dummy
     $EDITOR .ssh/authorize_keys
 
+    # OR, append key to the host remotedly
+    cat ~/.ssh/key.pub | ssh -l root HOST "cd ~dummy; cat >> .ssh/authorized_keys"
+
 =head1 ENVIRONMENT
 
 None.
