@@ -86,13 +86,6 @@ previous ``rbash`` approach by setting user's shell to the script ::
    # Change user's shell
    chsh --shell $(cd ~dummy; echo $(pwd)/bin/rshell) dummy
 
-REFERENCES
-==========
-
-Please read article
-http://www.symantec.com/connect/articles/restricting-unix-users to
-understand which method would be suitable for your threat level.
-
 Copyright and License
 =====================
 
