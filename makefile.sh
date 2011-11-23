@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1123.1840"
+VERSION="2011.1123.1843"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -390,11 +390,12 @@ Main ()
 
     MakeUser "$LOGIN"
     CopyFiles "$LOGIN"
+
+    Run cd ~"$LOGIN" || return 1
+
     MakeRestrictedBin
 
     # .... bash ...........................................................
-
-    Run cd ~"$LOGIN" || return 1
 
     Run chown "$CHOWN" .
     Run chmod 0750 .
