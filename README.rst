@@ -64,14 +64,11 @@ A popular Perl based menu shell is available at
 <http://freecode.com/projects/pshell>. The implementation below does
 not require Perl and additional modules, just plain ``/bin/sh``.
 
-The followgin feature is experimental and provided only as an idea.
-I'm not exactly convinced that a shell script is safe enough to be
-used as a menu shell. Use your judgement if you really want to use the
-method below.
-
 Directory ``bin/`` contains a very simple menu shell script that
 allows running only defined commands. You could use it instead of
-previous ``rbash`` approach by setting user's shell to the script ::
+previous ``rbash`` approach by setting user's shell to the script.
+This script is experimental and provided "as is". Use your judgement
+if you want to use this approach ::
 
    # Create user and needed files
    ./makefile.sh dummy date
