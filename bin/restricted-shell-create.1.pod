@@ -44,7 +44,7 @@ restricted-shell-create - create a restricted shell environment using rbash
 
 =head1 SYNOPSIS
 
-  restricted-shell-create [options] <login name> <list of allowed commands>
+  restricted-shell-create [options] <login name> [list of allowed commands]
 
 =head1 DESCRIPTION
 
