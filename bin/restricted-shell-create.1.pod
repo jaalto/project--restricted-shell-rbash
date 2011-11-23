@@ -65,6 +65,14 @@ are depreciated, you should be using tools such as apparmor,
 selinux, grsecurity or virtualization as it is rather trivial to
 break out of rbash."
 
+To further lock down the account, restrict access from certain
+hosts and private ssh keys. See Linux Journal article I<Paranoid
+Penguin - Managing SSH for Scripts and cron Jobs> at
+<http://www.linuxjournal.com/magazine/paranoid-penguin-managing-ssh-scripts-and-cron-jobs?page=0,0>
+
+A good article about overwiev to securing logins can be foudn at
+<http://www.symantec.com/connect/articles/restricting-unix-users>.
+
 =head1 options
 
 =over 4

@@ -1,5 +1,7 @@
 2011-11-23  Jari Aalto  <jari.aalto@cante.net>
 
+	* README.rst: (REFERENCES): Remove. Move to POD.
+
 	* makefile.sh (Main): set permissions of .ssh/authorized_keys
 	and .ssh/id* files. Add section breaks and move code
 	into logical blocks.
