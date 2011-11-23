@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1123.1837"
+VERSION="2011.1123.1838"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -421,7 +421,7 @@ Main ()
     Run chown "$CHOWN" .ssh .ssh/*
     Run chmod 0750 .ssh
     Run chmod ugo-s .ssh
-    Run chmod 0644 .ssh/*
+    Run chmod 0640 .ssh/*
 
     Run touch  .ssh/authorized_keys
 
