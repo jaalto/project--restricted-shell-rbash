@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1122.1817"
+VERSION="2011.1123.1745"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -395,8 +395,6 @@ Main ()
     Run chown "$CHOWN" .bash*
     Run chmod 0644 .bash*
 
-    touch  .ssh/authorized_keys
-
     cwd=
     [ "$test" ] || cwd="$(pwd)/"
 
@@ -406,6 +404,13 @@ Main ()
     Run chmod 0755 .ssh
     Run chmod ugo-s .ssh
     Run chmod 0644 .ssh/*
+
+    touch  .ssh/authorized_keys
+
+    od file in .ssh/authorized_keys .ssh/id*
+    do
+	[ -f "$file" ] && chmod 0600 "$elt"
+    done
 
     umask 077
 
