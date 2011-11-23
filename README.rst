@@ -48,24 +48,15 @@ REQUIREMENTS
 USAGE
 =====
 
-Simply copy files in this project somewhere and read usage ::
-
-    ./makefile.sh --help
-
-Select a user to create (or an existing user), who will be locked. To
-see what would happen, test all first ::
+Login to the server that contains the home directories, switch to
+administrator *root*, select a user to create (or supply existing
+user), who will be locked. Option --test outputs what commands would
+be run, nothing is executed for real :: ::
 
    ./makefile.sh --test dummy date ls ssh
-
-If all looks good, switch to *root* and create a real account:
-
-   ./makefile.sh dummy date ls ssh
-
-Make your personal modifications as needed, like allowing only ssh key
-based access ::
-
-    cd ~dummy
-    $EDITOR .ssh/authorize_keys
+                        |     |
+			|     list of allowed commands
+			user login name
 
 MENU BASED SHELL
 ================
