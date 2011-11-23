@@ -36,17 +36,6 @@ User cannot edit configuration files, change PATH, run commands
 starting with slash, or cd anywhere, so the only commands available to
 him are those in ``bin/``.
 
-Warnings
---------
-
-Don't let anyone run commands that allow escaping to shells. Like
-editors (``emacs``, ``vi``) or mail programs (``mutt``) etc.
-
-For a real hard security, remember: "Honestly a restricted shells are
-depreciated, you should be using tools such as apparmor, selinux,
-grsecurity or virtualization as it is rather trivial to break out of
-rbash."
-
 REQUIREMENTS
 ============
 
