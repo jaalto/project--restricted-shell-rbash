@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 #
 #   Copyright information
 #
@@ -21,8 +21,8 @@
 #
 # Descriotion
 #
-#	Edit while-loop to allow user to type recornized commands.
-#	Use the program as user's login shell.
+#	Edit while-loop to allow user to type recognized commands.
+#	Use the program as user's login shell: chsh --shell <path to program>
 
 PATH="/bin:/usr/bin"
 PROMPT="rshell"
