@@ -67,6 +67,9 @@ are depreciated, you should be using tools such as apparmor,
 selinux, grsecurity or virtualization as it is rather trivial to
 break out of rbash."
 
+In Debian systems, see package I<jailer> to create chrooted
+environments.
+
 To restrict access from certain hosts and private ssh keys. See
 Linux Journal article I<Paranoid Penguin - Managing SSH for
 Scripts and cron Jobs> at
@@ -216,8 +219,10 @@ http://freecode.com/projects/restricted-shell-rbash
 =head1 SEE ALSO
 
 bash(1)
+jailer(1)
 rbash(1)
 ssh(1)
+updatejail(1)
 
 =head1 AUTHORS
 
