@@ -23,18 +23,18 @@
 #	see POSIX/Susv standard and "Utility Description Defaults" at
 #	http://www.opengroup.org/onlinepubs/009695399/utilities/xcu_chap01.html#tag_01_11
 #
-#	This is manual page in Perl POD format. Read more at
+#	This manual page in Perl POD format. Read more at
 #	http://perldoc.perl.org/perlpod.html or run command:
 #
-#	    perldoc perlpod | less
+#	    perldoc perlpod
 #
 #	To check the syntax:
 #
 #	    podchecker *.pod
 #
-#	Create manual page with command:
+#	To create manual:
 #
-#	    pod2man PAGE.N.pod > PAGE.N
+#	    pod2man FILE.N.pod > FILE.N
 
 =pod
 
@@ -49,77 +49,77 @@ restricted-shell-create - create a restricted shell environment using rbash
 =head1 DESCRIPTION
 
 Program to create a restricted shell environment using
-C</bin/rbash>. Creates a LOGIN NAME if it does not exist.
+C</bin/rbash>. Creates login name if it does not exist.
 
 Program can only be run by root and it must be run on a host,
 that has direct access to the user's home; not on a host that NFS
-mounts /home. The allowed commands must be on PATH or written
-using full path name.
+mounts /home. The list of allowed commands must be along I<PATH> or
+written using full path name.
 
-Remember that the acocunt is only as secure as your choice of
+Remember that the acocunt is only as secure as the choice of
 commands. Don't let anyone run commands that would allow escaping
-to a shell. Like editors (emacs, vi) or mail programs (mutt) etc.
+to a shell. like editors (emacs, vi) or mail programs (mutt) etc.
 
-For a real hard security, remember: "Honestly a restricted shells
+For real hard security, remember: "honestly a restricted shells
 are depreciated, you should be using tools such as apparmor,
 selinux, grsecurity or virtualization as it is rather trivial to
 break out of rbash."
 
-=head1 OPTIONS
+=head1 options
 
 =over 4
 
-=item B<-d, --homeroot>
+=item b<-d, --homeroot>
 
-The mount directory of system home. Defaults to /home.
+The mount directory of system home. defaults to /home.
 
-=item B<-D, --debug>
+=item b<-d, --debug>
 
 Activate shell debug.
 
-=item B<-f, --force>
+=item b<-f, --force>
 
 Allow destructive changes, like overwriting files while copying
 bash startup to user's home directory.
 
-=item B<-g, --group>
+=item b<-g, --group>
 
-If provided, passed to B<usedadd(1)> command if user does not
+If provided, passed to b<usedadd(1)> command if user does not
 exist.
 
-=item B<-h, --help>
+=item b<-h, --help>
 
 Display short help.
 
-=item B<-i, --init>
+=item b<-i, --init>
 
-Clean initialization. Delete all previous commands from user's
-C<bin/> directory before creating suymlinks to the allowed
+Clean initialization. delete all previous commands from user's
+c<bin/> directory before creating suymlinks to the allowed
 commands.
 
-=item B<-o, --chown USER:GROUP>
+=item b<-o, --chown USER:GROUP>
 
-Set permissions to USER:GROUP. Defaults to root:root.
+Set permissions to USER:GROUP. Defaults to I<root:root>.
 
-=item B<-s, --shell PROGRAM>
+=item b<-s, --shell program>
 
-Set PROGRAM to user's B<--user> shell. Defualts to C</bin/rbash>.
+Set program to user's b<--user> shell. Defualts to c</bin/rbash>.
 
-=item B<-t, --test>
+=item b<-t, --test>
 
-Show what commands would be run. Do not actually do anything.
+Show what commands would be run. do not actually do anything.
 
-=item B<-v, --verbose>
+=item b<-v, --verbose>
 
 Be verbose.
 
-=item B<-V, --version>
+=item b<-v, --version>
 
 Display version information.
 
 =back
 
-=head1 EXAMPLES
+=head1 examples
 
 Create user dummy, allow it to run commands date(1), ls(1) and
 ssh(1) but don't actually do anything:
@@ -135,6 +135,14 @@ Overwrite account files while creating the restricted shell
 environment:
 
     restricted-shell-create --force --init dummy date ls ssh
+
+Make your personal modifications as needed, like allowing only
+ssh key based access. The authorized_keys file is a file that
+contains the public identities, or public keys, of users who can
+log in to the account by using public key authentication ::
+
+    cd ~dummy
+    $EDITOR .ssh/authorize_keys
 
 =head1 ENVIRONMENT
 
