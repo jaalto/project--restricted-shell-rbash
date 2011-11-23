@@ -1,7 +1,8 @@
 2011-11-23  Jari Aalto  <jari.aalto@cante.net>
 
 	* makefile.sh (Main): set permissions of .ssh/authorized_keys
-	and .ssh/id* files.
+	and .ssh/id* files. Add section breaks and move code
+	into logical blocks.
 
 	* bin/restricted-shell-create.1.pod: Start entences with
 	capital letter.

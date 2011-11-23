@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1123.1745"
+VERSION="2011.1123.1809"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -349,6 +349,8 @@ Main ()
 
     LOGIN="$1"
 
+    # .... verify usage ...................................................
+
     if [ ! "$LOGIN" ]; then
 	Die "ERROR: Which login name to use for restricted shell?"
     fi
@@ -359,6 +361,12 @@ Main ()
 	if ! IsRoot ; then
 	    Die "ERROR: This command can be run only by root"
 	fi
+    fi
+
+    if [ "$1" ]; then
+	COMMANDS="$*"
+    else
+	Die "ERROR: Which commands to allow user '$LOGIN' to run?"
     fi
 
     if [ ! "$RSHELL" ]; then
@@ -377,14 +385,13 @@ Main ()
 
     HOMEROOT=$( DropTrailingSlash $HOMEROOT )
 
-    if [ "$1" ]; then
-	COMMANDS="$*"
-    else
-	Die "ERROR: Which commands to allow user '$LOGIN' to run?"
-    fi
+    # .... DO IT ..........................................................
 
     MakeUser "$LOGIN"
     CopyFiles "$LOGIN"
+    MakeRestrictedBin
+
+    # .... bash ...........................................................
 
     Run cd ~"$LOGIN" || return 1
 
@@ -394,6 +401,17 @@ Main ()
 
     Run chown "$CHOWN" .bash*
     Run chmod 0644 .bash*
+
+    umask 077
+
+    # Allow only appending to the .bash_history file
+
+    Run chattr -a .bash_history 2> /dev/null # Can't chown without this
+    Run chown "$CHOWN" .bash_history
+    # Allow appending to the file
+    Run Chattr +a .bash_history
+
+    # .... ssh ............................................................
 
     cwd=
     [ "$test" ] || cwd="$(pwd)/"
@@ -405,24 +423,21 @@ Main ()
     Run chmod ugo-s .ssh
     Run chmod 0644 .ssh/*
 
-    touch  .ssh/authorized_keys
+    Run touch  .ssh/authorized_keys
 
     od file in .ssh/authorized_keys .ssh/id*
     do
-	[ -f "$file" ] && chmod 0600 "$elt"
+	[ -f "$file" ] && Run chmod 0600 "$elt"
     done
 
-    umask 077
+    Rrn chown "$CHOWN" .shosts
+    Run chmod 0600 .shosts
 
-    Run chattr -a .bash_history 2> /dev/null # Can't chown without this
-    Run chown "$CHOWN" .bash_history
-    # Allow appending to the file
-    Run Chattr +a .bash_history
+    # .... other ..........................................................
 
-    Run chown "$CHOWN" .rhosts .shosts
-    Run chmod 0600 .rhosts .shosts
+    Run chown "$CHOWN" .rhosts
+    Run chmod 0600 .rhosts
 
-    MakeRestrictedBin
     SetPath
 }
 
