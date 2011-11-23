@@ -25,7 +25,7 @@
 #	template files used for installation.
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1123.1809"
+VERSION="2011.1123.1834"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -400,7 +400,7 @@ Main ()
     Run chmod ugo-s .
 
     Run chown "$CHOWN" .bash*
-    Run chmod 0644 .bash*
+    Run chmod 0640 .bash*
 
     umask 077
 
