@@ -48,15 +48,14 @@ REQUIREMENTS
 USAGE
 =====
 
-Login to the server that contains the home directories, switch to
-administrator *root*, select a user to create (or supply existing
-user), who will be locked. Option --test outputs what commands would
-be run, nothing is executed for real :: ::
+Login to the server that distributes ``/home`` directories, switch to
+administrator *root*, select a login name (or supply existing login),
+which will be locked. Use Option --test to see what would happen ::
 
    ./makefile.sh --test dummy date ls ssh
                         |     |
-			|     list of allowed commands
-			user login name
+			|     List of allowed commands
+			User's login name
 
 MENU BASED SHELL
 ================
