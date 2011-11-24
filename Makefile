@@ -111,8 +111,15 @@ distclean: clean
 
 realclean: clean
 
+test-git:
+	# test-git - Check Git repository condition
+	@if git status | egrep "modified" ; then \
+	    echo "ERROR: Uncommitted files" >&2 ; \
+	    fatal-error ; \
+	fi
+
 # Rule: dist-git - [maintainer] release from Git repository
-dist-git: test
+dist-git: doc test test-git
 	rm -f $(DIST_DIR)/$(RELEASE)*
 
 	git archive --format=tar --prefix=$(RELEASE)/ master | \
@@ -125,7 +132,7 @@ dist-git: test
 
 # The "gt" is maintainer's program frontend to Git
 # Rule: dist-snap - [maintainer] release snapshot from Git repository
-dist-snap: test
+dist-snap: doc test test-git
 	@echo gt tar -q -z -p $(PACKAGE) -c -D master
 
 # Rule: dist - [maintainer] alias for dist-git
