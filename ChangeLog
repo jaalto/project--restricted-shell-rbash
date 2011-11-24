@@ -1,3 +1,10 @@
+2011-11-24  Jari Aalto  <jari.aalto@cante.net>
+
+	* Makefile (bin/$(NAME).1): Move manpage from section 1 to 5.
+
+	* bin/restricted-shell-create.5.pod: Rename. Was
+	bin/restricted-shell-create.1.pod.
+
 2011-11-23  Jari Aalto  <jari.aalto@cante.net>
 
 	* .bashrc: Document shopt commands.
