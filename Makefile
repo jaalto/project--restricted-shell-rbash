@@ -25,6 +25,7 @@ endif
 PACKAGE		= restricted-shell-rbash
 NAME		= restricted-shell-create
 BIN		= $(NAME).sh
+MANSECT		= 5
 PACKAGE_DOC	= $(PACKAGE)
 # The real binary
 LIBPRG		= makefile.sh
@@ -84,7 +85,7 @@ RELEASE		= $(PACKAGE)-$(VERSION)
 INSTALL_OBJS_LIB = README.rst makefile.sh .bash* .ssh/*
 INSTALL_OBJS_BIN = bin/$(BIN)
 INSTALL_OBJS_DOC = ChangeLog
-INSTALL_OBJS_MAN = bin/*.1
+INSTALL_OBJS_MAN = bin/*.$(MANSECT)
 
 all:
 	@echo "Nothing to compile."
@@ -137,20 +138,20 @@ dist-ls:
 # Rule: ls - [maintainer] alias for dist-ls
 ls: dist-ls
 
-bin/$(NAME).1: bin/$(NAME).1.pod
-	make -f pod2man.mk PACKAGE=bin/$(NAME) MANSECT=5 makeman
+bin/$(NAME).$(MANSECT): bin/$(NAME).$(MANSECT).pod
+	make -f pod2man.mk PACKAGE=bin/$(NAME) MANSECT=$(MANSECT) makeman
 	@-rm -f *.x~~ pod*.tmp
 
-doc/manual/index.html: bin/$(NAME).1.pod
+doc/manual/index.html: bin/$(NAME).$(MANSECT).pod
 	pod2html $< > $@
 	@-rm -f *.x~~ pod*.tmp
 
-doc/manual/index.txt: bin/$(NAME).1.pod
+doc/manual/index.txt: bin/$(NAME).$(MANSECT).pod
 	pod2text $< > $@
 	@-rm -f *.x~~ pod*.tmp
 
 # Rule: man - Generate or update manual page
-man: bin/$(NAME).1
+man: bin/$(NAME).$(MANSECT)
 
 html: doc/manual/index.html
 
@@ -187,8 +188,8 @@ install-doc:
 
 install-man: man
 	# install-man - Install manual pages
-	$(INSTALL_BIN) -d $(MANDIR1)
-	$(INSTALL_DATA) $(INSTALL_OBJS_MAN) $(MANDIR1)
+	$(INSTALL_BIN) -d $(MANDIR)/man$(MANSECT)
+	$(INSTALL_DATA) $(INSTALL_OBJS_MAN) $(MANDIR)/man$(MANSECT)
 
 install-lib:
 	# install-lib - Install libraries
