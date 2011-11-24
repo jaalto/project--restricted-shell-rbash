@@ -3,53 +3,75 @@ NAME
     rbash
 
 SYNOPSIS
-      restricted-shell-create [options] <login name> <list of allowed commands>
+      restricted-shell-create [options] <login name> [list of allowed commands]
 
 DESCRIPTION
     Program to create a restricted shell environment using "/bin/rbash".
-    Creates a LOGIN NAME if it does not exist.
+    Creates login name if it does not exist.
 
     Program can only be run by root and it must be run on a host, that has
     direct access to the user's home; not on a host that NFS mounts /home.
-    The allowed commands must be on PATH or written using full path name.
+    The list of allowed commands must be along *PATH* or written using full
+    path name.
 
-OPTIONS
-    -d, --homeroot
-        The mount directory of system home. Defaults to /home.
+    Remember that the acocunt is only as secure as the choice of commands.
+    Don't let anyone run commands that would allow escaping to a shell. like
+    editors (emacs, vi) or mail programs (mutt) etc.
 
-    -D, --debug
+  Further Reading
+    For real hard security, remember: "honestly a restricted shells are
+    depreciated, you should be using tools such as apparmor, selinux,
+    grsecurity or virtualization as it is rather trivial to break out of
+    rbash."
+
+    In Debian systems, see package *jailer* to create chrooted environments.
+
+    To restrict access from certain hosts and private ssh keys. See Linux
+    Journal article *Paranoid Penguin - Managing SSH for Scripts and cron
+    Jobs* at
+    <http://www.linuxjournal.com/magazine/paranoid-penguin-managing-ssh-scri
+    pts-and-cron-jobs?page=0,0>
+
+    A good article about overwiev to securing logins can be foudn at
+    <http://www.symantec.com/connect/articles/restricting-unix-users>.
+
+options
+    b<-d, --homeroot>
+        The mount directory of system home. defaults to /home.
+
+    b<-d, --debug>
         Activate shell debug.
 
-    -f, --force
+    b<-f, --force>
         Allow destructive changes, like overwriting files while copying bash
         startup to user's home directory.
 
-    -g, --group
-        If provided, passed to usedadd(1) command if user does not exist.
+    b<-g, --group>
+        If provided, passed to b<usedadd(1)> command if user does not exist.
 
-    -h, --help
+    b<-h, --help>
         Display short help.
 
-    -i, --init
-        Clean initialization. Delete all previous commands from user's
-        "bin/" directory before creating suymlinks to the allowed commands.
+    b<-i, --init>
+        Clean initialization. delete all previous commands from user's
+        c<bin/> directory before creating suymlinks to the allowed commands.
 
-    -o, --chown USER:GROUP
-        Set permissions to USER:GROUP. Defaults to root:root.
+    b<-o, --chown USER:GROUP>
+        Set permissions to USER:GROUP. Defaults to *root:root*.
 
-    -s, --shell PROGRAM
-        Set PROGRAM to user's --user shell. Defualts to "/bin/rbash".
+    b<-s, --shell program>
+        Set program to user's b<--user> shell. Defualts to c</bin/rbash>.
 
-    -t, --test
-        Show what commands would be run. Do not actually do anything.
+    b<-t, --test>
+        Show what commands would be run. do not actually do anything.
 
-    -v, --verbose
+    b<-v, --verbose>
         Be verbose.
 
-    -V, --version
+    b<-v, --version>
         Display version information.
 
-EXAMPLES
+examples
     Create user dummy, allow it to run commands date(1), ls(1) and ssh(1)
     but don't actually do anything:
 
@@ -63,6 +85,53 @@ EXAMPLES
     Overwrite account files while creating the restricted shell environment:
 
         restricted-shell-create --force --init dummy date ls ssh
+
+    Make your personal modifications as needed, like allowing only ssh key
+    based access. The authorized_keys file is a file that contains the
+    public identities, or public keys, of users who can log in to the
+    account by using public key authentication ::
+
+        cd ~dummy
+        $EDITOR .ssh/authorize_keys
+
+        # OR, append key to the host remotedly
+        cat ~/.ssh/key.pub | ssh -l root HOST "cd ~dummy; cat >> .ssh/authorized_keys"
+
+    A typical restricted case for restricted shell is to allow users to
+    access Subversion Version Control Server at remote host in a secure
+    manner. The server process typicaly runs on account *svn* so create
+    restricted login. For more information see SVN Book section *Tunneling
+    over SSH* at <http://svnbook.red-bean.com/nightly/en/index.html>.
+
+        # ... AT SVN SERVER
+
+        restricted-shell-create --init svn svnserve
+        cd ~svn
+        chown -R root:svn .bash* .ssh/
+
+        cd .ssh
+
+        # Make a unique ssh key for each user
+        ssh-keygen -t dsa -f user1
+        ssh-keygen -t dsa -f user2
+
+        # Add keys
+        cat user1.pub user2.pub >> authorized_keys
+
+        # Edit each user's key like this (all in one line):
+        # command=”svnserve --root=/var/svn/project/ --tunnel –-tunnel-user=user1″,no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty <KEY DATA>
+
+        $EDITOR authorized_keys
+
+        # ... AT SVN CLIENT SIDE
+
+        $EDITOR $HOME/.subversion/config
+
+        # Under the "[tunnels]". The svn URLs are like "svn+secure://HOST/dir"
+        # -l = Log in as "svn"
+        # -i = use specific key
+
+        secure = /usr/bin/ssh -l svn -i /home/user1/.ssh/user1
 
 ENVIRONMENT
     None.
@@ -80,7 +149,7 @@ AVAILABILITY
     http://freecode.com/projects/restricted-shell-rbash
 
 SEE ALSO
-    bash(1) rbash(1) ssh(1)
+    bash(1) jailer(1) rbash(1) ssh(1) updatejail(1)
 
 AUTHORS
     Program was written by <jari.aalto@cante.net>

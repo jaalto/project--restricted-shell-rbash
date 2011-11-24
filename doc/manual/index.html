@@ -19,8 +19,13 @@
 	<li><a href="#name">NAME</a></li>
 	<li><a href="#synopsis">SYNOPSIS</a></li>
 	<li><a href="#description">DESCRIPTION</a></li>
-	<li><a href="#options">OPTIONS</a></li>
-	<li><a href="#examples">EXAMPLES</a></li>
+	<ul>
+
+		<li><a href="#further_reading">Further Reading</a></li>
+	</ul>
+
+	<li><a href="#options">options</a></li>
+	<li><a href="#examples">examples</a></li>
 	<li><a href="#environment">ENVIRONMENT</a></li>
 	<li><a href="#files">FILES</a></li>
 	<li><a href="#standards">STANDARDS</a></li>
@@ -43,77 +48,95 @@
 <hr />
 <h1><a name="synopsis">SYNOPSIS</a></h1>
 <pre>
-  restricted-shell-create [options] &lt;login name&gt; &lt;list of allowed commands&gt;</pre>
+  restricted-shell-create [options] &lt;login name&gt; [list of allowed commands]</pre>
 <p>
 </p>
 <hr />
 <h1><a name="description">DESCRIPTION</a></h1>
 <p>Program to create a restricted shell environment using
-<code>/bin/rbash</code>. Creates a LOGIN NAME if it does not exist.</p>
+<code>/bin/rbash</code>. Creates login name if it does not exist.</p>
 <p>Program can only be run by root and it must be run on a host,
 that has direct access to the user's home; not on a host that NFS
-mounts /home. The allowed commands must be on PATH or written
-using full path name.</p>
+mounts /home. The list of allowed commands must be along <em>PATH</em> or
+written using full path name.</p>
+<p>Remember that the acocunt is only as secure as the choice of
+commands. Don't let anyone run commands that would allow escaping
+to a shell. like editors (emacs, vi) or mail programs (mutt) etc.</p>
+<p>
+</p>
+<h2><a name="further_reading">Further Reading</a></h2>
+<p>For real hard security, remember: &quot;honestly a restricted shells
+are depreciated, you should be using tools such as apparmor,
+selinux, grsecurity or virtualization as it is rather trivial to
+break out of rbash.&quot;</p>
+<p>In Debian systems, see package <em>jailer</em> to create chrooted
+environments.</p>
+<p>To restrict access from certain hosts and private ssh keys. See
+Linux Journal article <em>Paranoid Penguin - Managing SSH for
+Scripts and cron Jobs</em> at
+&lt;http://www.linuxjournal.com/magazine/paranoid-penguin-managing-ssh-scripts-and-cron-jobs?page=0,0&gt;</p>
+<p>A good article about overwiev to securing logins can be foudn at
+&lt;http://www.symantec.com/connect/articles/restricting-unix-users&gt;.</p>
 <p>
 </p>
 <hr />
-<h1><a name="options">OPTIONS</a></h1>
+<h1><a name="options">options</a></h1>
 <dl>
-<dt><strong><a name="d_homeroot" class="item"><strong>-d, --homeroot</strong></a></strong></dt>
+<dt><strong><a name="b_d_homeroot" class="item">b&lt;-d, --homeroot&gt;</a></strong></dt>
 
 <dd>
-<p>The mount directory of system home. Defaults to /home.</p>
+<p>The mount directory of system home. defaults to /home.</p>
 </dd>
-<dt><strong><a name="d_debug" class="item"><strong>-D, --debug</strong></a></strong></dt>
+<dt><strong><a name="b_d_debug" class="item">b&lt;-d, --debug&gt;</a></strong></dt>
 
 <dd>
 <p>Activate shell debug.</p>
 </dd>
-<dt><strong><a name="f_force" class="item"><strong>-f, --force</strong></a></strong></dt>
+<dt><strong><a name="b_f_force" class="item">b&lt;-f, --force&gt;</a></strong></dt>
 
 <dd>
 <p>Allow destructive changes, like overwriting files while copying
 bash startup to user's home directory.</p>
 </dd>
-<dt><strong><a name="g_group" class="item"><strong>-g, --group</strong></a></strong></dt>
+<dt><strong><a name="b_g_group" class="item">b&lt;-g, --group&gt;</a></strong></dt>
 
 <dd>
-<p>If provided, passed to <strong>usedadd(1)</strong> command if user does not
+<p>If provided, passed to b&lt;usedadd(1)&gt; command if user does not
 exist.</p>
 </dd>
-<dt><strong><a name="h_help" class="item"><strong>-h, --help</strong></a></strong></dt>
+<dt><strong><a name="b_h_help" class="item">b&lt;-h, --help&gt;</a></strong></dt>
 
 <dd>
 <p>Display short help.</p>
 </dd>
-<dt><strong><a name="i_init" class="item"><strong>-i, --init</strong></a></strong></dt>
+<dt><strong><a name="b_i_init" class="item">b&lt;-i, --init&gt;</a></strong></dt>
 
 <dd>
-<p>Clean initialization. Delete all previous commands from user's
-<code>bin/</code> directory before creating suymlinks to the allowed
+<p>Clean initialization. delete all previous commands from user's
+c&lt;bin/&gt; directory before creating suymlinks to the allowed
 commands.</p>
 </dd>
-<dt><strong><a name="o_chown_user_group" class="item"><strong>-o, --chown USER:GROUP</strong></a></strong></dt>
+<dt><strong><a name="b_o_chown_user_group" class="item">b&lt;-o, --chown USER:GROUP&gt;</a></strong></dt>
 
 <dd>
-<p>Set permissions to USER:GROUP. Defaults to root:root.</p>
+<p>Set permissions to USER:GROUP. Defaults to <em>root:root</em>.</p>
 </dd>
-<dt><strong><a name="s_shell_program" class="item"><strong>-s, --shell PROGRAM</strong></a></strong></dt>
+<dt><strong><a name="b_s_shell_program" class="item">b&lt;-s, --shell program&gt;</a></strong></dt>
 
 <dd>
-<p>Set PROGRAM to user's <strong>--user</strong> shell. Defualts to <code>/bin/rbash</code>.</p>
+<p>Set program to user's b&lt;--user&gt; shell. Defualts to c&lt;/bin/rbash&gt;.</p>
 </dd>
-<dt><strong><a name="t_test" class="item"><strong>-t, --test</strong></a></strong></dt>
+<dt><strong><a name="b_t_test" class="item">b&lt;-t, --test&gt;</a></strong></dt>
 
 <dd>
-<p>Show what commands would be run. Do not actually do anything.</p>
+<p>Show what commands would be run. do not actually do anything.</p>
 </dd>
-<dt><strong><a name="v_verbose" class="item"><strong>-v, --verbose</strong></a></strong></dt>
+<dt><strong><a name="b_v_verbose" class="item">b&lt;-v, --verbose&gt;</a></strong></dt>
 
 <dd>
 <p>Be verbose.</p>
 </dd>
-<dt><strong><a name="v_version" class="item"><strong>-V, --version</strong></a></strong></dt>
+<dt><strong><a name="b_v_version" class="item">b&lt;-v, --version&gt;</a></strong></dt>
 
 <dd>
 <p>Display version information.</p>
@@ -122,7 +145,7 @@ commands.</p>
 <p>
 </p>
 <hr />
-<h1><a name="examples">EXAMPLES</a></h1>
+<h1><a name="examples">examples</a></h1>
 <p>Create user dummy, allow it to run commands <code>date(1)</code>, <code>ls(1)</code> and
 <code>ssh(1)</code> but don't actually do anything:</p>
 <pre>
@@ -135,6 +158,52 @@ to from last setup:</p>
 environment:</p>
 <pre>
     restricted-shell-create --force --init dummy date ls ssh</pre>
+<p>Make your personal modifications as needed, like allowing only
+ssh key based access. The authorized_keys file is a file that
+contains the public identities, or public keys, of users who can
+log in to the account by using public key authentication ::</p>
+<pre>
+    cd ~dummy
+    $EDITOR .ssh/authorize_keys</pre>
+<pre>
+    # OR, append key to the host remotedly
+    cat ~/.ssh/key.pub | ssh -l root HOST &quot;cd ~dummy; cat &gt;&gt; .ssh/authorized_keys&quot;</pre>
+<p>A typical restricted case for restricted shell is to allow users
+to access Subversion Version Control Server at remote host in a
+secure manner. The server process typicaly runs on account <em>svn</em>
+so create restricted login. For more information see SVN Book
+section <em>Tunneling over SSH</em> at
+&lt;http://svnbook.red-bean.com/nightly/en/index.html&gt;.</p>
+<pre>
+    # ... AT SVN SERVER</pre>
+<pre>
+    restricted-shell-create --init svn svnserve
+    cd ~svn
+    chown -R root:svn .bash* .ssh/</pre>
+<pre>
+    cd .ssh</pre>
+<pre>
+    # Make a unique ssh key for each user
+    ssh-keygen -t dsa -f user1
+    ssh-keygen -t dsa -f user2</pre>
+<pre>
+    # Add keys
+    cat user1.pub user2.pub &gt;&gt; authorized_keys</pre>
+<pre>
+    # Edit each user's key like this (all in one line):
+    # command=”svnserve --root=/var/svn/project/ --tunnel –-tunnel-user=user1″,no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty &lt;KEY DATA&gt;</pre>
+<pre>
+    $EDITOR authorized_keys</pre>
+<pre>
+    # ... AT SVN CLIENT SIDE</pre>
+<pre>
+    $EDITOR $HOME/.subversion/config</pre>
+<pre>
+    # Under the &quot;[tunnels]&quot;. The svn URLs are like &quot;svn+secure://HOST/dir&quot;
+    # -l = Log in as &quot;svn&quot;
+    # -i = use specific key</pre>
+<pre>
+    secure = /usr/bin/ssh -l svn -i /home/user1/.ssh/user1</pre>
 <p>
 </p>
 <hr />
@@ -163,8 +232,10 @@ user directory after this program.</p>
 <hr />
 <h1><a name="see_also">SEE ALSO</a></h1>
 <p><code>bash(1)</code>
+<code>jailer(1)</code>
 <code>rbash(1)</code>
-<code>ssh(1)</code></p>
+<code>ssh(1)</code>
+<code>updatejail(1)</code></p>
 <p>
 </p>
 <hr />
