@@ -85,7 +85,7 @@ if you want to use this approach ::
    # Change user's shell
    chsh --shell $(cd ~dummy; echo $(pwd)/bin/rshell) dummy
 
-Copyright and License
+COPYRIGHT AND LICENSE
 =====================
 
 Copyright (C) 2011-2012 Jari Aalto <jari.aalto@cante.net>
@@ -94,4 +94,4 @@ This project is free; you can redistribute and/or modify it under
 the terms of GNU General Public license either version 2 of the
 License, or (at your option) any later version.
 
-End of file
+.. End of file
