@@ -5,7 +5,7 @@
 DESCRIPTION
 ===========
 
-Utility to create restricted shell account using Bash rbash.
+Utility to create restricted shell account using Bash in rbash mode.
 
 GNU project's Bash running in ``rbash`` mode is a viable choice if you
 are trying to somewhat contain trusted users. This project includes
