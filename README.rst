@@ -10,7 +10,10 @@ Utility to create restricted shell account using Bash in rbash mode.
 GNU project's Bash running in ``rbash`` mode is a viable choice if you
 are trying to somewhat contain trusted users. This project includes
 basic files and utility to create a dummy user that only can run
-commands of your choice. Project homepage (bugs and source) is at
+commands of your choice. Useful for setting up tightly confined secure
+accounts that allow minimum access to restricted set of commands.
+
+Project homepage (bugs and source) is at
 <http://freecode.com/projects/restricted-shell-rbash>.
 
 How does it work?
