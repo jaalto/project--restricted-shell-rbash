@@ -36,39 +36,39 @@ DESCRIPTION
     <http://www.symantec.com/connect/articles/restricting-unix-users>.
 
 options
-    b<-d, --homeroot>
+    -d, --homeroot
         The mount directory of system home. defaults to /home.
 
-    b<-d, --debug>
+    -d, --debug
         Activate shell debug.
 
-    b<-f, --force>
+    -f, --force
         Allow destructive changes, like overwriting files while copying bash
         startup to user's home directory.
 
-    b<-g, --group>
-        If provided, passed to b<usedadd(1)> command if user does not exist.
+    -g, --group
+        If provided, passed to usedadd(1) command if user does not exist.
 
-    b<-h, --help>
+    -h, --help
         Display short help.
 
-    b<-i, --init>
+    -i, --init
         Clean initialization. delete all previous commands from user's
         c<bin/> directory before creating suymlinks to the allowed commands.
 
-    b<-o, --chown USER:GROUP>
+    -o, --chown USER:GROUP
         Set permissions to USER:GROUP. Defaults to *root:root*.
 
-    b<-s, --shell program>
-        Set program to user's b<--user> shell. Defualts to c</bin/rbash>.
+    -s, --shell program
+        Set program to user's --user shell. Defualts to c</bin/rbash>.
 
-    b<-t, --test>
+    -t, --test
         Show what commands would be run. do not actually do anything.
 
-    b<-v, --verbose>
+    -v, --verbose
         Be verbose.
 
-    b<-v, --version>
+    -v, --version
         Display version information.
 
 examples
