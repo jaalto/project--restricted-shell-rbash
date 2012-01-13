@@ -1,5 +1,7 @@
 2012-01-13 Fri  Jari Aalto  <jari.aalto@cante.net>
 
+	* Makefile (doc): New rule.
+
 	* bin/restricted-shell-create.5.pod: Correct B<> markup.
 
 2011-11-24  Jari Aalto  <jari.aalto@cante.net>
