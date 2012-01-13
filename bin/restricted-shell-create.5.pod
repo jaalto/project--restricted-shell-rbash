@@ -82,51 +82,51 @@ A good article about overwiev to securing logins can be foudn at
 
 =over 4
 
-=item b<-d, --homeroot>
+=item B<-d, --homeroot>
 
 The mount directory of system home. defaults to /home.
 
-=item b<-d, --debug>
+=item B<-d, --debug>
 
 Activate shell debug.
 
-=item b<-f, --force>
+=item B<-f, --force>
 
 Allow destructive changes, like overwriting files while copying
 bash startup to user's home directory.
 
-=item b<-g, --group>
+=item B<-g, --group>
 
-If provided, passed to b<usedadd(1)> command if user does not
+If provided, passed to B<usedadd(1)> command if user does not
 exist.
 
-=item b<-h, --help>
+=item B<-h, --help>
 
 Display short help.
 
-=item b<-i, --init>
+=item B<-i, --init>
 
 Clean initialization. delete all previous commands from user's
 c<bin/> directory before creating suymlinks to the allowed
 commands.
 
-=item b<-o, --chown USER:GROUP>
+=item B<-o, --chown USER:GROUP>
 
 Set permissions to USER:GROUP. Defaults to I<root:root>.
 
-=item b<-s, --shell program>
+=item B<-s, --shell program>
 
-Set program to user's b<--user> shell. Defualts to c</bin/rbash>.
+Set program to user's B<--user> shell. Defualts to c</bin/rbash>.
 
-=item b<-t, --test>
+=item B<-t, --test>
 
 Show what commands would be run. do not actually do anything.
 
-=item b<-v, --verbose>
+=item B<-v, --verbose>
 
 Be verbose.
 
-=item b<-v, --version>
+=item B<-v, --version>
 
 Display version information.
 

@@ -1,3 +1,7 @@
+2012-01-13 Fri  Jari Aalto  <jari.aalto@cante.net>
+
+	* bin/restricted-shell-create.5.pod: Correct B<> markup.
+
 2011-11-24  Jari Aalto  <jari.aalto@cante.net>
 
 	* Makefile (bin/$(NAME).1): Move manpage from section 1 to 5.
