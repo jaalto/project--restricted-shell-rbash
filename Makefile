@@ -160,6 +160,9 @@ doc/manual/index.txt: bin/$(NAME).$(MANSECT).pod
 # Rule: man - Generate or update manual page
 man: bin/$(NAME).$(MANSECT)
 
+# Rule: doc - Same as man
+doc: man
+
 html: doc/manual/index.html
 
 txt: doc/manual/index.txt
@@ -230,7 +233,7 @@ install-test:
 	make DESTDIR=`pwd`/tmp prefix=/usr install
 	find tmp | sort
 
-.PHONY: clean distclean realclean
+.PHONY: clean distclean realclean doc
 .PHONY: install install-bin install-lib install-man
 .PHONY: all man doc test install-test test-pod
 .PHONY: dist dist-git dist-ls ls
