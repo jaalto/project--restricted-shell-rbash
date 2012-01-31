@@ -1,3 +1,21 @@
+2012-01-31  Jari Aalto  <jari.aalto@cante.net>
+
+	* bin/restricted-shell-create.5.pod: (OPTIONS): Add option
+	--password. Move option --help to the end (GNU convention).
+	(BUGS): Mention that rbash behavior does not work correctly
+	after su(1). This is a known bug in rbash(1).
+
+	* bin/restricted-shell-create.sh: Fix typo in comment.
+
+	* makefile.sh: (Main): Add option
+	--password. Chwon HOME directory with correct user:group.
+	(GetUserGroup): New.
+	(CreateUser): Call useradd(1) with --skel, --password
+	--create-home as needed.
+	(Chattr): Disable chattr(1).
+	(CopyFiles): Do not use unreliable ~LOGIN.
+	(GetHomeDir): New.
+
 2012-01-13 Fri  Jari Aalto  <jari.aalto@cante.net>
 
 	* Makefile (doc): New rule.
