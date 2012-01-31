@@ -48,8 +48,9 @@ restricted-shell-create - create a restricted shell environment using rbash
 
 =head1 DESCRIPTION
 
-Program to create a restricted shell environment using
-C</bin/rbash>. Creates login name if it does not exist.
+Program to create a restricted shell environment using C</bin/rbash>.
+Creates login name if it does not exist. If no password is specified
+for the login, default is set to I<password>.
 
 Program can only be run by root and it must be run on a host,
 that has direct access to the user's home; not on a host that NFS
@@ -78,7 +79,7 @@ Scripts and cron Jobs> at
 A good article about overwiev to securing logins can be found at
 <http://www.symantec.com/connect/articles/restricting-unix-users>.
 
-=head1 options
+=head1 OPTIONS
 
 =over 4
 
@@ -100,10 +101,6 @@ bash startup to user's home directory.
 If provided, passed to B<usedadd(1)> command if user does not
 exist.
 
-=item B<-h, --help>
-
-Display short help.
-
 =item B<-i, --init>
 
 Clean initialization. Delete all previous commands from user's
@@ -113,6 +110,11 @@ commands.
 =item B<-o, --chown USER:GROUP>
 
 Set permissions to USER:GROUP. Defaults to I<root:root>.
+
+=item B<-p, --password PASSWORD>
+
+Set login password to PASSWORD. If this options is not set, use
+default value of I<password> during call to adduser(8).
 
 =item B<-s, --shell PROGRAM>
 
@@ -129,6 +131,10 @@ Be verbose.
 =item B<-v, --version>
 
 Display version information and exit.
+
+=item B<-h, --help>
+
+Display short help.
 
 =back
 
@@ -196,6 +202,12 @@ I<Tunneling over SSH> at
     # -i = use specific key
 
     secure = /usr/bin/ssh -l svn -i /home/user1/.ssh/user1
+
+=head1 BUGS
+
+The C<restricted> behavior is not handled in rbash(1) correctly if you
+su(1) to the account. See <http://bugs.debian.org/411997>. You must
+use standard login(1) to get the expected behavior.
 
 =head1 ENVIRONMENT
 
