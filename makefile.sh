@@ -2,7 +2,7 @@
 #
 #   Copyright
 #
-#	Copyright (C) 2011 Jari Aalto <jari.aalto@cante.net>
+#	Copyright (C) 2011-2012 Jari Aalto <jari.aalto@cante.net>
 #
 #   License
 #
@@ -391,7 +391,7 @@ Main ()
     # .... DO IT ..........................................................
 
     MakeUser "$LOGIN"
-set -x
+
     CopyFiles "$LOGIN"
 
     Run cd ~"$LOGIN" || return 1
