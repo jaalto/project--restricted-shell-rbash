@@ -1,3 +1,7 @@
+2012-06-18 Mon  Jari Aalto  <jari.aalto@cante.net>
+
+	* makefile.sh (Main): Correct typo from $chwon to $chown.
+
 2012-01-31  Jari Aalto  <jari.aalto@cante.net>
 
 	* bin/restricted-shell-create.5.pod: (OPTIONS): Add option
