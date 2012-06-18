@@ -2,6 +2,7 @@
 
 umask 007
 PATH="%PATH"
+PS1='\u@\h:\w\$ '
 
 if [ -f $HOME/.bashrc ] ; then
     . $HOME/.bashrc
