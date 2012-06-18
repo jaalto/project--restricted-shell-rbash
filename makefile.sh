@@ -31,7 +31,7 @@
 #	standard login(1).
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2012.0618.1842"
+VERSION="2012.0618.1903"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -471,8 +471,7 @@ Main ()
 
     Run chown "$CHOWN" .bash*
     Run chmod 0644 .bash*
-set +x
-exit 777
+
     umask 077
 
     # Allow only appending to the .bash_history file
