@@ -7,7 +7,8 @@ SYNOPSIS
 
 DESCRIPTION
     Program to create a restricted shell environment using "/bin/rbash".
-    Creates login name if it does not exist.
+    Creates login name if it does not exist. If no password is specified for
+    the login, default is set to *password*.
 
     Program can only be run by root and it must be run on a host, that has
     direct access to the user's home; not on a host that NFS mounts /home.
@@ -35,7 +36,7 @@ DESCRIPTION
     A good article about overwiev to securing logins can be found at
     <http://www.symantec.com/connect/articles/restricting-unix-users>.
 
-options
+OPTIONS
     -d, --homeroot
         The absolute path of system home directory root. defaults to /home.
 
@@ -49,15 +50,16 @@ options
     -g, --group
         If provided, passed to usedadd(1) command if user does not exist.
 
-    -h, --help
-        Display short help.
-
     -i, --init
         Clean initialization. Delete all previous commands from user's
         c<bin/> directory before creating suymlinks to the allowed commands.
 
     -o, --chown USER:GROUP
         Set permissions to USER:GROUP. Defaults to *root:root*.
+
+    -p, --password PASSWORD
+        Set login password to PASSWORD. If this options is not set, use
+        default value of *password* during call to adduser(8).
 
     -s, --shell PROGRAM
         Set user's shell to PROGRAM. Defualts to c</bin/rbash>.
@@ -70,6 +72,9 @@ options
 
     -v, --version
         Display version information and exit.
+
+    -h, --help
+        Display short help.
 
 EXAMPLES
     Create user *dummy*, allow it to run commands date(1), ls(1) and ssh(1)
@@ -133,6 +138,11 @@ EXAMPLES
         # -i = use specific key
 
         secure = /usr/bin/ssh -l svn -i /home/user1/.ssh/user1
+
+BUGS
+    The "restricted" behavior is not handled in rbash(1) correctly if you
+    su(1) to the account. See <http://bugs.debian.org/411997>. You must use
+    standard login(1) to get the expected behavior.
 
 ENVIRONMENT
     None.

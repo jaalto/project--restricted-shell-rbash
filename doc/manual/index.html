@@ -24,8 +24,9 @@
 		<li><a href="#further_reading">Further Reading</a></li>
 	</ul>
 
-	<li><a href="#options">options</a></li>
+	<li><a href="#options">OPTIONS</a></li>
 	<li><a href="#examples">EXAMPLES</a></li>
+	<li><a href="#bugs">BUGS</a></li>
 	<li><a href="#environment">ENVIRONMENT</a></li>
 	<li><a href="#files">FILES</a></li>
 	<li><a href="#standards">STANDARDS</a></li>
@@ -53,8 +54,9 @@
 </p>
 <hr />
 <h1><a name="description">DESCRIPTION</a></h1>
-<p>Program to create a restricted shell environment using
-<code>/bin/rbash</code>. Creates login name if it does not exist.</p>
+<p>Program to create a restricted shell environment using <code>/bin/rbash</code>.
+Creates login name if it does not exist. If no password is specified
+for the login, default is set to <em>password</em>.</p>
 <p>Program can only be run by root and it must be run on a host,
 that has direct access to the user's home; not on a host that NFS
 mounts /home. The list of allowed commands must be along <em>PATH</em> or
@@ -80,7 +82,7 @@ Scripts and cron Jobs</em> at
 <p>
 </p>
 <hr />
-<h1><a name="options">options</a></h1>
+<h1><a name="options">OPTIONS</a></h1>
 <dl>
 <dt><strong><a name="d_homeroot" class="item"><strong>-d, --homeroot</strong></a></strong></dt>
 
@@ -104,11 +106,6 @@ bash startup to user's home directory.</p>
 <p>If provided, passed to <strong>usedadd(1)</strong> command if user does not
 exist.</p>
 </dd>
-<dt><strong><a name="h_help" class="item"><strong>-h, --help</strong></a></strong></dt>
-
-<dd>
-<p>Display short help.</p>
-</dd>
 <dt><strong><a name="i_init" class="item"><strong>-i, --init</strong></a></strong></dt>
 
 <dd>
@@ -120,6 +117,12 @@ commands.</p>
 
 <dd>
 <p>Set permissions to USER:GROUP. Defaults to <em>root:root</em>.</p>
+</dd>
+<dt><strong><a name="p_password_password" class="item"><strong>-p, --password PASSWORD</strong></a></strong></dt>
+
+<dd>
+<p>Set login password to PASSWORD. If this options is not set, use
+default value of <em>password</em> during call to <code>adduser(8)</code>.</p>
 </dd>
 <dt><strong><a name="s_shell_program" class="item"><strong>-s, --shell PROGRAM</strong></a></strong></dt>
 
@@ -140,6 +143,11 @@ commands.</p>
 
 <dd>
 <p>Display version information and exit.</p>
+</dd>
+<dt><strong><a name="h_help" class="item"><strong>-h, --help</strong></a></strong></dt>
+
+<dd>
+<p>Display short help.</p>
 </dd>
 </dl>
 <p>
@@ -204,6 +212,13 @@ restricted login below. For more information see SVN Book section
     # -i = use specific key</pre>
 <pre>
     secure = /usr/bin/ssh -l svn -i /home/user1/.ssh/user1</pre>
+<p>
+</p>
+<hr />
+<h1><a name="bugs">BUGS</a></h1>
+<p>The <code>restricted</code> behavior is not handled in <code>rbash(1)</code> correctly if you
+<code>su(1)</code> to the account. See &lt;http://bugs.debian.org/411997&gt;. You must
+use standard <code>login(1)</code> to get the expected behavior.</p>
 <p>
 </p>
 <hr />

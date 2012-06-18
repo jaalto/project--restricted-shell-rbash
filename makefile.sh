@@ -2,7 +2,7 @@
 #
 #   Copyright
 #
-#	Copyright (C) 2011 Jari Aalto <jari.aalto@cante.net>
+#	Copyright (C) 2011-2012 Jari Aalto <jari.aalto@cante.net>
 #
 #   License
 #
@@ -23,9 +23,15 @@
 #
 #	See --help. This program must be located in the same directory as the
 #	template files used for installation.
+#
+#   Notes
+#
+#	The "rbash" behavior is not handled correctly if you su(1) to
+#	the account. See <http://bugs.debian.org/411997>. You must use
+#	standard login(1).
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2011.1123.2134"
+VERSION="2012.0131.1801"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -33,8 +39,11 @@ CURDIR=$( cd $(dirname $0) ; pwd )
 HOMEROOT=/home
 RSHELL=/bin/rbash
 CHOWN=root:root
+
 unset COMMANDS
 unset USERGROUP
+unset HOMEDIR
+unset PASSWD
 unset test
 unset verbose
 unset initialize
@@ -104,16 +113,38 @@ IsUser ()
     getent passwd "$1" 2> /dev/null
 }
 
+GetHomeDir ()
+{
+    getent passwd $1 | awk -F: '{print $6}'
+}
+
+GetUserGroup ()
+{
+    #  dummy:x:1001:1001:Restricted user:/home/dummy:/bin/rbash
+    #	       =========
+    getent passwd "$1" 2> /dev/null |
+    awk -F: '{ print $3 ":" $4 }'
+}
+
 UserShell ()
 {
     [ "$1" ] || return 2
     IsUser "$1" | awk -F: '{ print $(NF) }'
 }
 
-MakeUser ()
+GeneratePassword ()
+{
+    perl -e 'print crypt($ARGV[0],q(sa))' ${1:-password}
+}
+
+CreateUser ()
 {
     if IsUser "$1" > /dev/null ; then
 	Echo "NOTE: Not touching existing account '$1'."
+
+	if [ "$PASSWD" ]; then
+	    Echo "NOTE: you must change password manually with passwd(1)"
+	fi
 
 	str=$(UserShell $1)
 
@@ -122,23 +153,42 @@ MakeUser ()
 	else
 	    "Run manually: chsh --shell $RSHELL $1"
 	fi
+
+	HOMEDIR=$(GetHomeDir $1)
+
     else
 	Echo "NOTE: Adding user 'S1'"
 
-	Run useradd \
-	    ${USERGROUP+--group $USERGROUP} \
-	    --home "$HOMEROOT/$1" \
-	    --shell "$RSHELL" "$1"
+	userskel=/tmp/dummy-skel
+	HOMEDIR="$HOMEROOT/$1"
 
-	Run install --directory --mode=750 "$HOMEROOT/$1"
+	if [ ! -d "$HOMEDIR" ]; then
+	    useraddopt="--create-home --skel $userskel"
+	fi
+
+	Run install --directory --mode=750 "$userskel"
+
+	if [ "$PASSWD" ]; then
+	    useraddopt="$useraddopt --password '$(GeneratePassword $PASSWD)'"
+	fi
+
+	Run useradd \
+	    --comment "'Restricted user'" \
+	    ${USERGROUP+--group $USERGROUP} \
+	    $useraddopt \
+	    --home "'$HOMEDIR'" \
+	    --shell $RSHELL "'$1'"
+
+       Run rmdir $userskel
+
     fi
 }
 
 MakeRestrictedBin ()
 {
-    Run install --directory bin
+    Run install --directory --mode=700 bin
     chmod 750 bin
-    Run chown "$CHOWN" bin
+    Run chown "$1" bin
 
     cwd=$(pwd)
 
@@ -195,7 +245,7 @@ CopyFiles ()
 
     cd "$CURDIR" || exit 1
 
-    Echo "Copyring setup files"
+    Echo "Copying setup files"
 
     for elt in .[a-z]*
     do
@@ -208,15 +258,16 @@ CopyFiles ()
 	if [ ! "$test" ]; then
 	    if [ "$force" ]; then
 		:   # Skip
-	    elif [ -d ~"$1/$elt" ] || [ -f ~"$1/$elt" ] ; then
-		Die "ERROR: Abort. Not overwriting without --force file: $elt"
+	    elif [ -d ~"$1/$elt" ] || [ -f "$1/$elt" ] ; then
+		Warn "WARN: Abort. Not overwriting without --force file: $1/$elt"
+		continue
 	    fi
 	fi
 
 	if [ -d "$elt" ]; then
-	    Run cp $verbose --recursive "$elt" ~"$1"/
+	    Run cp $verbose --recursive "$elt" "$1"/
 	else
-	    Run cp $verbose "$elt" ~"$1"/
+	    Run cp $verbose "$elt" "$1/$elt"
 	fi
     done
 }
@@ -228,6 +279,8 @@ IsMount ()
 
 Chattr ()
 {
+    return  # Disabled for now
+
     if [ ! "$test" ]; then
 	mount=$(Run IsMount ":$HOMEROOT")
     fi
@@ -238,7 +291,7 @@ Chattr ()
 	Warn "$mount"
     fi
 
-    echo "cd ~$LOGIN ; chattr" "$@"
+    Echo "cd $HOMEDIR ; chattr" "$@"
     Run chattr "$@"
 }
 
@@ -294,6 +347,7 @@ Main ()
 		shift
 		;;
 	    -D | --debug)
+		shift
 		set -x
 		;;
 	    -f | --force)
@@ -319,6 +373,12 @@ Main ()
 		shift
 		CHOWN="$1"
 		DieIfOption $CHOWN "--chown looks like an option: $CHOWN"
+		shift
+		;;
+	    -p | --passwd)
+		shift
+		PASSWD="$1"
+		DieIfOption $PASSWD "--passwd looks like an option: $PASSWD"
 		shift
 		;;
 	    -s | --shell)
@@ -386,26 +446,31 @@ Main ()
 	Die "ERROR: --homeroot is not an absolute path: $HOMEROOT"
     fi
 
-    HOMEROOT=$( DropTrailingSlash $HOMEROOT )
+    HOMEROOT=$(DropTrailingSlash $HOMEROOT)
 
     # .... DO IT ..........................................................
 
-    MakeUser "$LOGIN"
-set -x
-    CopyFiles "$LOGIN"
+    CreateUser "$LOGIN"
+    CopyFiles "$HOMEDIR"
 
-    Run cd ~"$LOGIN" || return 1
+    Run cd "$HOMEDIR" || return 1
 
-    MakeRestrictedBin
+    chown=$(GetUserGroup "$LOGIN")
+
+    if [ ! "$chown" ]; then
+	Die "INTERNAL ERROR: Can't read user:group. Run program option --debug"
+    fi
+
+    MakeRestrictedBin "$chown"
 
     # .... bash ...........................................................
 
-    Run chown "$CHOWN" .
+    Run chown "$chwon" .
     Run chmod 0750 .
     Run chmod ugo-s .
 
     Run chown "$CHOWN" .bash*
-    Run chmod 0640 .bash*
+    Run chmod 0644 .bash*
 
     umask 077
 
@@ -413,6 +478,7 @@ set -x
 
     Run chattr -a .bash_history 2> /dev/null # Can't chown without this
     Run chown "$CHOWN" .bash_history
+
     # Allow appending to the file
     Run Chattr +a .bash_history
 
@@ -423,7 +489,7 @@ set -x
 
     Echo "NOTE: Add keys to $cwd.ssh/authorized_keys"
 
-    Run chown "$CHOWN" .ssh .ssh/*
+    Run chown root:root .ssh .ssh/*
     Run chmod 0750 .ssh
     Run chmod ugo-s .ssh
     Run chmod 0640 .ssh/*
@@ -435,16 +501,19 @@ set -x
 	[ -f "$file" ] && Run chmod 0600 "$elt"
     done
 
-    Run chown "$CHOWN" .shosts
+    touch .shosts
+    Run chown root:root .shosts
     Run chmod 0600 .shosts
 
     # .... other ..........................................................
 
-    Run chown "$CHOWN" .rhosts
+    touch .rhosts
+    Run chown root:root .rhosts
     Run chmod 0600 .rhosts
 
     SetPath
 }
+
 
 Main "$@"
 

@@ -19,10 +19,10 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-# Descriotion
+# Description
 #
-#	This is only a redictor which is installed in PATH. It will
-#	to call the real $PROGRAM.
+#	This a redictor which is installed in PATH. It will call
+#	the real $PROGRAM.
 
 set -e
 
