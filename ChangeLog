@@ -1,5 +1,9 @@
 2013-05-29 Wed  Jari Aalto  <jari.aalto@cante.net>
 
+	* makefile.sh (Help): Fix typo.
+
+	* bin/restricted-shell-create.5.pod: Fix typo.
+
 	* Makefile (help): Suppress displaying command.
 
 2012-06-18 Mon  Jari Aalto  <jari.aalto@cante.net>

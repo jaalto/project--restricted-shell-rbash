@@ -31,7 +31,7 @@
 #	standard login(1).
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2012.0618.1903"
+VERSION="2013.0529.1931"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -317,7 +317,7 @@ OPTIONS
 
 	-i, --init
 	    Clean initialization. Delete all previous commands from user's
-	    bin/ directory before creating suymlinks to the allowed
+	    bin/ directory before creating symlinks to the allowed
 	    commands.
 
 	-t, --test

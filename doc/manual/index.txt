@@ -52,7 +52,7 @@ OPTIONS
 
     -i, --init
         Clean initialization. Delete all previous commands from user's
-        c<bin/> directory before creating suymlinks to the allowed commands.
+        c<bin/> directory before creating symlinks to the allowed commands.
 
     -o, --chown USER:GROUP
         Set permissions to USER:GROUP. Defaults to *root:root*.
