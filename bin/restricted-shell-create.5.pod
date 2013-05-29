@@ -209,6 +209,10 @@ The C<restricted> behavior is not handled in rbash(1) correctly if you
 su(1) to the account. See <http://bugs.debian.org/411997>. You must
 use standard login(1) to get the expected behavior.
 
+Due to lack of available tools in POSIX shell, combining short options
+is not supported; .e.g. B<-fi>. All options must be give separately
+using spaces like in B<-f> B<-i>.
+
 =head1 ENVIRONMENT
 
 None.

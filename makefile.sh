@@ -31,7 +31,7 @@
 #	standard login(1).
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2013.0529.1936"
+VERSION="2013.0529.1943"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -325,6 +325,12 @@ OPTIONS
 
 	-V, --version
 	    Display version.
+
+BUGS
+
+        Due to lack of available tools in POSIX shell, combining short
+        options is not supported; .e.g. -fi. All options must be
+        give separately using spaces: -f -i.
 "
 }
 

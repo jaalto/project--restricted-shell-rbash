@@ -219,6 +219,9 @@ restricted login below. For more information see SVN Book section
 <p>The <code>restricted</code> behavior is not handled in <code>rbash(1)</code> correctly if you
 <code>su(1)</code> to the account. See &lt;http://bugs.debian.org/411997&gt;. You must
 use standard <code>login(1)</code> to get the expected behavior.</p>
+<p>Due to lack of available tools in POSIX shell, combining short options
+is not supported; .e.g. <strong>-fi</strong>. All options must be give separately
+using spaces like in <strong>-f</strong> <strong>-i</strong>.</p>
 <p>
 </p>
 <hr />

@@ -2,8 +2,10 @@
 
 	* makefile.sh (Help): Fix typo.
 	(Main): Die on unknown option.
+	(Help): Add that combining short options are not supported.
 
 	* bin/restricted-shell-create.5.pod: Fix typo.
+	(BUGS): Add that combining short options are not supported.
 
 	* Makefile (help): Suppress displaying command.
 
