@@ -31,7 +31,7 @@
 #	standard login(1).
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2013.0529.1931"
+VERSION="2013.0529.1936"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -402,7 +402,7 @@ Main ()
 		;;
 	     -*)
 		Warn "[WARN] Unknown option: $1"
-		shift
+		return 1
 		;;
 	      *)
 		break

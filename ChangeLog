@@ -1,6 +1,7 @@
 2013-05-29 Wed  Jari Aalto  <jari.aalto@cante.net>
 
 	* makefile.sh (Help): Fix typo.
+	(Main): Die on unknown option.
 
 	* bin/restricted-shell-create.5.pod: Fix typo.
 
