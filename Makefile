@@ -93,7 +93,7 @@ all:
 
 # Rule: help - display Makefile rules
 help:
-	grep "^# Rule:" Makefile | sort
+	@ grep "^# Rule:" Makefile | sort
 
 # Rule: clean - remove temporary files
 clean:

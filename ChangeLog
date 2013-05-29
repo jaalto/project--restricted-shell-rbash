@@ -1,3 +1,7 @@
+2013-05-29 Wed  Jari Aalto  <jari.aalto@cante.net>
+
+	* Makefile (help): Suppress displaying command.
+
 2012-06-18 Mon  Jari Aalto  <jari.aalto@cante.net>
 
 	* makefile.sh (Main): Correct typo from $chwon to $chown.
