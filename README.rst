@@ -60,6 +60,26 @@ which will be locked. Use Option --test to see what would happen ::
 			|     List of allowed commands
 			User's login name
 
+
+  # set password
+  passwd dummy
+    Enter new UNIX password: xxx
+    Retype new UNIX password: xxx
+
+  # Set this user restricted
+  chsh --shell /bin/rbash dummy
+
+  # Test restricted shell by logging to an account. It's not possible
+  # to use su(1) here. See manual page of restricted-shell-create(5)
+  login dummy
+    password: xxxxxx
+
+  # See what you can do as user dummy?
+  $ ls
+  $ date
+  $ perl -V
+  -rbash: perl: command not found
+
 MENU BASED SHELL
 ================
 
