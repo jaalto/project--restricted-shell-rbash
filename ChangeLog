@@ -1,3 +1,7 @@
+2013-05-30 Thu  Jari Aalto  <jari.aalto@cante.net>
+
+	* makefile.sh (CreateUser): improve chsh message.
+
 2013-05-29 Wed  Jari Aalto  <jari.aalto@cante.net>
 
 	* makefile.sh (Help): Fix typo.

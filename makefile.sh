@@ -31,7 +31,9 @@
 #	standard login(1).
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
-VERSION="2013.0529.1943"
+
+VERSION="2013.0530.0840"
+
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
@@ -151,7 +153,8 @@ CreateUser ()
 	if Match "*rbash" "$str"; then
 	    Echo "Good, login shell of user '$1' is $str"
 	else
-	    "Run manually: chsh --shell $RSHELL $1"
+	    echo "[NOTE] Won't change shell from $str." \
+		 "Run manually: chsh --shell $RSHELL $1"
 	fi
 
 	HOMEDIR=$(GetHomeDir $1)
