@@ -309,6 +309,9 @@ DESCRIPTION
         Creates a LOGIN NAME if it does not exists. Only root can run this
         script.
 
+        The list of allowed commands must be on standard PATH
+        (/usr/bin:/usr/loca/bin) or listed with full path names.
+
 OPTIONS
         See manual page for complete set of options. An exerpt:
 
