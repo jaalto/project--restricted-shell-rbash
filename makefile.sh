@@ -302,39 +302,39 @@ Help ()
 {
     echo "\
 SYNOPSIS
-	[options] <login name> <list of allowed commands>
+        [options] <login name> <list of allowed commands>
 
 DESCRIPTION
-	Script to create a restricted shell environment using /bin/rbash.
-	Creates a LOGIN NAME if it does not exists. Only root can run this
-	script.
+        Script to create a restricted shell environment using /bin/rbash.
+        Creates a LOGIN NAME if it does not exists. Only root can run this
+        script.
 
 OPTIONS
-	See manual page for complete set of options. An exerpt:
+        See manual page for complete set of options. An exerpt:
 
-	-D, --debug
-	    Activate shell debug option.
+        -D, --debug
+            Activate shell debug option.
 
-	-f, --force
-	    Allow destructive changes, like overwriting files.
+        -f, --force
+            Allow destructive changes, like overwriting files while
+            copying bash startup to user's home directory.
 
-	-i, --init
-	    Clean initialization. Delete all previous commands from user's
-	    bin/ directory before creating symlinks to the allowed
-	    commands.
+        -i, --init
+            Clean initialization. Delete all previous commands from user's
+            bin/ directory before creating symlinks to the allowed
+            commands.
 
-	-t, --test
-	    Show what commands would be run. Do not actually do anything.
+        -t, --test
+            Show what commands would be run. Do not actually do anything.
 
-	-V, --version
-	    Display version.
+        -V, --version
+            Display version.
 
 BUGS
 
         Due to lack of available tools in POSIX shell, combining short
         options is not supported; .e.g. -fi. All options must be
-        give separately using spaces: -f -i.
-"
+        give separately using spaces: -f -i."
 }
 
 Version ()
