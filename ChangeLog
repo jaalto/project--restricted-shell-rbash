@@ -3,6 +3,8 @@
 	* README.rst (USAGE): Broaden example.
 
 	* makefile.sh (CreateUser): improve chsh message.
+	(Help): update --force option. The list of allowed commands must
+	be on standard PATH.
 
 2013-05-29 Wed  Jari Aalto  <jari.aalto@cante.net>
 

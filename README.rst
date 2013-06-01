@@ -55,10 +55,20 @@ Login to the server that distributes ``/home`` directories, switch to
 administrator *root*, select a login name (or supply existing login),
 which will be locked. Use Option --test to see what would happen ::
 
-   ./makefile.sh --test dummy date ls ssh
-                        |     |
-			|     List of allowed commands
-			User's login name
+    ./makefile.sh --init --force --test dummy date ls ssh
+                                        |     |
+                                        |     List of allowed commands
+                                        User's login name
+
+    -f, --force
+        Allow destructive changes, like overwriting files in user's account.
+	Used prmarily when command is repeated so that new set of commands
+	can be defined freely.
+
+    -i, --init
+        Clean initialization. Delete all previous commands from user's
+        bin/ directory before creating symlinks to the allowed
+        commands.
 
 
   # set password
@@ -84,11 +94,13 @@ MENU BASED SHELL
 ================
 
 A popular Perl based menu shell is available at
-<http://freecode.com/projects/pshell>. The implementation below does
-not require Perl and additional modules, just plain ``/bin/sh``.
+<http://freecode.com/projects/pshell> which also may interest you.
 
-Directory ``bin/`` contains a very simple menu shell script that
-allows running only defined commands. You could use it instead of
+The implementation presented here does not require Perl and additional
+modules, just plain POSIX shell ``/bin/sh``.
+
+Directory ``bin/`` contains a very simple menu script that allows
+running only defined set of commands. You could use it instead of
 previous ``rbash`` approach by setting user's shell to the script.
 This script is experimental and provided "as is". Use your judgement
 if you want to use this approach ::
@@ -108,7 +120,7 @@ if you want to use this approach ::
 COPYRIGHT AND LICENSE
 =====================
 
-Copyright (C) 2011-2012 Jari Aalto <jari.aalto@cante.net>
+Copyright (C) 2011-2013 Jari Aalto <jari.aalto@cante.net>
 
 This project is free; you can redistribute and/or modify it under
 the terms of GNU General Public license either version 2 of the
