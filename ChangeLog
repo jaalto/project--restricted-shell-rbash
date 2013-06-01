@@ -5,7 +5,9 @@
 	* makefile.sh (Tmpfile, Atexit): New.
 	(Main): Add getopt(1) support. Use if available. Check syntax
 	of user supplied $RSHELL. Correct error "--chown is not in
-	format user:group"
+	format user:group".
+	(CreateUser): Option --force now allows changing user's shell.
+	Add many more RSHELL cases to check.
 
 2013-05-31 Fri  Jari Aalto  <jari.aalto@cante.net>
 

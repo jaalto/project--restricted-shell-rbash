@@ -55,9 +55,9 @@ Login to the server that distributes ``/home`` directories, switch to
 administrator *root*, select a login name (or supply existing login),
 which will be locked. Use Option --test to see what would happen ::
 
-    ./makefile.sh --init --force --test dummy date ls ssh
-                                        |     |
-                                        |     List of allowed commands
+    ./makefile.sh -v --init --force --test dummy date ls ssh
+                                           |     |
+                                           |     List of allowed commands
                                         User's login name
 
     -f, --force
@@ -70,14 +70,15 @@ which will be locked. Use Option --test to see what would happen ::
         bin/ directory before creating symlinks to the allowed
         commands.
 
+    -v, --verbose
+        Display verbose messages.
+
+After the initialization, you might want to check how the account works:
 
   # set password
   passwd dummy
     Enter new UNIX password: xxx
     Retype new UNIX password: xxx
-
-  # Set this user restricted
-  chsh --shell /bin/rbash dummy
 
   # Test restricted shell by logging to an account. It's not possible
   # to use su(1) here. See manual page of restricted-shell-create(5)

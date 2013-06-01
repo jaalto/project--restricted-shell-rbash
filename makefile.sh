@@ -32,7 +32,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2013.0601.0934"
+VERSION="2013.0601.0943"
 
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
@@ -200,6 +200,9 @@ CreateUser ()
 	elif [ "$RSHELL" = "$str" ]; then   	        # Same, nothing to do
 	    :
 	elif [ "$OPT_RSHELL" ]; then			# User defined
+	    Run chsh --shell $RSHELL $1
+	elif [ "$force" ]; then
+	    echo "# NOTE: Changing user's $1 shell from $str to $RSHELL"
 	    Run chsh --shell $RSHELL $1
 	else
 	    echo "[NOTE] Won't change shell from $str." \
