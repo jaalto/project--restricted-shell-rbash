@@ -118,9 +118,6 @@ if you want to use this approach ::
    # Edit commands in case-statement of Main() function
    $EDITOR ~dummy/bin/rshell
 
-   # Change user's shell
-   chsh --shell $(cd ~dummy; echo $(pwd)/bin/rshell) dummy
-
 COPYRIGHT AND LICENSE
 =====================
 
