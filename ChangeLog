@@ -3,7 +3,8 @@
 	* bin/restricted-shell-create.5.pod: Mention getopt(1)
 
 	* makefile.sh (Tmpfile, Atexit): New.
-	(Main): Add getopt(1) support. Use if available.
+	(Main): Add getopt(1) support. Use if available. Check syntax
+	of user supplied $RSHELL.
 
 2013-05-31 Fri  Jari Aalto  <jari.aalto@cante.net>
 

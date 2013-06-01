@@ -32,7 +32,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2013.0601.0853"
+VERSION="2013.0601.0930"
 
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
@@ -46,6 +46,7 @@ unset COMMANDS
 unset USERGROUP
 unset HOMEDIR
 unset PASSWD
+unset OPT_RSHELL
 unset test
 unset verbose
 unset initialize
@@ -86,6 +87,11 @@ Which ()
     unset _saved _tmp
 
     return 1
+}
+
+MatchGrep ()
+{
+    echo "$2" | egrep -e "$1" > /dev/null
 }
 
 Match ()
@@ -187,11 +193,17 @@ CreateUser ()
 
 	str=$(UserShell $1)
 
-	if Match "*rbash" "$str"; then
+	if [ ! "$str" ]; then
+	    Echo "WARN: Cannot read current login shell of user '$1'"
+	elif Match "*rbash" "$str"; then
 	    Echo "Good, login shell of user '$1' is $str"
+	elif [ "$RSHELL" = "$str" ]; then   	        # Same, nothing to do
+	    :
+	elif [ "$OPT_RSHELL" ]; then			# User defined
+	    Run chsh --shell $RSHELL $1
 	else
 	    echo "[NOTE] Won't change shell from $str." \
-		 "Run manually: chsh --shell $RSHELL $1"
+ 		 "Run manually: chsh --shell $RSHELL $1"
 	fi
 
 	HOMEDIR=$(GetHomeDir $1)
@@ -217,7 +229,8 @@ CreateUser ()
 	    ${USERGROUP+--group $USERGROUP} \
 	    $useraddopt \
 	    --home "'$HOMEDIR'" \
-	    --shell $RSHELL "'$1'"
+	    --shell $RSHELL \
+	    "'$1'"
 
        Run rmdir $userskel
 
@@ -299,7 +312,8 @@ CopyFiles ()
 	    if [ "$force" ]; then
 		:   # Skip
 	    elif [ -d ~"$1/$elt" ] || [ -f "$1/$elt" ] ; then
-		Warn "WARN: Abort. Not overwriting without --force file: $1/$elt"
+		Warn "WARN: Not overwriting without" \
+		     "--force file: $1/$elt"
 		continue
 	    fi
 	fi
@@ -396,7 +410,7 @@ Main ()
         --shell bash \
         --name "$0.Main($VERSION restricted-shell-create)" \
         --long homeroot:,debug,force,group:,help,init,chown,passwd,shell,test,verbose,version \
-        --option "d:Dfg:hiopstvV" -- "$@" \
+        --option "d:Dfg:hiops:tvV" -- "$@" \
 	)
 
         if [ "$?" != "0" ]; then
@@ -425,7 +439,8 @@ Main ()
 	    -d | --homeroot)
 		shift
 		HOMEROOT="$1"
-		DieIfOption $HOMEROOT "--homeroot looks like an option: $HOMEROOT"
+		DieIfOption $HOMEROOT \
+		    "--homeroot looks like an option: $HOMEROOT"
 		shift
 		;;
 	    -D | --debug)
@@ -439,7 +454,8 @@ Main ()
 	    -g | --group)
 		shift
 		USERGROUP="$1"
-		DieIfOption $USERGROUP "--group looks like an option: $USERGROUP"
+		DieIfOption $USERGROUP \
+		    "--group looks like an option: $USERGROUP"
 		shift
 		;;
 	    -h | --help)
@@ -465,6 +481,7 @@ Main ()
 		;;
 	    -s | --shell)
 		shift
+		OPT_RSHELL="set-rshell"
 		RSHELL="$1"
 		DieIfOption $RSHELL "--shell looks like an option: $RSHELL"
 		shift
@@ -483,6 +500,7 @@ Main ()
 		return 0
 		;;
 	     --)
+		shift
 		break
 		;;
 	     -*)
@@ -500,14 +518,14 @@ Main ()
     # .... verify usage ...................................................
 
     if [ ! "$LOGIN" ]; then
-	Die "ERROR: Which login name to use for restricted shell?"
+	Die "ERROR: Missing login name to use for restricted shell. See -h"
     fi
 
     shift
 
     if [ ! "$test" ]; then
 	if ! IsRoot ; then
-	    Die "ERROR: This command can be run only by root"
+	    Die "ERROR: This utlity can only be run by root"
 	fi
     fi
 
@@ -520,7 +538,9 @@ Main ()
     if [ ! "$RSHELL" ]; then
 	Die "ERROR: --shell program not set"
     elif [ ! -x "$RSHELL" ]; then
-	Die "ERROR: --shell program does not exist: $RSELL"
+	Die "ERROR: --shell program does not exist: $RSHELL"
+    elif ! MatchGrep "^/[^/]+/[-_.a-zA-Z0-9]+$" "$RSHELL" ; then
+	Die "ERROR: --shell path name is invalid: '$RSHELL'"
     fi
 
     if ! Match "*[a-z]:[a-z]*" $CHOWN ; then
