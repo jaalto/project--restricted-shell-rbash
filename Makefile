@@ -133,7 +133,13 @@ dist-git: doc test test-git
 # The "gt" is maintainer's program frontend to Git
 # Rule: dist-snap - [maintainer] release snapshot from Git repository
 dist-snap: doc test test-git
-	@echo gt tar -q -z -c -p $(PACKAGE) -c -D master
+	@version=$$(awk -F= '/^VERSION=/ { +\
+			        gsub("\"",""); \
+				sub("[.][0-9]+$$", ""); \
+				print $$2; \
+				exit; \
+			    }' makefile.sh); \
+	echo gt tar -q -z -c -p $(PACKAGE)-$$version -c -D master
 
 # Rule: dist - [maintainer] alias for dist-git
 dist: dist-git
