@@ -53,6 +53,7 @@ unset USERGROUP
 unset HOMEDIR
 unset PASSWD
 unset OPT_RSHELL
+unset OPT_CHATTR
 unset test
 unset verbose
 unset initialize
@@ -342,20 +343,22 @@ IsMount ()
 
 Chattr ()
 {
-    return  # Disabled for now
+    [ "$OPT_CHATTR" ] || return 0
 
     if [ ! "$test" ]; then
 	mount=$(Run IsMount ":$HOMEROOT")
     fi
 
     if [ "$mount" ]; then
-	Warn "WARN: chattr(1) will fail. Can't change attributes on NFS mount"
+	Warn "WARN: chattr(1) will fail. Can't change" \
+	     "attributes on NFS mount"
 	Warn "WARN: run the command manually on the host of $HOMEROOT"
 	Warn "$mount"
     fi
 
     Echo "cd $HOMEDIR ; chattr" "$@"
     Run chattr "$@"
+    unset mount
 }
 
 Help ()
@@ -373,7 +376,7 @@ DESCRIPTION
         (/usr/bin:/usr/loca/bin) or listed with full path names.
 
 OPTIONS
-        See manual page for complete set of options. An exerpt:
+        See manual page for complete set of options. This is an exerpt only:
 
         -D, --debug
             Activate shell debug option.
@@ -418,8 +421,8 @@ Main ()
         tmpopt=$(getopt \
         --shell bash \
         --name "$0.Main($VERSION restricted-shell-create)" \
-        --long homeroot:,debug,force,group:,help,init,chown,passwd,shell,test,verbose,version \
-        --option "d:Dfg:hiops:tvV" -- "$@" \
+        --long attributes,homeroot:,debug,force,group:,help,init,chown,passwd,shell,test,verbose,version \
+        --option "ad:Dfg:hiops:tvV" -- "$@" \
 	)
 
         if [ "$?" != "0" ]; then
@@ -445,6 +448,9 @@ Main ()
     while :
     do
 	case "$1" in
+	    -a | --attributes)
+		OPT_CHATTR="opt-chattr"
+		;;
 	    -d | --homeroot)
 		shift
 		HOMEROOT="$1"
@@ -490,7 +496,7 @@ Main ()
 		;;
 	    -s | --shell)
 		shift
-		OPT_RSHELL="set-rshell"
+		OPT_RSHELL="opt-rshell"
 		RSHELL="$1"
 		DieIfOption $RSHELL "--shell looks like an option: $RSHELL"
 		shift
@@ -590,7 +596,7 @@ Main ()
 
     # Allow only appending to the .bash_history file
 
-    Run chattr -a .bash_history 2> /dev/null # Can't chown without this
+    Run Chattr -a .bash_history 2> /dev/null # Can't chown without this
     Run chown "$CHOWN" .bash_history
 
     # Allow appending to the file

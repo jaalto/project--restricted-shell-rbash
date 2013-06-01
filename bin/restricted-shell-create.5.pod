@@ -44,7 +44,7 @@ restricted-shell-create - create a restricted shell environment using rbash
 
 =head1 SYNOPSIS
 
-  restricted-shell-create [options] <login name> [list of allowed commands]
+  restricted-shell-create [options] <login name> [list of commands]
 
 =head1 DESCRIPTION
 
@@ -82,6 +82,27 @@ A good article about overwiev to securing logins can be found at
 =head1 OPTIONS
 
 =over 4
+
+=item B<-a, --attributes>
+
+Use extended file system attributes provided by chattr(1) command to
+protect installed files better from user's modification attempts. If
+this options is used, make sure that following conditions are met:
+
+=over 2
+
+=item *
+
+(1) You're running at the host that physically has the home disk for
+the $USER. Using this option on a host that only has access to the
+/home share through networked file system, like NFS, will fail.
+
+=item *
+
+(2) the File System supports chattr(1) command. E.g. ext* file systems
+do, but others may not.
+
+=back
 
 =item B<-d, --homeroot>
 

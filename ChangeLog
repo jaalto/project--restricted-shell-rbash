@@ -2,14 +2,17 @@
 
 	* README.rst (REQUIREMENTS): List run time requirements.
 
-	* bin/restricted-shell-create.5.pod: Mention getopt(1)
+	* bin/restricted-shell-create.5.pod:
+	(OPTIONS): Add -a, --attributes to activate chattr(1).
+	(BUGS): Mention getopt(1)
 
 	* makefile.sh (Tmpfile, Atexit): New.
 	(Main): Add getopt(1) support. Use if available. Check syntax
 	of user supplied $RSHELL. Correct error "--chown is not in
-	format user:group".
+	format user:group". Add new option --attribute.
 	(CreateUser): Option --force now allows changing user's shell.
 	Add many more RSHELL cases to check.
+	(Chattr): Activate only on $OPT_CHATTR.
 
 2013-05-31 Fri  Jari Aalto  <jari.aalto@cante.net>
 
