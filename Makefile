@@ -115,7 +115,7 @@ test-git:
 	# test-git - Check Git repository condition
 	@if git status | egrep "modified" ; then \
 	    echo "ERROR: Uncommitted files" >&2 ; \
-	    fatal-error ; \
+	    will-now-exit-with-fatal-error ; \
 	fi
 
 # Rule: dist-git - [maintainer] release from Git repository
@@ -133,7 +133,7 @@ dist-git: doc test test-git
 # The "gt" is maintainer's program frontend to Git
 # Rule: dist-snap - [maintainer] release snapshot from Git repository
 dist-snap: doc test test-git
-	@echo gt tar -q -z -p $(PACKAGE) -c -D master
+	@echo gt tar -q -z -c -p $(PACKAGE) -c -D master
 
 # Rule: dist - [maintainer] alias for dist-git
 dist: dist-git
