@@ -139,7 +139,7 @@ dist-snap: doc test test-git
 				print $$2; \
 				exit; \
 			    }' makefile.sh); \
-	echo gt tar -q -z -c -p $(PACKAGE)-$$version -c -D master
+	echo gt tar -q -z -c -p $(PACKAGE)-$$version master
 
 # Rule: dist - [maintainer] alias for dist-git
 dist: dist-git
