@@ -38,7 +38,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2013.0601.0958"
+VERSION="2013.0601.1911"
 
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
@@ -545,8 +545,39 @@ Main ()
     fi
 
     if [ "$1" ]; then
-	COMMANDS="$*"
-    else
+	list=""
+
+	# Do some sanity checks
+
+	for elt in "$@"
+	do
+	    MatchGrep "^[ ]+$" "$elt" && continue
+
+	    case "$elt" in
+		*\ *)
+		    Warn "WARN: Ignoring command with space: '$elt'"
+		    ;;
+		cd)
+		    Warn "WARN: Ignoring command 'cd'. See rbash(1)"
+		    ;;
+		*/) Warn "WARN: Ignoring command: '$elt'"
+		    ;;
+		*/*)Warn "WARN: Ignoring command with relative path: '$elt'"
+		    ;;
+                 *) list="$list $elt"
+		    ;;
+	    esac
+	done
+
+	Echo "NOTE: Using command set: $list"
+
+	COMMANDS="$list"
+
+	unset elt
+	unset list
+    fi
+
+    if [ "$COMMANDS" ]; then
 	Warn "WARN: list of commands not given for '$LOGIN' to run"
     fi
 
@@ -578,7 +609,8 @@ Main ()
     chown=$(GetUserGroup "$LOGIN")
 
     if [ ! "$chown" ]; then
-	Die "INTERNAL ERROR: Can't read user:group. Run program option --debug"
+	Die "INTERNAL ERROR: Can't read user:group." \
+	    "Run program option --debug"
     fi
 
     MakeRestrictedBin "$chown"

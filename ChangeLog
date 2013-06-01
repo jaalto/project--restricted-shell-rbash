@@ -11,8 +11,10 @@
 	of user supplied $RSHELL. Correct error "--chown is not in
 	format user:group". Add new option --attribute.
 	(CreateUser): Option --force now allows changing user's shell.
-	Add many more RSHELL cases to check.
+	Add many more RSHELL cases to check. Add sanity checks for
+	user supplied commands, like no spaces, no relative paths etc.
 	(Chattr): Activate only on $OPT_CHATTR.
+	(TMPBASE): master
 
 2013-05-31 Fri  Jari Aalto  <jari.aalto@cante.net>
 
