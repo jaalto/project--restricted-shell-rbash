@@ -32,7 +32,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2013.0601.0930"
+VERSION="2013.0601.0934"
 
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
@@ -185,7 +185,7 @@ GeneratePassword ()
 CreateUser ()
 {
     if IsUser "$1" > /dev/null ; then
-	Echo "NOTE: Not touching existing account '$1'."
+	Echo "NOTE: Existing account '$1'."
 
 	if [ "$PASSWD" ]; then
 	    Echo "NOTE: you must change password manually with passwd(1)"
@@ -543,7 +543,7 @@ Main ()
 	Die "ERROR: --shell path name is invalid: '$RSHELL'"
     fi
 
-    if ! Match "*[a-z]:[a-z]*" $CHOWN ; then
+    if ! Match "*[a-z]:[a-z]*" "$CHOWN" ; then
 	Die "ERROR: --chown is not in format user:group => $CHOWN"
     fi
 

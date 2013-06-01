@@ -4,7 +4,8 @@
 
 	* makefile.sh (Tmpfile, Atexit): New.
 	(Main): Add getopt(1) support. Use if available. Check syntax
-	of user supplied $RSHELL.
+	of user supplied $RSHELL. Correct error "--chown is not in
+	format user:group"
 
 2013-05-31 Fri  Jari Aalto  <jari.aalto@cante.net>
 
