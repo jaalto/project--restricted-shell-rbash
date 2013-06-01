@@ -29,10 +29,16 @@
 #	The "rbash" behavior is not handled correctly if you su(1) to
 #	the account. See <http://bugs.debian.org/411997>. You must use
 #	standard login(1).
+#
+#   Depends (Debian packages)
+#
+#	util-linux	/usr/bin/getopt [optional]
+#	e2fsprogs	/usr/bin/chattr
+#	bash		/bin/rbash
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2013.0601.0943"
+VERSION="2013.0601.0958"
 
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash

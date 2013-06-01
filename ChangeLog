@@ -1,5 +1,7 @@
 2013-06-01 Sat  Jari Aalto  <jari.aalto@cante.net>
 
+	* README.rst (REQUIREMENTS): List run time requirements.
+
 	* bin/restricted-shell-create.5.pod: Mention getopt(1)
 
 	* makefile.sh (Tmpfile, Atexit): New.
