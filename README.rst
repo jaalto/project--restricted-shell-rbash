@@ -73,23 +73,23 @@ which will be locked. Use Option --test to see what would happen ::
     -v, --verbose
         Display verbose messages.
 
-After the initialization, you might want to check how the account works:
+After the initialization, you might want to check how the account works: ::
 
-  # set password
-  passwd dummy
-    Enter new UNIX password: xxx
-    Retype new UNIX password: xxx
+    # set password
+    passwd dummy
+      Enter new UNIX password: xxx
+      Retype new UNIX password: xxx
 
-  # Test restricted shell by logging to an account. It's not possible
-  # to use su(1) here. See manual page of restricted-shell-create(5)
-  login dummy
-    password: xxxxxx
+    # Test restricted shell by logging to an account. It's not possible
+    # to use su(1) here. See manual page of restricted-shell-create(5)
+    login dummy
+      password: xxxxxx
 
-  # See what you can do as user dummy?
-  $ ls
-  $ date
-  $ perl -V
-  -rbash: perl: command not found
+    # See what you can do as user dummy?
+    $ ls
+    $ date
+    $ perl -V
+    -rbash: perl: command not found
 
 MENU BASED SHELL
 ================
