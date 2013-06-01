@@ -1,3 +1,14 @@
+2013-06-01 Sat  Jari Aalto  <jari.aalto@cante.net>
+
+	* bin/restricted-shell-create.5.pod: Mention getopt(1)
+
+	* makefile.sh (Tmpfile, Atexit): New.
+	(Main): Add getopt(1) support. Use if available.
+
+2013-05-31 Fri  Jari Aalto  <jari.aalto@cante.net>
+
+	* makefile.sh (Which): New.
+
 2013-05-30 Thu  Jari Aalto  <jari.aalto@cante.net>
 
 	* README.rst (USAGE): Broaden example.

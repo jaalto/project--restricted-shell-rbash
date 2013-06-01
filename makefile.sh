@@ -32,7 +32,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2013.0530.0840"
+VERSION="2013.0601.0853"
 
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
@@ -50,6 +50,43 @@ unset test
 unset verbose
 unset initialize
 unset force
+
+TMPBASE=/tmp/tmp.$(basename $0).$$
+
+Tmpfile ()
+{
+    mktemp $TMPBASE.XXXXXX ||
+    {
+       echo "$0: [FATAL] Cannnot create temporary file in $TMPBASE" >&2
+       exit 1
+    }
+}
+
+Atexit ()
+{
+    rm -f "$TMPBASE"*
+}
+
+Which ()
+{
+    _saved="$IFS";
+    IFS=":"
+
+    for _tmp in $PATH
+    do
+        _tmp=${_tmp%/}			# Delete trailing slash
+
+	if [ -x "$_tmp/$1" ]; then
+	    echo "$_tmp/$1"
+	    return 0
+	fi
+    done
+
+    IFS="$saved"
+    unset _saved _tmp
+
+    return 1
+}
 
 Match ()
 {
@@ -349,6 +386,39 @@ Main ()
 {
     dummy="$*"				# for debug
 
+    if  Which getopt > /dev/null ; then
+
+	# What getopt(1) does is to allow user to cmbine options (-vh).
+	# It splits them apart (see eval) in form "-v -h" so that they
+	# can be processed.
+
+        tmpopt=$(getopt \
+        --shell bash \
+        --name "$0.Main($VERSION restricted-shell-create)" \
+        --long homeroot:,debug,force,group:,help,init,chown,passwd,shell,test,verbose,version \
+        --option "d:Dfg:hiopstvV" -- "$@" \
+	)
+
+        if [ "$?" != "0" ]; then
+	    for i in "$@"
+	    do
+		case "$i" in
+		    -[a-z][a-z])
+			Die "FATAL: No getopt(1) in PATH to parse" \
+			    "combined options ($i); use separate options"
+			;;
+		esac
+	    done
+
+	    unset i
+	fi
+
+        eval set -- "$tmpopt"
+	unset tmpopt
+    fi
+
+    # POSIX shell statements to parse options
+
     while :
     do
 	case "$1" in
@@ -411,6 +481,9 @@ Main ()
 		shift
 		Version
 		return 0
+		;;
+	     --)
+		break
 		;;
 	     -*)
 		Warn "[WARN] Unknown option: $1"
@@ -526,6 +599,8 @@ Main ()
     SetPath
 }
 
+# Nubers are not POSIX: 0 1 2 5 15
+trap Atexit EXIT HUP INT TRAP TERM
 
 Main "$@"
 
