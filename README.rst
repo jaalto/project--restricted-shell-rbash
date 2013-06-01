@@ -82,6 +82,7 @@ After the initialization, you might want to check how the account works: ::
 
     # Test restricted shell by logging to an account. It's not possible
     # to use su(1) here. See manual page of restricted-shell-create(5)
+    # why su(1) does not work.
     login dummy
       password: xxxxxx
 
