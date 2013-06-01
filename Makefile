@@ -135,7 +135,6 @@ dist-git: doc test test-git
 dist-snap: doc test test-git
 	@version=$$(awk -F= '/^VERSION=/ { +\
 			        gsub("\"",""); \
-				sub("[.][0-9]+$$", ""); \
 				print $$2; \
 				exit; \
 			    }' makefile.sh); \
