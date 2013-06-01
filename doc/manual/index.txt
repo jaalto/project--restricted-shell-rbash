@@ -3,7 +3,7 @@ NAME
     rbash
 
 SYNOPSIS
-      restricted-shell-create [options] <login name> [list of allowed commands]
+      restricted-shell-create [options] <login name> [list of commands]
 
 DESCRIPTION
     Program to create a restricted shell environment using "/bin/rbash".
@@ -37,6 +37,19 @@ DESCRIPTION
     <http://www.symantec.com/connect/articles/restricting-unix-users>.
 
 OPTIONS
+    -a, --attributes
+        Use extended file system attributes provided by chattr(1) command to
+        protect installed files better from user's modification attempts. If
+        this options is used, make sure that following conditions are met:
+
+        * (1) You're running at the host that physically has the home disk
+          for the $USER. Using this option on a host that only has access to
+          the /home share through networked file system, like NFS, will
+          fail.
+
+        * (2) the File System supports chattr(1) command. E.g. ext* file
+          systems do, but others may not.
+
     -d, --homeroot
         The absolute path of system home directory root. defaults to /home.
 

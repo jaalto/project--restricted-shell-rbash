@@ -49,7 +49,7 @@
 <hr />
 <h1><a name="synopsis">SYNOPSIS</a></h1>
 <pre>
-  restricted-shell-create [options] &lt;login name&gt; [list of allowed commands]</pre>
+  restricted-shell-create [options] &lt;login name&gt; [list of commands]</pre>
 <p>
 </p>
 <hr />
@@ -84,6 +84,24 @@ Scripts and cron Jobs</em> at
 <hr />
 <h1><a name="options">OPTIONS</a></h1>
 <dl>
+<dt><strong><a name="a_attributes" class="item"><strong>-a, --attributes</strong></a></strong></dt>
+
+<dd>
+<p>Use extended file system attributes provided by <code>chattr(1)</code> command to
+protect installed files better from user's modification attempts. If
+this options is used, make sure that following conditions are met:</p>
+<ul>
+<li>
+<p>(1) You're running at the host that physically has the home disk for
+the $USER. Using this option on a host that only has access to the
+/home share through networked file system, like NFS, will fail.</p>
+</li>
+<li>
+<p>(2) the File System supports <code>chattr(1)</code> command. E.g. ext* file systems
+do, but others may not.</p>
+</li>
+</ul>
+</dd>
 <dt><strong><a name="d_homeroot" class="item"><strong>-d, --homeroot</strong></a></strong></dt>
 
 <dd>
