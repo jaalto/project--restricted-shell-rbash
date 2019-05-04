@@ -51,8 +51,8 @@ Main ()
 	Die "$0: Setup error. Run Makefile in source distribution."
     fi
 
-    dir=$( dirname $PROGRAM )
-    bin=$( basename $PROGRAM )
+    dir=$(dirname $PROGRAM)
+    bin=$(basename $PROGRAM)
 
     cd "$dir"
     ./"$bin" "$@"
