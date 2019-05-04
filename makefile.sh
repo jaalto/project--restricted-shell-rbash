@@ -43,7 +43,7 @@ VERSION="2013.0601.1911"
 LICENSE="GPL-2+"
 HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
 
-CURDIR=$( cd $(dirname $0) ; pwd )
+CURDIR=$(cd $(dirname $0) ; pwd)
 HOMEROOT=/home
 RSHELL=/bin/rbash
 CHOWN=root:root
@@ -181,7 +181,7 @@ GetUserGroup ()
 UserShell ()
 {
     [ "$1" ] || return 2
-    IsUser "$1" | awk -F: '{ print $(NF) }'
+    IsUser "$1" | awk -F: '{print $(NF)}'
 }
 
 GeneratePassword ()
@@ -272,7 +272,7 @@ MakeRestrictedBin ()
     do
 	case "$cmd" in
 	    /*) path="$cmd"
-		cmd=$( echo $cmd | sed 's,.*/,,' )
+		cmd=$(echo $cmd | sed 's,.*/,,')
 		;;
 
 	     */*)
