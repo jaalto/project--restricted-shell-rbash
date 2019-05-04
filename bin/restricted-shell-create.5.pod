@@ -252,7 +252,7 @@ None.
 
 =head1 AVAILABILITY
 
-http://freecode.com/projects/restricted-shell-rbash
+https://github.com/jaalto/project--linux-tmpfs-ramdisk
 
 =head1 SEE ALSO
 

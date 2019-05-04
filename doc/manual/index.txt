@@ -175,7 +175,7 @@ STANDARDS
     None.
 
 AVAILABILITY
-    http://freecode.com/projects/restricted-shell-rbash
+    https://github.com/jaalto/project--linux-tmpfs-ramdisk
 
 SEE ALSO
     bash(1) jailer(1) rbash(1) ssh(1) updatejail(1)

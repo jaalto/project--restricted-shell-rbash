@@ -14,7 +14,7 @@ commands of your choice. Useful for setting up tightly confined secure
 accounts that allow minimum access to restricted set of commands.
 
 Project homepage (bugs and source) is at
-<http://freecode.com/projects/restricted-shell-rbash>.
+https://github.com/jaalto/project--linux-tmpfs-ramdisk
 
 How does it work?
 -----------------

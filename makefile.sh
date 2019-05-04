@@ -38,10 +38,10 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2013.0601.1911"
+VERSION="2019.0504.2151"
 
 LICENSE="GPL-2+"
-HOMEPAGE=http://freecode.com/projects/restricted-shell-rbash
+HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
 
 CURDIR=$(cd $(dirname $0) ; pwd)
 HOMEROOT=/home
