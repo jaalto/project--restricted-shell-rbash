@@ -5,10 +5,10 @@
 DESCRIPTION
 ===========
 
-Utility to create restricted shell account using Bash in rbash mode.
+Utility to create restricted shell, to jail, account using Bash in rbash mode.
 
 GNU project's Bash running in ``rbash`` mode is a viable choice if you
-are trying to somewhat contain trusted users. This project includes
+are trying to somewhat contain semi-trusted users. This project includes
 basic files and utility to create a dummy user that only can run
 commands of your choice. Useful for setting up tightly confined secure
 accounts that allow minimum access to restricted set of commands.
@@ -16,7 +16,7 @@ accounts that allow minimum access to restricted set of commands.
 How does it work?
 -----------------
 
-Bash installation contains ``rbash`` binary which restricts access.
+Bash installation contains ``rbash`` binary which can restrict access.
 See
 <http://www.gnu.org/s/bash/manual/html_node/The-Restricted-Shell.html>.
 What is left to do is to provide a small set of configuration files to
