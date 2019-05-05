@@ -165,9 +165,6 @@ doc/manual/index.txt: bin/$(NAME).$(MANSECT).pod
 # Rule: man - Generate or update manual page
 man: bin/$(NAME).$(MANSECT)
 
-# Rule: doc - Same as man
-doc: man
-
 html: doc/manual/index.html
 
 txt: doc/manual/index.txt
