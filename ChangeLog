@@ -1,5 +1,7 @@
 2019-05-05 Sun  Jari Aalto  <jari.aalto@cante.net>
 
+	* README.rst (MENU BASED SHELL): Add pshell dev URL.
+
 	* bin/restricted-shell-create.5.pod: (AVAILABILITY):
 	Update to Github.
 
