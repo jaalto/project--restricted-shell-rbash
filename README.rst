@@ -13,9 +13,6 @@ basic files and utility to create a dummy user that only can run
 commands of your choice. Useful for setting up tightly confined secure
 accounts that allow minimum access to restricted set of commands.
 
-Project homepage (bugs and source) is at
-https://github.com/jaalto/project--linux-tmpfs-ramdisk
-
 How does it work?
 -----------------
 
@@ -127,5 +124,8 @@ Copyright (C) 2011-2019 Jari Aalto <jari.aalto@cante.net>
 This project is free; you can redistribute and/or modify it under
 the terms of GNU General Public license either version 2 of the
 License, or (at your option) any later version.
+
+Project homepage (bugs and source) is at
+https://github.com/jaalto/project--restricted-shell-rbash
 
 .. End of file
