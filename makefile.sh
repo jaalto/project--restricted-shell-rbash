@@ -38,7 +38,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2019.0505.1808"
+VERSION="2019.0505.1815"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -137,6 +137,7 @@ Which ()
 
         if [ -x "$dir/$cmd" ]; then
             echo "$dir/$cmd"
+            IFS="$saved"
             return 0
         fi
     done
@@ -322,10 +323,12 @@ MakeRestrictedBin ()
 
     Echo "Symlinking allowed commands"
 
-    local cmd
+    local cmd debug
 
     for cmd in $COMMANDS
     do
+        debug="$cmd"
+
         case "$cmd" in
             /*) path="$cmd"
                 cmd=$(echo $cmd | sed 's,.*/,,')
@@ -645,8 +648,8 @@ Main ()
         unset list
     fi
 
-    if [ "$COMMANDS" ]; then
-        Warn "WARN: list of commands not given for '$LOGIN' to run"
+    if [ ! "$COMMANDS" ]; then
+        Warn "WARN: no list of commands to allowed by '$LOGIN'"
     fi
 
     if [ ! "$RSHELL" ]; then
