@@ -194,7 +194,7 @@ restricted login below. For more information see SVN Book section
 I<Tunneling over SSH> at
 <http://svnbook.red-bean.com/nightly/en/index.html>.
 
-    # ... AT SVN SERVER
+    # ... SVN SERVER
 
     restricted-shell-create --init svn svnserve
     cd ~svn
@@ -210,11 +210,11 @@ I<Tunneling over SSH> at
     cat user1.pub user2.pub >> authorized_keys
 
     # Edit each user's key like this (all in one line):
-    # command=”svnserve --root=/var/svn/project/ --tunnel –-tunnel-user=user1″,no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty <KEY DATA>
+    # command="svnserve --root=/var/svn/project/ --tunnel --tunnel-user=tunnel1,no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty <KEY DATA>"
 
     $EDITOR authorized_keys
 
-    # ... AT SVN CLIENT SIDE
+    # ... SVN CLIENT
 
     $EDITOR $HOME/.subversion/config
 
