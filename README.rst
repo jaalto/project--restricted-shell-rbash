@@ -97,9 +97,6 @@ After the initialization, you might want to check how the account works: ::
 MENU BASED SHELL
 ================
 
-A popular Perl based menu shell is available at
-<http://freecode.com/projects/pshell> which also may interest you.
-
 The implementation presented here does not require Perl and additional
 modules, just plain POSIX shell ``/bin/sh``.
 
@@ -117,6 +114,10 @@ if you want to use this approach ::
 
    # Edit commands in case-statement of Main() function
    $EDITOR ~dummy/bin/rshell
+
+Note: See also a Perl based menu shell at
+<http://freecode.com/projects/pshell> and
+<https://sourceforge.net/projects/psydev/>.
 
 COPYRIGHT AND LICENSE
 =====================
