@@ -1,13 +1,23 @@
+2019-07-08 Mon  Jari Aalto  <jari.aalto@cante.net>
+
+	* bin/restricted-shell-create.5.pod: (FILES):
+	Correct path to /usr/share/...
+
 2019-05-05 Sun  Jari Aalto  <jari.aalto@cante.net>
+
+	* Makefile (doc): remove duplicate target.
 
 	* README.rst (MENU BASED SHELL): Add pshell dev URL.
 
 	* bin/restricted-shell-create.5.pod: (AVAILABILITY):
-	Update to Github.
+	Update to Github. Delete UTF8 (podchecker).
 
 	* doc/manual/index.txt (AVAILABILITY): Update to Github.
 
 	* makefile.sh (HOMEPAGE): Update to Github.
+	(CreateUser): "Adding user S1" by using $1.
+	Big change: move to /bin/bash and fix tiny little
+	bugs here and there.
 
 2013-06-01 Sat  Jari Aalto  <jari.aalto@cante.net>
 

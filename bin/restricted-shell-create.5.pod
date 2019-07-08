@@ -241,7 +241,7 @@ None.
 
 =head1 FILES
 
-Directory C</ust/share/restricted-shell-rbash> contains template
+Directory C</usr/share/restricted-shell-rbash> contains template
 field. These are not user editable as they are overwritten by
 next install. If you want to supply your own, copy them over to
 user directory after this program.
