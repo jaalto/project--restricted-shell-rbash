@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1054"
+VERSION="2026.1107.1055"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -265,8 +265,7 @@ CreateUser ()
             --shell "$RSHELL" \
             "'$login'" || exit $?
 
-       Run rmdir $userskel
-
+       Run rmdir "$userskel"
     fi
 }
 
