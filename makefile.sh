@@ -42,8 +42,7 @@ VERSION="2019.0505.1815"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
-
-CURDIR=$(cd $(dirname $0) ; pwd)
+CURDIR="$(CDPATH='' cd -- "$(dirname "$0")" && pwd)"
 HOMEROOT=/home
 RSHELL=/bin/rbash
 CHOWN=root:root
