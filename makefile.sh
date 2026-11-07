@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 #
 #   Copyright
 #
@@ -38,7 +38,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1039"
+VERSION="2026.1107.1044"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -62,46 +62,8 @@ unset verbose
 unset initialize
 unset force
 
-# Make sure this is the deault
-IFS=$' \t\n'
-
-#######################################################################
-#
-#       Initial shell check
-#
-#######################################################################
-
-#   Check correct shell and detect user mistakes like this:
-#
-#       sh ./program.sh
-#
-#   The following will succeed under bash, but will give error under sh
-#
-#   NOTE: In some places the sh is copy of bash (or symlink), but bash
-#   would still restrict it to certain features. The simplistic test
-#   is not enough. See bash manual and section "INVOCATION".
-#
-#       eval "[[ 1 ]]" > /dev/null
-#
-#   The process substitution test will fail under Bash running as
-#   "sh" mode.
-#
-#       eval ": <(:)" > /dev/null
-
-[ "$BASH" = "/usr/bin/bash" ] || [ "$BASH" = "/bin/bash" ] ||
-{
-    prg="$0"
-
-    # If we did not find ourselves, most probably we were run as
-    # 'sh PROGRAM' in which case we are not to be found in PATH.
-
-    if [ -f "$prg" ]; then
-        [ -x /bin/bash ] && exec /bin/bash "$prg" ${1:+"$@"}
-    fi
-
-    echo "$0 [FATAL] $prg called with wrong shell: needs bash" >&2
-    exit 1 ;
-}
+# Make IFS is the deault
+unset IFS
 
 #######################################################################
 #
