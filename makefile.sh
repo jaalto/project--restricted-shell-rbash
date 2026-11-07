@@ -36,9 +36,13 @@
 #       e2fsprogs       /usr/bin/chattr
 #       bash            /bin/rbash
 
+# - Allow use of local
+# - supprted by 100% /bin/sh (legacy systems excluded)
+# shellcheck shell=dash
+
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1044"
+VERSION="2026.1107.1047"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -178,7 +182,7 @@ IsUser ()
 
 GetHomeDir ()
 {
-    getent passwd $1 | awk -F: '{print $6}'
+    getent passwd "$1" | awk -F: '{print $6; exit}'
 }
 
 GetUserGroup ()
