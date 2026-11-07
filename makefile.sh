@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1049"
+VERSION="2026.1107.1050"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -227,10 +227,10 @@ CreateUser ()
         elif [ "$RSHELL" = "$str" ]; then               # Same, nothing to do
             :
         elif [ "$OPT_RSHELL" ]; then                    # User defined
-            Run chsh --shell $RSHELL $login
+            Run chsh --shell "$RSHELL" "$login"
         elif [ "$force" ]; then
             echo "# NOTE: Changing user's $login shell from $str to $RSHELL"
-            Run chsh --shell $RSHELL $login
+            Run chsh --shell "$RSHELL" "$login"
         else
             echo "[NOTE] Won't change shell from $str." \
                  "Run manually: chsh --shell $RSHELL $login"
