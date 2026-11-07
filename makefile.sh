@@ -527,7 +527,7 @@ Main ()
             -g | --group)
                 shift
                 USERGROUP="$1"
-                DieIfOption $USERGROUP \
+                DieIfOption "$USERGROUP" \
                     "--group looks like an option: $USERGROUP"
                 shift
                 ;;
