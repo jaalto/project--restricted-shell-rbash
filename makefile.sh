@@ -184,7 +184,7 @@ Die ()
 
 DieIfOption ()
 {
-    if Match "-*" $1 ; then
+    if Match "-*" "$1" ; then
         shift
         Die "ERROR: $*"
     fi
