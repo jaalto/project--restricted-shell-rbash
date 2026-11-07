@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1109"
+VERSION="2026.1107.1110"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -543,7 +543,7 @@ Main ()
             -o | --chown)
                 shift
                 CHOWN="$1"
-                DieIfOption $CHOWN "--chown looks like an option: $CHOWN"
+                DieIfOption "$CHOWN" "--chown looks like an option: $CHOWN"
                 shift
                 ;;
             -p | --passwd)
