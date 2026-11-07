@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1102"
+VERSION="2026.1107.1103"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -371,8 +371,12 @@ CopyFiles ()
         fi
 
         if [ -d "$elt" ]; then
+	    # ignore quotes
+	    # shellcheck disable=SC2086
             Run cp $verbose --recursive "$elt" "dir1"/
         else
+	    # ignore quotes
+	    # shellcheck disable=SC2086
             Run cp $verbose "$elt" "$dir/$elt"
         fi
     done
