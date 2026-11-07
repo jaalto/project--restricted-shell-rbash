@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1051"
+VERSION="2026.1107.1054"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -251,15 +251,18 @@ CreateUser ()
         Run install --directory --mode=750 "$userskel"
 
         if [ "$PASSWD" ]; then
-            useraddopt="$useraddopt --password '$(GeneratePassword $PASSWD)'"
+            useraddopt="$useraddopt --password '$(GeneratePassword "$PASSWD")'"
         fi
+
+	# ignore quotes, backslashes
+	# shellcheck disable=SC2086,SC2090
 
         Run useradd \
             --comment "'Restricted user'" \
             ${USERGROUP+--group $USERGROUP} \
             $useraddopt \
             --home "'$HOMEDIR'" \
-            --shell $RSHELL \
+            --shell "$RSHELL" \
             "'$login'" || exit $?
 
        Run rmdir $userskel
