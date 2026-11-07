@@ -218,7 +218,7 @@ CreateUser ()
             Echo "NOTE: you must change password manually with passwd(1)"
         fi
 
-        str=$(UserShell $login)
+        str="$(UserShell "$login")"
 
         if [ ! "$str" ]; then
             Echo "WARN: Cannot read current login shell of user '$login'"
