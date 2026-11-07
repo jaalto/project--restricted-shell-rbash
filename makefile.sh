@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1059"
+VERSION="2026.1107.1101"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -317,6 +317,8 @@ MakeRestrictedBin ()
                 ;;
         esac
 
+	# ignore quotes
+	# shellcheck disable=SC2248
         [ "$path" ] && Run ln $verbose --force --symbolic "$path" "$cmd"
     done
 
