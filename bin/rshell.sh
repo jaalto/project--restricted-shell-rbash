@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 #
 #   Copyright information
 #
@@ -26,13 +26,13 @@
 
 PATH="/bin:/usr/bin"
 PROMPT="rshell"
-HOST=$(hostname)
+HOST="$(hostname)"
 unset IFS
 
 Prompt ()
 {
     pwd=$(pwd)
-    echo -n "$LOGNAME@$HOST:$pwd\$ "
+    printf "$LOGNAME@$HOST:$pwd\$ "
 }
 
 Error ()
@@ -62,7 +62,7 @@ Main ()
     done
 }
 
-trap 'exit' 0 1 2 3 9 15
+trap 'exit' EXIT HUP INT QUIT TERM
 Main
 
 # End of file
