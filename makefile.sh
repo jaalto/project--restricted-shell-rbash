@@ -38,7 +38,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2019.0505.1815"
+VERSION="2026.1107.1039"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -195,7 +195,7 @@ Run ()
     if [ "$test" ]; then
         echo "$*"
     else
-        eval "$@"
+        eval "$*"
     fi
 }
 
