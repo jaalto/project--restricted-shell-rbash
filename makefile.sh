@@ -148,7 +148,7 @@ Which ()
 
 MatchGrep ()
 {
-    echo "$2" | egrep -e "$1" > /dev/null
+    echo "$2" | grep -Ee "$1" > /dev/null
 }
 
 Match ()
