@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1110"
+VERSION="2026.1107.1111"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -556,7 +556,7 @@ Main ()
                 shift
                 OPT_RSHELL="opt-rshell"
                 RSHELL="$1"
-                DieIfOption $RSHELL "--shell looks like an option: $RSHELL"
+                DieIfOption "$RSHELL" "--shell looks like an option: $RSHELL"
                 shift
                 ;;
             -t | --test)
