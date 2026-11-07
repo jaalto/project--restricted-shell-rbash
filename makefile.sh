@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1050"
+VERSION="2026.1107.1051"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -236,7 +236,7 @@ CreateUser ()
                  "Run manually: chsh --shell $RSHELL $login"
         fi
 
-        HOMEDIR=$(GetHomeDir $login)
+        HOMEDIR="$(GetHomeDir "$login")"
 
     else
         Echo "NOTE: adding user '$login'"
