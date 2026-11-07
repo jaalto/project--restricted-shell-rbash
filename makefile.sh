@@ -277,7 +277,7 @@ MakeRestrictedBin ()
     chmod 750 bin
     Run chown "$chownattributes" bin
 
-    local cwd=$(pwd)
+    local cwd=$PWD
 
     Run cd bin || exit 1
 
