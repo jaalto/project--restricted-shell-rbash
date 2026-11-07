@@ -32,7 +32,7 @@ unset IFS
 Prompt ()
 {
     pwd=$(pwd)
-    printf "$LOGNAME@$HOST:$pwd\$ "
+    printf '%s' "$LOGNAME@$HOST:$pwd\$ "
 }
 
 Error ()
