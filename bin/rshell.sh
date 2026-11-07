@@ -46,11 +46,13 @@ Main ()
 
     while read -r arg rest
     do
-	case "$arg" in
-	    ls | pwd | date | ssh )
+	case $arg in
+	    ls | pwd | date | ssh)
+		# ignore quotes
+		# shellcheck disable=SC2086
 		$arg $rest
 		;;
-	    exit | logout )
+	    exit | logout)
 		return
 		;;
 	    *)
