@@ -110,11 +110,10 @@ IFS=$' \t\n'
 
 Tmpfile ()
 {
-    mktemp $TMPBASE.XXXXXX ||
-    {
+    if ! mktemp -t "$TMPBASE.XXXXXX"; then
        echo "$0: [FATAL] Cannnot create temporary file in $TMPBASE" >&2
        exit 1
-    }
+    fi
 }
 
 Atexit ()
