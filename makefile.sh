@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1101"
+VERSION="2026.1107.1102"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -327,7 +327,8 @@ MakeRestrictedBin ()
 
 SetPath ()
 {
-    local path="$(pwd)/bin"
+    local path
+    path="$PWD/bin"
 
     local file
 
