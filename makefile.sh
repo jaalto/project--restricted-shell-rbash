@@ -299,6 +299,8 @@ MakeRestrictedBin ()
 
     for cmd in $COMMANDS
     do
+	# unused
+	# shellcheck disable=SC2034
         debug="$cmd"
 
         case "$cmd" in
