@@ -42,7 +42,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1047"
+VERSION="2026.1107.1048"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -203,7 +203,7 @@ UserShell ()
 
 GeneratePassword ()
 {
-    perl -e 'print crypt($ARGV[0],q(sa))' ${1:-password}
+    perl -e 'print crypt($ARGV[0],q(sa))' "${1:-password}"
 }
 
 CreateUser ()
