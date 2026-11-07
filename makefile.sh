@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1056"
+VERSION="2026.1107.1058"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -289,8 +289,8 @@ MakeRestrictedBin ()
         Echo "NOTE: Removing previous commands"
 
 	# ignore quotes
-	# shellcheck disable=SC2086
-        Run rm $verbose -f *
+	# shellcheck disable=SC2248
+        Run rm $verbose -f ./*
     fi
 
     Echo "Symlinking allowed commands"
