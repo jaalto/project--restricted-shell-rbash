@@ -651,11 +651,11 @@ Main ()
         Die "ERROR: --chown is not in format user:group => $CHOWN"
     fi
 
-    if ! Match "/*" $HOMEROOT ; then
+    if ! Match "/*" "$HOMEROOT" ; then
         Die "ERROR: --homeroot is not an absolute path: $HOMEROOT"
     fi
 
-    HOMEROOT=$(DropTrailingSlash $HOMEROOT)
+    HOMEROOT="$(DropTrailingSlash "$HOMEROOT")"
 
     # .... DO IT ..........................................................
 
