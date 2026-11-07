@@ -25,14 +25,13 @@
 #	Use the program as user's login shell: chsh --shell <path to program>
 
 PATH="/bin:/usr/bin"
-PROMPT="rshell"
+# PROMPT="rshell"
 HOST="$(hostname)"
 unset IFS
 
 Prompt ()
 {
-    pwd=$(pwd)
-    printf '%s' "$LOGNAME@$HOST:$pwd\$ "
+    printf '%s' "$LOGNAME@$HOST:$PWD\$ "
 }
 
 Error ()
