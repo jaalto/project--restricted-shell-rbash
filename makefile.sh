@@ -112,7 +112,7 @@ IFS=$' \t\n'
 Tmpfile ()
 {
     if ! mktemp -t "$TMPBASE.XXXXXX"; then
-       echo "$0: [FATAL] Cannnot create temporary file in $TMPBASE" >&2
+       echo "$PROGRAM: [FATAL] Cannnot create temporary file in $TMPBASE" >&2
        exit 1
     fi
 }
@@ -491,7 +491,7 @@ Main ()
 
         tmpopt=$(getopt \
         --shell bash \
-        --name "$0.Main($VERSION restricted-shell-create)" \
+        --name "$PROGRAM.Main($VERSION restricted-shell-create)" \
         --long attributes,homeroot:,debug,force,group:,help,init,chown,passwd,shell,test,verbose,version \
         --option "ad:Dfg:hiops:tvV" -- "$@" \
         )
