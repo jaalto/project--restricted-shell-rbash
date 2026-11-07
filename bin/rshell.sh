@@ -44,7 +44,7 @@ Main ()
 {
     Prompt
 
-    while read arg rest
+    while read -r arg rest
     do
 	case "$arg" in
 	    ls | pwd | date | ssh )
