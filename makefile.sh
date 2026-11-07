@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1105"
+VERSION="2026.1107.1107"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -91,7 +91,9 @@ Atexit ()
 
 Which ()
 {
-    local cmd=$1
+    local cmd="${1:-}"
+
+    [ "$cmd" ] || return 1
 
     local saved="$IFS";
     IFS=":"
@@ -462,7 +464,7 @@ Version ()
 
 Main ()
 {
-    dummy="$*"                          # for debug
+    local dummy="$*"			# for debug
 
     if  Which getopt > /dev/null ; then
 
