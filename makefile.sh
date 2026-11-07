@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1104"
+VERSION="2026.1107.1105"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -477,6 +477,8 @@ Main ()
         --option "ad:Dfg:hiops:tvV" -- "$@" \
         )
 
+	# exit code
+	# shellcheck disable=SC2181
         if [ "$?" != "0" ]; then
             for i in "$@"
             do
