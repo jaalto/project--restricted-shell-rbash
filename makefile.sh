@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1107"
+VERSION="2026.1107.1108"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -464,6 +464,8 @@ Version ()
 
 Main ()
 {
+    # unused
+    # shellcheck disable=SC2034
     local dummy="$*"			# for debug
 
     if  Which getopt > /dev/null ; then
