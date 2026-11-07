@@ -549,7 +549,7 @@ Main ()
             -p | --passwd)
                 shift
                 PASSWD="$1"
-                DieIfOption $PASSWD "--passwd looks like an option: $PASSWD"
+                DieIfOption "$PASSWD" "--passwd looks like an option: $PASSWD"
                 shift
                 ;;
             -s | --shell)
