@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1111"
+VERSION="2026.1107.1113"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -253,6 +253,8 @@ CreateUser ()
         Run install --directory --mode=750 "$userskel"
 
         if [ "$PASSWD" ]; then
+	    # ignore single quotes
+	    # shellcheck disable=SC2089
             useraddopt="$useraddopt --password '$(GeneratePassword "$PASSWD")'"
         fi
 
