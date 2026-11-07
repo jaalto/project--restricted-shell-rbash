@@ -153,8 +153,8 @@ MatchGrep ()
 
 Match ()
 {
-    case "$2" in
-        $1) return 0
+    case $2 in
+        "$1") return 0
             ;;
         *)  return 1
             ;;
