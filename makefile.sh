@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1058"
+VERSION="2026.1107.1059"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -305,7 +305,7 @@ MakeRestrictedBin ()
 
         case "$cmd" in
             /*) path="$cmd"
-                cmd=$(echo $cmd | sed 's,.*/,,')
+                cmd=$(echo "$cmd" | sed 's,.*/,,')
                 ;;
 
              */*)
@@ -313,7 +313,7 @@ MakeRestrictedBin ()
                 continue
                 ;;
 
-             *) path=$(which $cmd)
+             *) path="$(command -v "$cmd")"
                 ;;
         esac
 
