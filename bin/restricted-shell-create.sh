@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 #
 #   Copyright information
 #
@@ -24,8 +24,9 @@
 #	This a redictor which is installed in PATH. It will call
 #	the real $PROGRAM.
 
-set -e
+set -o errexit   # Exit on error
 
+# template: replaced by setup
 PROGRAM=%PROGRAM
 
 Warn ()
@@ -41,7 +42,7 @@ Die ()
 
 Main ()
 {
-    case "$PROGRAM" in
+    case $PROGRAM in
 	*%*) Die "$0: Setup template error." \
 	         "Run Makefile in source distribution."
              ;;
@@ -51,10 +52,11 @@ Main ()
 	Die "$0: Setup error. Run Makefile in source distribution."
     fi
 
-    dir=$(dirname $PROGRAM)
-    bin=$(basename $PROGRAM)
+    dir=${PROGRAM%/*}
+    bin=${PROGRAM##*/}
 
-    cd "$dir"
+    cd "$dir" || return $?
+
     ./"$bin" "$@"
 }
 
