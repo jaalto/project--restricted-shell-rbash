@@ -32,6 +32,7 @@
 #
 #   Depends (Debian packages)
 #
+#       perl
 #       util-linux      /usr/bin/getopt [optional]
 #       e2fsprogs       /usr/bin/chattr
 #       bash            /bin/rbash
@@ -42,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1048"
+VERSION="2026.1107.1049"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
