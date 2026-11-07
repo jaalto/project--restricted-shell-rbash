@@ -43,7 +43,7 @@
 
 AUTHOR="Jari Aalto <jari.aalto@cante.net>"
 
-VERSION="2026.1107.1108"
+VERSION="2026.1107.1109"
 
 LICENSE="GPL-2+"
 HOMEPAGE=https://github.com/jaalto/project--linux-tmpfs-ramdisk
@@ -512,7 +512,7 @@ Main ()
             -d | --homeroot)
                 shift
                 HOMEROOT="$1"
-                DieIfOption $HOMEROOT \
+                DieIfOption "$HOMEROOT" \
                     "--homeroot looks like an option: $HOMEROOT"
                 shift
                 ;;
